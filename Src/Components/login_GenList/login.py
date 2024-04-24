@@ -19,10 +19,6 @@ class login (QWidget):
 
     def generar_formulario(self):
 
-        # prendia ajustar la imagen al Label ↓
-        # Etiqueta_imagen.setScaledContents(True)
-        # Etiqueta_imagen.setPixmap(QPixmap(escudoUP))
-        # escudoUP = QPixmap('escudounipamplona.png')
         empresa = QPixmap('Src/Images/LogoempresaA.png')
         Etiqueta_imagen = QLabel()
         imagen_renden = empresa.scaledToWidth(150)
