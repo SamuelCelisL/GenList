@@ -23,7 +23,7 @@ class login (QWidget):
         # Etiqueta_imagen.setScaledContents(True)
         # Etiqueta_imagen.setPixmap(QPixmap(escudoUP))
         # escudoUP = QPixmap('escudounipamplona.png')
-        empresa = QPixmap('LogoempresaA.png')
+        empresa = QPixmap('Src/Images/LogoempresaA.png')
         Etiqueta_imagen = QLabel()
         imagen_renden = empresa.scaledToWidth(150)
         Etiqueta_imagen.setPixmap(imagen_renden)
