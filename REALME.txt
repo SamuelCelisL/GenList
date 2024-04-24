@@ -1,0 +1,5 @@
+Comandos Importantes:
+-> python -m venv venv // Si no tienes la carpeta venv
+// Seleccionar el Interpretador Virtual
+-> .\Scripts\activate // Dentro de la carpeta venv
+-> pip install -r requirements.txt
