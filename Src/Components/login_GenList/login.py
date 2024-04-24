@@ -3,6 +3,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit,
                              QPushButton, QHBoxLayout, QVBoxLayout)
 from PyQt6.QtGui import QPixmap, QFont
+from PyQt6 import QtGui
 
 
 class login (QWidget):
@@ -24,11 +25,15 @@ class login (QWidget):
         imagen_renden = empresa.scaledToWidth(150)
         Etiqueta_imagen.setPixmap(imagen_renden)
         Etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        Etiqueta_imagen.setStyleSheet("")
         Etiqueta_imagen.setStyleSheet("border: none;")
 
         Titulo_inicial = QLabel("GenList")
         Titulo_inicial.setFont(QFont('Times New Roman', 30))
+        Titulo_inicial.setFixedSize(150, 40)
         Titulo_inicial.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        Titulo_inicial.setStyleSheet("background-color: none;")
+        Titulo_inicial.setStyleSheet("border: none;")
         Titulo_inicial.setStyleSheet('color: white')
 
         usuario_label = QLabel("USUARIO")
@@ -75,8 +80,13 @@ class login (QWidget):
         h_layaout_1 = QHBoxLayout()
         # Cambiar el backgroud
         w_h_layaout_1 = QWidget()
+        gradient_titulo = QtGui.QLinearGradient(0, 0, 0, 400)
+        gradient_titulo.setColorAt(0.1, QtGui.QColor(46, 145, 221))
+        gradient_titulo.setColorAt(0.4, QtGui.QColor(40, 125, 190))
+        gradient_titulo.setColorAt(0.6, QtGui.QColor(33, 104, 158))
+        diseño_titulo = "background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0.1 rgba(46, 145, 221, 255), stop:0.4 rgba(40, 125, 190, 255), stop:0.6 rgba(33, 104, 158, 255));"
         w_h_layaout_1.setLayout(h_layaout_1)
-        w_h_layaout_1.setStyleSheet("background-color: #F75A50;")
+        w_h_layaout_1.setStyleSheet(diseño_titulo)
 
         # crear layaout
         # Parte de Registro
