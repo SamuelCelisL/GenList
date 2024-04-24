@@ -138,7 +138,10 @@ class login (QWidget):
         v_layaout_2 = QVBoxLayout()
         w_v_layaout_2 = QWidget()
         w_v_layaout_2.setLayout(v_layaout_2)
-        w_v_layaout_2.setStyleSheet("border: 1px solid black;")
+        w_v_layaout_2.setStyleSheet("""QWidget{
+                                    background-color: white;
+                                    border: 1px solid black;
+                                    }""")
         w_v_layaout_2.setGeometry(0, 0, 400, 500)
 
         h_layaout_2_1 = QHBoxLayout()
