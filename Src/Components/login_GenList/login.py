@@ -21,8 +21,6 @@ class login (QWidget):
     def generar_formulario(self):
 
         empresa = QPixmap('Src/Images/LogoempresaA.png')
-        font_neg = QtGui.QFont()
-        font_neg.setBold(True)
 
         font_titulo = QtGui.QFont()
         font_titulo.setBold(True)
@@ -45,29 +43,41 @@ class login (QWidget):
         Titulo_inicial.setStyleSheet('color: white')
 
         usuario_label = QLabel("USUARIO")
-
-        # usuario_label.setFixedWidth(60)
-        # usuario_label.setFont(QFont('sans-serif', False))
-        # usuario_label.setFont(font_neg)
         usuario_label.setStyleSheet("""QLabel{
                     color: black;
                     font-family: sans-serif;
                     font-weight: bold;
-                    width: 60px;
                     border: none;
                     max-width: 60px;
                 }""")
         self.usuario_input = QLineEdit()
         self.usuario_input.setFixedWidth(300)
+        self.usuario_input.setStyleSheet("""QLineEdit{
+                    color: black;
+                    font-family: sans-serif;
+                    border: 1px solid black;
+                    max-width: 300px;
+                }""")
         self.usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         Contra_label = QLabel("CONTRASEÑA")
         Contra_label.setFixedWidth(80)
-        Contra_label.setStyleSheet("border: none;")
-        Contra_label.setFont(font_neg)
+        Contra_label.setStyleSheet("""QLabel{
+                    color: black;
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    border: none;
+                    max-width: 100px;
+                }""")
         self.Contra_input = QLineEdit()
         self.Contra_input.setFixedWidth(300)
         self.Contra_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.Contra_input.setStyleSheet("""QLineEdit{
+                    color: black;
+                    font-family: sans-serif;
+                    border: 1px solid black;
+                    max-width: 300px;
+                }""")
         self.Contra_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         cretido = QLabel("Desarrollado por:")
@@ -118,6 +128,11 @@ class login (QWidget):
         boton_registrar.clicked.connect(self.registrar_usuario)
 
         Horizontal_layaout_main = QVBoxLayout()
+        w_Horizontal_layaout_main = QWidget()
+        w_Horizontal_layaout_main.setStyleSheet("""QWidget{
+                                    background-color: white;
+                                    }""")
+        w_Horizontal_layaout_main.setLayout(Horizontal_layaout_main)
 
         # crear layaout
         h_layaout_1 = QHBoxLayout()
@@ -194,7 +209,8 @@ class login (QWidget):
         v_layaout_3.addLayout(h_layaout_3_3)
         v_layaout_3.addLayout(h_layaout_3_4)
 
-# Agregar los layouts a al layoud original
+        primero = QVBoxLayout()
+# Agregar los Qwidget a al Layout original
         Horizontal_layaout_main.addWidget(w_h_layaout_1)
         # Horizontal_layaout_main.addLayout(h_layaout_1)
         Horizontal_layaout_main.addWidget(w_v_layaout_2)
@@ -203,8 +219,12 @@ class login (QWidget):
         #     boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
         Horizontal_layaout_main.addWidget(w_v_layaout_3)
         # Horizontal_layaout_main.addLayout(v_layaout_3)
+
+# Agregar los layouts a al layoud original
+        primero.addWidget(w_Horizontal_layaout_main)
         app.setStyle("Fusion")
-        self.setLayout(Horizontal_layaout_main)
+        # Esta linea crea el primer layout ↓
+        self.setLayout(primero)
 
     def registrar_usuario(self):
         print("HOLA MUNDO")
