@@ -43,6 +43,7 @@ class login (QWidget):
         titulo_inicial.setStyleSheet('color: white')
 
         usuario_label = QLabel("USUARIO")
+        usuario_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         usuario_label.setStyleSheet("""QLabel{
                     color: black;
                     font-family: sans-serif;
@@ -61,6 +62,7 @@ class login (QWidget):
         self.usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         Contra_label = QLabel("CONTRASEÑA")
+        Contra_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         Contra_label.setFixedWidth(80)
         Contra_label.setStyleSheet("""QLabel{
                     color: black;
