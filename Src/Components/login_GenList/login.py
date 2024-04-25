@@ -20,7 +20,7 @@ class login (QWidget):
 
     def generar_formulario(self):
 
-        empresa = QPixmap('Src/Images/LogoempresaA.png')
+        empresa = QPixmap('src/images/LogoempresaA.png')
 
         font_titulo = QtGui.QFont()
         font_titulo.setBold(True)
