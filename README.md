@@ -1,5 +1,7 @@
 # Comandos Importantes
 
+## Comandos para El funcionamiento
+
 - `python -m venv venv` // Si no tienes la carpeta venv
 - `.\Scripts\activate` // Dentro de la carpeta venv
 - `pip install -r requirements.txt` // Instalar todas las dependencias
