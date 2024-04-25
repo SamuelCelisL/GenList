@@ -27,20 +27,20 @@ class login (QWidget):
         font_titulo.setFamily('sans-sarif')
         font_titulo.setPixelSize(30)
 
-        Etiqueta_imagen = QLabel()
+        etiqueta_imagen = QLabel()
         imagen_renden = empresa.scaledToWidth(150)
-        Etiqueta_imagen.setPixmap(imagen_renden)
-        Etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        Etiqueta_imagen.setStyleSheet("")
-        Etiqueta_imagen.setStyleSheet("border: none;")
+        etiqueta_imagen.setPixmap(imagen_renden)
+        etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        etiqueta_imagen.setStyleSheet("")
+        etiqueta_imagen.setStyleSheet("border: none;")
 
-        Titulo_inicial = QLabel("GenList")
-        Titulo_inicial.setFont(font_titulo)
-        Titulo_inicial.setFixedSize(150, 40)
-        Titulo_inicial.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        Titulo_inicial.setAttribute(
+        titulo_inicial = QLabel("GenList")
+        titulo_inicial.setFont(font_titulo)
+        titulo_inicial.setFixedSize(150, 40)
+        titulo_inicial.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        titulo_inicial.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        Titulo_inicial.setStyleSheet('color: white')
+        titulo_inicial.setStyleSheet('color: white')
 
         usuario_label = QLabel("USUARIO")
         usuario_label.setStyleSheet("""QLabel{
@@ -127,104 +127,104 @@ class login (QWidget):
                 """)
         boton_registrar.clicked.connect(self.registrar_usuario)
 
-        Horizontal_layaout_main = QVBoxLayout()
-        w_Horizontal_layaout_main = QWidget()
-        w_Horizontal_layaout_main.setStyleSheet("""QWidget{
+        contenedor_principal = QVBoxLayout()
+        widget_contenedor_principal = QWidget()
+        widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
                                     }""")
-        w_Horizontal_layaout_main.setLayout(Horizontal_layaout_main)
+        widget_contenedor_principal.setLayout(contenedor_principal)
 
         # crear layaout
-        h_layaout_1 = QHBoxLayout()
+        contenedor_titulo = QHBoxLayout()
         # Cambiar el backgroud
-        w_h_layaout_1 = QWidget()
-        gradient_titulo = QtGui.QLinearGradient(0, 0, 0, 400)
-        gradient_titulo.setColorAt(0.1, QtGui.QColor(46, 145, 221))
-        gradient_titulo.setColorAt(0.4, QtGui.QColor(40, 125, 190))
-        gradient_titulo.setColorAt(0.6, QtGui.QColor(33, 104, 158))
+        widget_contenedor_titulo = QWidget()
+        # gradient_titulo = QtGui.QLinearGradient(0, 0, 0, 400)
+        # gradient_titulo.setColorAt(0.1, QtGui.QColor(46, 145, 221))
+        # gradient_titulo.setColorAt(0.4, QtGui.QColor(40, 125, 190))
+        # gradient_titulo.setColorAt(0.6, QtGui.QColor(33, 104, 158))
         diseño_titulo = """background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0.1 rgba(46, 145, 221, 255), 
             stop:0.4 rgba(40, 125, 190, 255), 
             stop:0.6 rgba(33, 104, 158, 255));"""
-        w_h_layaout_1.setLayout(h_layaout_1)
-        w_h_layaout_1.setStyleSheet(diseño_titulo)
+        widget_contenedor_titulo.setLayout(contenedor_titulo)
+        widget_contenedor_titulo.setStyleSheet(diseño_titulo)
 
         # crear layaout
         # Parte de Registro
-        v_layaout_2 = QVBoxLayout()
-        w_v_layaout_2 = QWidget()
-        w_v_layaout_2.setLayout(v_layaout_2)
-        w_v_layaout_2.setStyleSheet("""QWidget{
+        contenedor_registro = QVBoxLayout()
+        widget_contenedor_registro = QWidget()
+        widget_contenedor_registro.setLayout(contenedor_registro)
+        widget_contenedor_registro.setStyleSheet("""QWidget{
                                     background-color: white;
                                     border: 1px solid black;
                                     }""")
-        w_v_layaout_2.setGeometry(0, 0, 400, 500)
+        widget_contenedor_registro.setGeometry(0, 0, 400, 500)
 
-        h_layaout_2_1 = QHBoxLayout()
-        h_layaout_2_2 = QHBoxLayout()
-        h_layaout_2_3 = QHBoxLayout()
-        h_layaout_2_4 = QHBoxLayout()
-        h_layaout_2_5 = QHBoxLayout()
+        contenedor_logo = QHBoxLayout()
+        contenedor_usuario = QHBoxLayout()
+        contenedor_imput_usuario = QHBoxLayout()
+        contenedor_contraseña = QHBoxLayout()
+        contenedor_imput_contra = QHBoxLayout()
         # Parte Azul ↓
-        v_layaout_3 = QVBoxLayout()
+        contenedor_credito = QVBoxLayout()
 
-        gradient_barra_F = QtGui.QLinearGradient(0, 0, 0, 400)
-        gradient_barra_F.setColorAt(0.0, QtGui.QColor(33, 104, 158))
-        gradient_barra_F.setColorAt(1.0, QtGui.QColor(0, 0, 0))
+        # gradient_barra_F = QtGui.QLinearGradient(0, 0, 0, 400)
+        # gradient_barra_F.setColorAt(0.0, QtGui.QColor(33, 104, 158))
+        # gradient_barra_F.setColorAt(1.0, QtGui.QColor(0, 0, 0))
         diseño_barra_F = "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(33, 104, 158, 255), stop: 1 rgba(0, 0, 0, 255))"
 
-        w_v_layaout_3 = QWidget()
-        w_v_layaout_3.setLayout(v_layaout_3)
-        w_v_layaout_3.setStyleSheet(diseño_barra_F)
-        h_layaout_3_1 = QHBoxLayout()
-        h_layaout_3_2 = QHBoxLayout()
-        h_layaout_3_3 = QHBoxLayout()
-        h_layaout_3_4 = QHBoxLayout()
+        widget_contenedor_credito = QWidget()
+        widget_contenedor_credito.setLayout(contenedor_credito)
+        widget_contenedor_credito.setStyleSheet(diseño_barra_F)
+        contenedor_texto_credito = QHBoxLayout()
+        contenedor_autor1 = QHBoxLayout()
+        contenedor_autor2 = QHBoxLayout()
+        contenedor_autor3 = QHBoxLayout()
 
         # 1 ↓
-        h_layaout_1.addWidget(Titulo_inicial)
+        contenedor_titulo.addWidget(titulo_inicial)
         # 2 ↓
-        h_layaout_2_1.addWidget(Etiqueta_imagen)
-        h_layaout_2_2.addWidget(usuario_label)
-        h_layaout_2_3.addWidget(self.usuario_input)
-        h_layaout_2_4.addWidget(Contra_label)
-        h_layaout_2_5.addWidget(self.Contra_input)
+        contenedor_logo.addWidget(etiqueta_imagen)
+        contenedor_usuario.addWidget(usuario_label)
+        contenedor_imput_usuario.addWidget(self.usuario_input)
+        contenedor_contraseña.addWidget(Contra_label)
+        contenedor_imput_contra.addWidget(self.Contra_input)
         # 1-#↓
-        h_layaout_3_1.addWidget(cretido)
-        h_layaout_3_2.addWidget(autor1)
-        h_layaout_3_3.addWidget(autor2)
-        h_layaout_3_4.addWidget(autor3)
+        contenedor_texto_credito.addWidget(cretido)
+        contenedor_autor1.addWidget(autor1)
+        contenedor_autor2.addWidget(autor2)
+        contenedor_autor3.addWidget(autor3)
 
-        v_layaout_2.addLayout(h_layaout_2_1)
-        v_layaout_2.addLayout(h_layaout_2_2)
-        v_layaout_2.addLayout(h_layaout_2_3)
-        v_layaout_2.addLayout(h_layaout_2_4)
-        v_layaout_2.addLayout(h_layaout_2_5)
-        v_layaout_2.addWidget(
+        contenedor_registro.addLayout(contenedor_logo)
+        contenedor_registro.addLayout(contenedor_usuario)
+        contenedor_registro.addLayout(contenedor_imput_usuario)
+        contenedor_registro.addLayout(contenedor_contraseña)
+        contenedor_registro.addLayout(contenedor_imput_contra)
+        contenedor_registro.addWidget(
             boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        # v_layaout_2.addLayout(v_layaout_2_c)
+        # contenedor_registro.addLayout(contenedor_registro_c)
 
-        v_layaout_3.addLayout(h_layaout_3_1)
-        v_layaout_3.addLayout(h_layaout_3_2)
-        v_layaout_3.addLayout(h_layaout_3_3)
-        v_layaout_3.addLayout(h_layaout_3_4)
+        contenedor_credito.addLayout(contenedor_texto_credito)
+        contenedor_credito.addLayout(contenedor_autor1)
+        contenedor_credito.addLayout(contenedor_autor2)
+        contenedor_credito.addLayout(contenedor_autor3)
 
-        primero = QVBoxLayout()
+        fondo = QVBoxLayout()
 # Agregar los Qwidget a al Layout original
-        Horizontal_layaout_main.addWidget(w_h_layaout_1)
-        # Horizontal_layaout_main.addLayout(h_layaout_1)
-        Horizontal_layaout_main.addWidget(w_v_layaout_2)
-        # Horizontal_layaout_main.addLayout(v_layaout_2)
-        # Horizontal_layaout_main.addWidget(
+        contenedor_principal.addWidget(widget_contenedor_titulo)
+        # contenedor_principal.addLayout(contenedor_titulo)
+        contenedor_principal.addWidget(widget_contenedor_registro)
+        # contenedor_principal.addLayout(contenedor_registro)
+        # contenedor_principal.addWidget(
         #     boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
-        Horizontal_layaout_main.addWidget(w_v_layaout_3)
-        # Horizontal_layaout_main.addLayout(v_layaout_3)
+        contenedor_principal.addWidget(widget_contenedor_credito)
+        # contenedor_principal.addLayout(contenedor_credito)
 
 # Agregar los layouts a al layoud original
-        primero.addWidget(w_Horizontal_layaout_main)
+        fondo.addWidget(widget_contenedor_principal)
         app.setStyle("Fusion")
         # Esta linea crea el primer layout ↓
-        self.setLayout(primero)
+        self.setLayout(fondo)
 
     def registrar_usuario(self):
         print("HOLA MUNDO")
