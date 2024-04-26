@@ -91,12 +91,12 @@ class login (QWidget):
                     font-size: 20px;
         }
 """
-        cretido = QLabel("Desarrollado por:")
-        cretido.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        # cretido.setFont(QFont('sans-serif', 20))
-        cretido.setAttribute(
+        credito = QLabel("Desarrollado por:")
+        credito.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # credito.setFont(QFont('sans-serif', 20))
+        credito.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        cretido.setStyleSheet(stilo_credito)
+        credito.setStyleSheet(stilo_credito)
 
         autor1 = QLabel("Juan Pablo Marquez Sanchez")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -176,6 +176,7 @@ class login (QWidget):
         contenedor_imput_contra = QHBoxLayout()
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
+        # contenedor_credito.setSpacing(20)
         # gradient_barra_F = QtGui.QLinearGradient(0, 0, 0, 400)
         # gradient_barra_F.setColorAt(0.0, QtGui.QColor(33, 104, 158))
         # gradient_barra_F.setColorAt(1.0, QtGui.QColor(0, 0, 0))
@@ -188,10 +189,10 @@ class login (QWidget):
         widget_contenedor_credito = QWidget()
         widget_contenedor_credito.setLayout(contenedor_credito)
         widget_contenedor_credito.setStyleSheet(diseño_barra_F)
-        contenedor_texto_credito = QHBoxLayout()
-        contenedor_autor1 = QHBoxLayout()
-        contenedor_autor2 = QHBoxLayout()
-        contenedor_autor3 = QHBoxLayout()
+        # contenedor_texto_credito = QHBoxLayout()
+        # contenedor_autor1 = QHBoxLayout()
+        # contenedor_autor2 = QHBoxLayout()
+        # contenedor_autor3 = QHBoxLayout()
 
         # 1 ↓
         contenedor_titulo.addWidget(titulo_inicial)
@@ -202,10 +203,10 @@ class login (QWidget):
         contenedor_contraseña.addWidget(Contra_label)
         contenedor_imput_contra.addWidget(self.Contra_input)
         # 1-#↓
-        contenedor_texto_credito.addWidget(cretido)
-        contenedor_autor1.addWidget(autor1)
-        contenedor_autor2.addWidget(autor2)
-        contenedor_autor3.addWidget(autor3)
+        # contenedor_texto_credito.addWidget(credito)
+        # contenedor_autor1.addWidget(autor1)
+        # contenedor_autor2.addWidget(autor2)
+        # contenedor_autor3.addWidget(autor3)
 
         contenedor_registro.addLayout(contenedor_logo)
         contenedor_registro.addLayout(contenedor_usuario)
@@ -217,10 +218,10 @@ class login (QWidget):
 
         # contenedor_registro.addLayout(contenedor_registro_c)
 
-        contenedor_credito.addLayout(contenedor_texto_credito)
-        contenedor_credito.addLayout(contenedor_autor1)
-        contenedor_credito.addLayout(contenedor_autor2)
-        contenedor_credito.addLayout(contenedor_autor3)
+        contenedor_credito.addWidget(credito)
+        contenedor_credito.addWidget(autor1)
+        contenedor_credito.addWidget(autor2)
+        contenedor_credito.addWidget(autor3)
 
         fondo = QVBoxLayout()
 # Agregar los Qwidget a al Layout original
