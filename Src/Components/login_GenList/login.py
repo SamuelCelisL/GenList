@@ -164,6 +164,10 @@ class login (QWidget):
 
         # crear layaout
         # Parte de Registro
+        contenedor_pre_registro = QHBoxLayout()
+        widget_con_pre_registro = QWidget()
+        widget_con_pre_registro.setLayout(contenedor_pre_registro)
+
         contenedor_registro = QVBoxLayout()
         widget_contenedor_registro = QWidget()
         widget_contenedor_registro.setLayout(contenedor_registro)
@@ -174,7 +178,6 @@ class login (QWidget):
                                     max-width: 400px;
                                     margin: 1px 1em;
                                     }""")
-
         # contenedor_logo = QHBoxLayout()
         # contenedor_usuario = QHBoxLayout()
         # contenedor_imput_usuario = QHBoxLayout()
@@ -233,11 +236,13 @@ class login (QWidget):
         contenedor_credito.addWidget(autor2)
         contenedor_credito.addWidget(autor3)
 
+        contenedor_pre_registro.addWidget(widget_contenedor_registro)
+
         fondo = QVBoxLayout()
 # Agregar los Qwidget a al Layout original
         contenedor_principal.addWidget(widget_contenedor_titulo)
         # contenedor_principal.addLayout(contenedor_titulo)
-        contenedor_principal.addWidget(widget_contenedor_registro)
+        contenedor_principal.addWidget(widget_con_pre_registro)
         # contenedor_principal.addLayout(contenedor_pre_registro)
         # contenedor_principal.addWidget(
         #     boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
