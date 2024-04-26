@@ -36,7 +36,6 @@ class login (QWidget):
 
         titulo_inicial = QLabel("GenList")
         titulo_inicial.setFont(font_titulo)
-        titulo_inicial.setFixedSize(150, 40)
         titulo_inicial.setAlignment(Qt.AlignmentFlag.AlignCenter)
         titulo_inicial.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
@@ -129,6 +128,7 @@ class login (QWidget):
                         padding: 5px;
                         font-size: 10px;
                         font-weight: bold;
+                        min-width: 100px;
                     }
                     QPushButton:hover {
                         background-color: #555555;
@@ -143,6 +143,7 @@ class login (QWidget):
         widget_contenedor_principal = QWidget()
         widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
+                                    min-width: 500px;
                                     }""")
         widget_contenedor_principal.setLayout(contenedor_principal)
 
@@ -150,34 +151,40 @@ class login (QWidget):
         contenedor_titulo = QHBoxLayout()
         # Cambiar el backgroud
         widget_contenedor_titulo = QWidget()
-        diseño_titulo = """background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+        diseño_titulo = """QWidget{background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
             stop:0.4 rgba(40, 125, 190, 255),
-            stop:0.6 rgba(33, 104, 158, 255));"""
+            stop:0.6 rgba(33, 104, 158, 255));
+            max-height: 55px;
+            }"""
         widget_contenedor_titulo.setLayout(contenedor_titulo)
         widget_contenedor_titulo.setStyleSheet(diseño_titulo)
 
         # crear layaout
         # Parte de Registro
         contenedor_pre_registro = QHBoxLayout()
-        widget_con_pre_registro = QWidget()
-        widget_con_pre_registro.setLayout(contenedor_pre_registro)
+        self.widget_con_pre_registro = QWidget()
+        self.widget_con_pre_registro.setLayout(contenedor_pre_registro)
 
         contenedor_registro = QVBoxLayout()
+        contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         widget_contenedor_registro = QWidget()
         widget_contenedor_registro.setLayout(contenedor_registro)
         widget_contenedor_registro.setStyleSheet("""QWidget{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
-                                    border-radius: 5px;
+                                    border-radius: 9px;
                                     max-width: 400px;
-                                    margin: 1px 1em;
+                                    min-width: 200px;
+                                    margin: 1px 1px;
                                     }""")
         contenedor_pre_registro.addWidget(widget_contenedor_registro)
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
 
-        diseño_barra_F = "background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400)"
-
+        diseño_barra_F = """QWidget {
+            background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400);
+            max-height: 110px;
+        }"""
         widget_contenedor_credito = QWidget()
         widget_contenedor_credito.setLayout(contenedor_credito)
         widget_contenedor_credito.setStyleSheet(diseño_barra_F)
@@ -208,7 +215,7 @@ class login (QWidget):
 # Agregar los Qwidget a al Layout original
         contenedor_principal.addWidget(widget_contenedor_titulo)
 
-        contenedor_principal.addWidget(widget_con_pre_registro)
+        contenedor_principal.addWidget(self.widget_con_pre_registro)
 
         contenedor_principal.addWidget(widget_contenedor_credito)
 
@@ -219,7 +226,8 @@ class login (QWidget):
         self.setLayout(fondo)
 
     def registrar_usuario(self):
-        print("HOLA MUNDO")
+        self.widget_con_pre_registro.setVisible(False)
+        
 
 
 if __name__ == '__main__':
