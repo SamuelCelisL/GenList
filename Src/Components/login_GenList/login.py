@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit,
                              QPushButton, QHBoxLayout, QVBoxLayout)
-from PyQt6.QtGui import QPixmap, QFont, QLinearGradient, QColor
+from PyQt6.QtGui import QPixmap, QFont
 from PyQt6 import QtGui, QtCore
 
 
@@ -92,11 +92,9 @@ class login (QWidget):
                     font-family: sans-serif;
                     font-weight: bold;
                     font-size: 20px;
-        }
-"""
+        }"""
         credito = QLabel("Desarrollado por:")
         credito.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        # credito.setFont(QFont('sans-serif', 20))
         credito.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         credito.setStyleSheet(stilo_credito)
@@ -152,10 +150,6 @@ class login (QWidget):
         contenedor_titulo = QHBoxLayout()
         # Cambiar el backgroud
         widget_contenedor_titulo = QWidget()
-        # gradient_titulo = QtGui.QLinearGradient(0, 0, 0, 400)
-        # gradient_titulo.setColorAt(0.1, QtGui.QColor(46, 145, 221))
-        # gradient_titulo.setColorAt(0.4, QtGui.QColor(40, 125, 190))
-        # gradient_titulo.setColorAt(0.6, QtGui.QColor(33, 104, 158))
         diseño_titulo = """background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
             stop:0.4 rgba(40, 125, 190, 255),
             stop:0.6 rgba(33, 104, 158, 255));"""
@@ -178,30 +172,15 @@ class login (QWidget):
                                     max-width: 400px;
                                     margin: 1px 1em;
                                     }""")
-        # contenedor_logo = QHBoxLayout()
-        # contenedor_usuario = QHBoxLayout()
-        # contenedor_imput_usuario = QHBoxLayout()
-        # contenedor_contraseña = QHBoxLayout()
-        # contenedor_imput_contra = QHBoxLayout()
+        contenedor_pre_registro.addWidget(widget_contenedor_registro)
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
-        # contenedor_credito.setSpacing(20)
-        # gradient_barra_F = QtGui.QLinearGradient(0, 0, 0, 400)
-        # gradient_barra_F.setColorAt(0.0, QtGui.QColor(33, 104, 158))
-        # gradient_barra_F.setColorAt(1.0, QtGui.QColor(0, 0, 0))
+
         diseño_barra_F = "background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400)"
-        # diseño_barra_F = """background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
-        #     stop:0.4 rgba(40, 125, 190, 255),
-        #     stop:0.6 rgba(33, 104, 158, 255));"""
-        # diseño_barra_F = "background-color: #0074D9;"
 
         widget_contenedor_credito = QWidget()
         widget_contenedor_credito.setLayout(contenedor_credito)
         widget_contenedor_credito.setStyleSheet(diseño_barra_F)
-        # contenedor_texto_credito = QHBoxLayout()
-        # contenedor_autor1 = QHBoxLayout()
-        # contenedor_autor2 = QHBoxLayout()
-        # contenedor_autor3 = QHBoxLayout()
 
         # 1 ↓
         contenedor_titulo.addWidget(titulo_inicial)
@@ -215,17 +194,6 @@ class login (QWidget):
             Contra_label, alignment=Qt.AlignmentFlag.AlignCenter)
         contenedor_registro.addWidget(
             self.Contra_input, alignment=Qt.AlignmentFlag.AlignCenter)
-        # 1-#↓
-        # contenedor_texto_credito.addWidget(credito)
-        # contenedor_autor1.addWidget(autor1)
-        # contenedor_autor2.addWidget(autor2)
-        # contenedor_autor3.addWidget(autor3)
-
-        # contenedor_registro.addLayout(contenedor_logo)
-        # contenedor_registro.addLayout(contenedor_usuario)
-        # contenedor_registro.addLayout(contenedor_imput_usuario)
-        # contenedor_registro.addLayout(contenedor_contraseña)
-        # contenedor_registro.addLayout(contenedor_imput_contra)
         contenedor_registro.addWidget(
             boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
 
@@ -236,18 +204,13 @@ class login (QWidget):
         contenedor_credito.addWidget(autor2)
         contenedor_credito.addWidget(autor3)
 
-        contenedor_pre_registro.addWidget(widget_contenedor_registro)
-
         fondo = QVBoxLayout()
 # Agregar los Qwidget a al Layout original
         contenedor_principal.addWidget(widget_contenedor_titulo)
-        # contenedor_principal.addLayout(contenedor_titulo)
+
         contenedor_principal.addWidget(widget_con_pre_registro)
-        # contenedor_principal.addLayout(contenedor_pre_registro)
-        # contenedor_principal.addWidget(
-        #     boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
+
         contenedor_principal.addWidget(widget_contenedor_credito)
-        # contenedor_principal.addLayout(contenedor_credito)
 
 # Agregar los layouts a al layoud original
         fondo.addWidget(widget_contenedor_principal)
