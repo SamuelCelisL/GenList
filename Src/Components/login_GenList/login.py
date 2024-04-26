@@ -56,8 +56,10 @@ class login (QWidget):
                     color: black;
                     font-family: sans-serif;
                     border: 1px solid black;
-                    max-width: 200px;
+                    border-radius: 9px;
+                    max-width: 500px;
                 }""")
+        self.usuario_input.setFixedWidth(200)
         self.usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.usuario_input.setPlaceholderText(
             "Escribe tu usuario")
@@ -77,10 +79,11 @@ class login (QWidget):
         self.Contra_input.setStyleSheet("""QLineEdit{
                     color: black;
                     font-family: sans-serif;
-                    border-radius: 50px;
+                    border-radius: 9px;
                     border: 1px solid black;
-                    max-width: 200px;
+                    max-width: 500px;
                 }""")
+        self.Contra_input.setFixedWidth(200)
         self.Contra_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Contra_input.setPlaceholderText("Escribe tu contraseña")
 
@@ -153,8 +156,8 @@ class login (QWidget):
         # gradient_titulo.setColorAt(0.1, QtGui.QColor(46, 145, 221))
         # gradient_titulo.setColorAt(0.4, QtGui.QColor(40, 125, 190))
         # gradient_titulo.setColorAt(0.6, QtGui.QColor(33, 104, 158))
-        diseño_titulo = """background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255), 
-            stop:0.4 rgba(40, 125, 190, 255), 
+        diseño_titulo = """background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+            stop:0.4 rgba(40, 125, 190, 255),
             stop:0.6 rgba(33, 104, 158, 255));"""
         widget_contenedor_titulo.setLayout(contenedor_titulo)
         widget_contenedor_titulo.setStyleSheet(diseño_titulo)
@@ -167,13 +170,16 @@ class login (QWidget):
         widget_contenedor_registro.setStyleSheet("""QWidget{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
+                                    border-radius: 5px;
+                                    max-width: 400px;
+                                    margin: 1px 1em;
                                     }""")
 
-        contenedor_logo = QHBoxLayout()
-        contenedor_usuario = QHBoxLayout()
-        contenedor_imput_usuario = QHBoxLayout()
-        contenedor_contraseña = QHBoxLayout()
-        contenedor_imput_contra = QHBoxLayout()
+        # contenedor_logo = QHBoxLayout()
+        # contenedor_usuario = QHBoxLayout()
+        # contenedor_imput_usuario = QHBoxLayout()
+        # contenedor_contraseña = QHBoxLayout()
+        # contenedor_imput_contra = QHBoxLayout()
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
         # contenedor_credito.setSpacing(20)
@@ -197,22 +203,26 @@ class login (QWidget):
         # 1 ↓
         contenedor_titulo.addWidget(titulo_inicial)
         # 2 ↓
-        contenedor_logo.addWidget(etiqueta_imagen)
-        contenedor_usuario.addWidget(usuario_label)
-        contenedor_imput_usuario.addWidget(self.usuario_input)
-        contenedor_contraseña.addWidget(Contra_label)
-        contenedor_imput_contra.addWidget(self.Contra_input)
+        contenedor_registro.addWidget(etiqueta_imagen)
+        contenedor_registro.addWidget(
+            usuario_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        contenedor_registro.addWidget(
+            self.usuario_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        contenedor_registro.addWidget(
+            Contra_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        contenedor_registro.addWidget(
+            self.Contra_input, alignment=Qt.AlignmentFlag.AlignCenter)
         # 1-#↓
         # contenedor_texto_credito.addWidget(credito)
         # contenedor_autor1.addWidget(autor1)
         # contenedor_autor2.addWidget(autor2)
         # contenedor_autor3.addWidget(autor3)
 
-        contenedor_registro.addLayout(contenedor_logo)
-        contenedor_registro.addLayout(contenedor_usuario)
-        contenedor_registro.addLayout(contenedor_imput_usuario)
-        contenedor_registro.addLayout(contenedor_contraseña)
-        contenedor_registro.addLayout(contenedor_imput_contra)
+        # contenedor_registro.addLayout(contenedor_logo)
+        # contenedor_registro.addLayout(contenedor_usuario)
+        # contenedor_registro.addLayout(contenedor_imput_usuario)
+        # contenedor_registro.addLayout(contenedor_contraseña)
+        # contenedor_registro.addLayout(contenedor_imput_contra)
         contenedor_registro.addWidget(
             boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
 
@@ -228,7 +238,7 @@ class login (QWidget):
         contenedor_principal.addWidget(widget_contenedor_titulo)
         # contenedor_principal.addLayout(contenedor_titulo)
         contenedor_principal.addWidget(widget_contenedor_registro)
-        # contenedor_principal.addLayout(contenedor_registro)
+        # contenedor_principal.addLayout(contenedor_pre_registro)
         # contenedor_principal.addWidget(
         #     boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
         contenedor_principal.addWidget(widget_contenedor_credito)
