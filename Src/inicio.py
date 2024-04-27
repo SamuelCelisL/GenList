@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout)
+    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton)
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
 from components import login, informacion
@@ -85,13 +85,22 @@ class inicio (QWidget):
 
         # crear layaout
         # Parte de Registro
-        contenedor_pre_registro = QHBoxLayout()
+        self.contenedor_pre_registro = QHBoxLayout()
         self.widget_con_pre_registro = QWidget()
-        self.widget_con_pre_registro.setLayout(contenedor_pre_registro)
+        self.widget_con_pre_registro.setLayout(self.contenedor_pre_registro)
 
         # CAMBIO DE PANTALLA CENTRAL
-        login_widget = login.generar_formulario_login(self)
-        contenedor_pre_registro.addWidget(login_widget)
+        boton_registrar = QPushButton("REGISTRAR")
+        self.login_widget = login.generar_formulario_login(
+            self, boton_registrar)
+
+        self.contenedor_pre_registro.addWidget(self.login_widget)
+        boton_registrar.clicked.connect(self.cambiar_pantalla)
+
+        # if vista == True:
+        #     contenedor_pre_registro.addWidget(login_widget)
+        # else:
+        #     contenedor_pre_registro.removeWidget(login_widget)
 
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
@@ -129,6 +138,12 @@ class inicio (QWidget):
         app.setStyle("Fusion")
         # Esta linea crea el primer layout ↓
         self.setLayout(fondo)
+
+    def cambiar_pantalla(self):
+        print("BEBECITA")
+        self.contenedor_pre_registro.removeWidget(self.login_widget)
+        self.login_widget = informacion.generar_cursos()
+        self.contenedor_pre_registro.addWidget(self.login_widget)
 
 
 if __name__ == '__main__':

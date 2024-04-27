@@ -4,8 +4,10 @@ from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
 from PyQt6.QtGui import QPixmap
 from PyQt6 import QtCore
 
+vista = True
 
-def generar_formulario_login(self):
+
+def generar_formulario_login(self, boton_registrar):
     empresa = QPixmap('src/images/LogoempresaA.png')
 
     etiqueta_imagen = QLabel()
@@ -24,17 +26,17 @@ def generar_formulario_login(self):
                         border: none;
                         max-width: 60px;
                     }""")
-    self.usuario_input = QLineEdit()
-    self.usuario_input.setStyleSheet("""QLineEdit{
+    usuario_input = QLineEdit()
+    usuario_input.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
                         border: 1px solid black;
                         border-radius: 9px;
                         max-width: 500px;
                     }""")
-    self.usuario_input.setFixedWidth(200)
-    self.usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    self.usuario_input.setPlaceholderText(
+    usuario_input.setFixedWidth(200)
+    usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    usuario_input.setPlaceholderText(
         "Escribe tu usuario")
 
     Contra_label = QLabel("CONTRASEÑA")
@@ -47,21 +49,19 @@ def generar_formulario_login(self):
                         border: none;
                         max-width: 100px;
                     }""")
-    self.Contra_input = QLineEdit()
-    self.Contra_input.setEchoMode(QLineEdit.EchoMode.Password)
-    self.Contra_input.setStyleSheet("""QLineEdit{
+    Contra_input = QLineEdit()
+    Contra_input.setEchoMode(QLineEdit.EchoMode.Password)
+    Contra_input.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
                         border-radius: 9px;
                         border: 1px solid black;
                         max-width: 500px;
                     }""")
-    self.Contra_input.setFixedWidth(200)
-    self.Contra_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    self.Contra_input.setPlaceholderText("Escribe tu contraseña")
+    Contra_input.setFixedWidth(200)
+    Contra_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    Contra_input.setPlaceholderText("Escribe tu contraseña")
 
-    boton_registrar = QPushButton("REGISTRAR")
-    boton_registrar.setObjectName("boton_ingresar")
     boton_registrar.setFixedWidth(150)
     boton_registrar.setStyleSheet("""
                 QPushButton {
@@ -98,16 +98,20 @@ def generar_formulario_login(self):
     contenedor_registro.addWidget(
         usuario_label, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
-        self.usuario_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        usuario_input, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
         Contra_label, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
-        self.Contra_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        Contra_input, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
         boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
 
     return widget_contenedor_registro
 
 
-def registrar_usuario(self):
-    print("HOLA mundo")
+def registrar_usuario():
+    pass
+
+
+if __name__ == '__main__':
+    pass
