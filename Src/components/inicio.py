@@ -32,7 +32,6 @@ class inicio (QWidget):
         titulo_inicial.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         titulo_inicial.setStyleSheet('color: white')
-
         stilo_credito = """QLabel{
                     color: white;
                     font-family: sans-serif;
@@ -90,6 +89,7 @@ class inicio (QWidget):
         self.widget_con_pre_registro = QWidget()
         self.widget_con_pre_registro.setLayout(contenedor_pre_registro)
 
+        ## CAMBIO DE PANTALLA CENTRAL
         login_widget = generar_formulario_login(self)
         contenedor_pre_registro.addWidget(login_widget)
 
@@ -100,6 +100,7 @@ class inicio (QWidget):
             background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400);
             max-height: 110px;
         }"""
+        # 110;
         widget_contenedor_credito = QWidget()
         widget_contenedor_credito.setLayout(contenedor_credito)
         widget_contenedor_credito.setStyleSheet(diseño_barra_F)
