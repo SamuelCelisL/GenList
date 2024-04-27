@@ -140,7 +140,6 @@ class inicio (QWidget):
         self.setLayout(fondo)
 
     def cambiar_pantalla(self):
-        print("BEBECITA")
         self.contenedor_pre_registro.removeWidget(self.login_widget)
         self.login_widget = informacion.generar_cursos()
         self.contenedor_pre_registro.addWidget(self.login_widget)

@@ -14,8 +14,8 @@ def generar_cursos():
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
                                 border-radius: 9px;
-                                max-width: 1000px;
-                                min-width: 1000px;
+                                max-width: 800px;
+                                min-width: 800px;
                                 margin: 1px 1px;
                                 }""")
 
