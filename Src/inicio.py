@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout)
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
-from login import generar_formulario_login
+from components import login, informacion
 
 
 class inicio (QWidget):
@@ -89,8 +89,8 @@ class inicio (QWidget):
         self.widget_con_pre_registro = QWidget()
         self.widget_con_pre_registro.setLayout(contenedor_pre_registro)
 
-        ## CAMBIO DE PANTALLA CENTRAL
-        login_widget = generar_formulario_login(self)
+        # CAMBIO DE PANTALLA CENTRAL
+        login_widget = login.generar_formulario_login(self)
         contenedor_pre_registro.addWidget(login_widget)
 
         # Parte Azul ↓
