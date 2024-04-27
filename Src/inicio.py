@@ -140,6 +140,7 @@ class inicio (QWidget):
         self.setLayout(fondo)
 
     def cambiar_pantalla(self):
+        self.setGeometry(200, 100, 1000, 700)
         self.contenedor_pre_registro.removeWidget(self.login_widget)
         self.login_widget = informacion.generar_cursos()
         self.contenedor_pre_registro.addWidget(self.login_widget)

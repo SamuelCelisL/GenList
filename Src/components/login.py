@@ -80,7 +80,6 @@ def generar_formulario_login(self, boton_registrar):
                     background-color: #222222;
                 }
             """)
-    boton_registrar.clicked.connect(registrar_usuario)
 
     contenedor_registro = QVBoxLayout()
     contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -107,10 +106,6 @@ def generar_formulario_login(self, boton_registrar):
         boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
 
     return widget_contenedor_registro
-
-
-def registrar_usuario():
-    pass
 
 
 if __name__ == '__main__':
