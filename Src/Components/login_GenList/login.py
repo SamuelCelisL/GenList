@@ -1,9 +1,8 @@
-import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit,
-                             QPushButton, QHBoxLayout, QVBoxLayout)
-from PyQt6.QtGui import QPixmap, QFont
-from PyQt6 import QtGui, QtCore
+from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
+                             QPushButton, QVBoxLayout)
+from PyQt6.QtGui import QPixmap
+from PyQt6 import QtCore
 
 
 def generar_formulario_login(self):

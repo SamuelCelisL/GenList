@@ -1,10 +1,10 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit,
-                             QPushButton, QHBoxLayout, QVBoxLayout)
-from PyQt6.QtGui import QPixmap, QFont
+from PyQt6.QtWidgets import (
+    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout)
+from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
-from login import generar_formulario_login, registrar_usuario
+from login import generar_formulario_login
 
 
 class inicio (QWidget):
