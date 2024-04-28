@@ -97,11 +97,6 @@ class inicio (QWidget):
         self.contenedor_pre_registro.addWidget(self.login_widget)
         boton_registrar.clicked.connect(self.cambiar_pantalla)
 
-        # if vista == True:
-        #     contenedor_pre_registro.addWidget(login_widget)
-        # else:
-        #     contenedor_pre_registro.removeWidget(login_widget)
-
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
 
