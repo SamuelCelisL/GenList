@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QPushButton, QVBoxLayout)
+                             QPushButton, QHBoxLayout)
 from PyQt6.QtGui import QPixmap
 from PyQt6 import QtCore
 
@@ -32,15 +32,16 @@ def generar_espacio_datos(boton_cerrar, boton_crear_curso):
                         max-width: 200px;
                     }""")
     # Creacion de contenerdor de datos y acciones basicas
-    contenedor_ayuda = QVBoxLayout()
+    contenedor_ayuda = QHBoxLayout()
     widget_contenedor_ayuda = QWidget()
     widget_contenedor_ayuda.setStyleSheet("""QWidget{
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
                                 border-radius: 8px;
-                                max-width: 400px;
-                                min-width: 100px;
+                                min-width: 800px;
                                 margin: 1px 1px;
+                                max-height: 60px;
+                                min-height: 60px;
                                 }""")
     widget_contenedor_ayuda.setLayout(contenedor_ayuda)
 
@@ -53,7 +54,10 @@ def generar_espacio_datos(boton_cerrar, boton_crear_curso):
                     padding: 1px;
                     font-size: 10px;
                     font-weight: bold;
-                    min-width: 80px;
+                    min-width: 100px;
+                    max-width: 100px;
+                    max-height: 40px;
+                    min-height: 40px;                       
                 }
                 QPushButton:hover {
                     background-color: #555555;
@@ -72,7 +76,10 @@ def generar_espacio_datos(boton_cerrar, boton_crear_curso):
                     padding: 1px;
                     font-size: 10px;
                     font-weight: bold;
-                    min-width: 80px;
+                    min-width: 100px;
+                    max-width: 100px;
+                    max-height: 40px;
+                    min-height: 40px; 
                 }
                 QPushButton:hover {
                     background-color: #555555;
@@ -81,14 +88,14 @@ def generar_espacio_datos(boton_cerrar, boton_crear_curso):
                     background-color: #222222;
                 }
             """)
+    # contenedor_ayuda.addWidget(
+    #     etiqueta_imagen_usuario)
+    # contenedor_ayuda.addWidget(
+    #     nombre_docente, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_ayuda.addWidget(
-        etiqueta_imagen_usuario)
+        boton_crear_curso, alignment=Qt.AlignmentFlag.AlignLeft)
     contenedor_ayuda.addWidget(
-        nombre_docente, alignment=Qt.AlignmentFlag.AlignCenter)
-    contenedor_ayuda.addWidget(
-        boton_crear_curso, alignment=Qt.AlignmentFlag.AlignCenter)
-    contenedor_ayuda.addWidget(
-        boton_cerrar, alignment=Qt.AlignmentFlag.AlignCenter)
+        boton_cerrar, alignment=Qt.AlignmentFlag.AlignRight)
 
     return widget_contenedor_ayuda
 

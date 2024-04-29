@@ -14,7 +14,7 @@ class inicio (QWidget):
         self.InicializarUI()
 
     def InicializarUI(self):
-        self.setGeometry(500, 100, 400, 150)
+        # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
         self.generar_formulario()
         self.show()
@@ -85,16 +85,24 @@ class inicio (QWidget):
 
         # crear layaout
         # Parte de Registro
-        self.contenedor_pre_registro = QHBoxLayout()
-        self.contenedor_pre_registro.setSpacing(0)
+        self.contenedor_pre_pre_registro = QHBoxLayout()
+        self.widget_contenedor_pre_pre_registro = QWidget()
+        self.widget_contenedor_pre_pre_registro.setLayout(
+            self.contenedor_pre_pre_registro)
+
+        self.contenedor_pre_registro = QVBoxLayout()
         self.widget_con_pre_registro = QWidget()
         self.widget_con_pre_registro.setLayout(self.contenedor_pre_registro)
+
+        self.contenedor_pre_registro.addWidget(
+            self.widget_contenedor_pre_pre_registro)
 
         # CAMBIO DE PANTALLA CENTRAL
         boton_registrar = QPushButton("REGISTRAR")
         self.login_widget = login.generar_formulario_login(boton_registrar)
 
-        self.contenedor_pre_registro.addWidget(self.login_widget)
+        self.contenedor_pre_pre_registro.addWidget(
+            self.login_widget)
         boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         # Creacion de botones de cerrar sesion y crear curso
@@ -139,23 +147,27 @@ class inicio (QWidget):
         self.setLayout(fondo)
 
     def cambiar_pantalla(self):
-        self.setGeometry(200, 100, 1000, 700)
-        self.contenedor_pre_registro.removeWidget(self.login_widget)
+        # self.setGeometry(200, 100, 1000, 700)
+        self.contenedor_pre_pre_registro.removeWidget(self.login_widget)
         self.login_widget.hide()
+        self.widget_contenedor_pre_pre_registro.hide()
         self.informacion_widget = informacion.generar_cursos()
-        self.contenedor_pre_registro.addWidget(self.informacion_widget)
+        self.contenedor_pre_registro.addWidget(
+            self.informacion_widget, alignment=Qt.AlignmentFlag.AlignCenter)
         self.datos_y_opc_widget = datos_y_opciones.generar_espacio_datos(
             self.boton_cerrar, self.boton_crear_curso)
-        self.contenedor_pre_registro.addWidget(self.datos_y_opc_widget)
+        self.contenedor_pre_registro.addWidget(
+            self.datos_y_opc_widget, alignment=Qt.AlignmentFlag.AlignCenter)
 
     def volver_inicio(self):
-        self.contenedor_pre_registro.removeWidget(self.informacion_widget)
+        self.contenedor_pre_pre_registro.removeWidget(self.informacion_widget)
         self.informacion_widget.hide()
-        self.contenedor_pre_registro.removeWidget(self.datos_y_opc_widget)
+        self.contenedor_pre_pre_registro.removeWidget(self.datos_y_opc_widget)
         self.datos_y_opc_widget.hide()
-        self.setGeometry(500, 100, 400, 150)
+        # self.setGeometry(500, 100, 400, 150)
         self.login_widget.show()
-        self.contenedor_pre_registro.addWidget(self.login_widget)
+        self.widget_contenedor_pre_pre_registro.show()
+        self.contenedor_pre_pre_registro.addWidget(self.login_widget)
 
 
 if __name__ == '__main__':
