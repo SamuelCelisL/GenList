@@ -22,6 +22,15 @@ def generar_espacio_datos(boton_cerrar, boton_crear_curso):
                     }""")
 
     nombre_docente = QLabel("Jose Gerardo Chacon Rangel")
+    nombre_docente.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    nombre_docente.setFixedWidth(80)
+    nombre_docente.setStyleSheet("""QLabel{
+                        color: black;
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        border: none;
+                        max-width: 200px;
+                    }""")
     # Creacion de contenerdor de datos y acciones basicas
     contenedor_ayuda = QVBoxLayout()
     widget_contenedor_ayuda = QWidget()
