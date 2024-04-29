@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton)
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
-from components import login, informacion
+from components import login, informacion, datos_y_opciones
 
 
 class inicio (QWidget):
@@ -86,17 +86,21 @@ class inicio (QWidget):
         # crear layaout
         # Parte de Registro
         self.contenedor_pre_registro = QHBoxLayout()
+        self.contenedor_pre_registro.setSpacing(0)
         self.widget_con_pre_registro = QWidget()
         self.widget_con_pre_registro.setLayout(self.contenedor_pre_registro)
 
         # CAMBIO DE PANTALLA CENTRAL
         boton_registrar = QPushButton("REGISTRAR")
-        self.login_widget = login.generar_formulario_login(
-            self, boton_registrar)
+        self.login_widget = login.generar_formulario_login(boton_registrar)
 
         self.contenedor_pre_registro.addWidget(self.login_widget)
         boton_registrar.clicked.connect(self.cambiar_pantalla)
 
+        # Creacion de botones de cerrar sesion y crear curso
+        self.boton_cerrar = QPushButton("Cerrar Sesion")
+        self.boton_crear_curso = QPushButton("Crear Curso")
+        self.boton_cerrar.clicked.connect(self.volver_inicio)
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
 
@@ -137,7 +141,20 @@ class inicio (QWidget):
     def cambiar_pantalla(self):
         self.setGeometry(200, 100, 1000, 700)
         self.contenedor_pre_registro.removeWidget(self.login_widget)
-        self.login_widget = informacion.generar_cursos()
+        self.login_widget.hide()
+        self.informacion_widget = informacion.generar_cursos()
+        self.contenedor_pre_registro.addWidget(self.informacion_widget)
+        self.datos_y_opc_widget = datos_y_opciones.generar_espacio_datos(
+            self.boton_cerrar, self.boton_crear_curso)
+        self.contenedor_pre_registro.addWidget(self.datos_y_opc_widget)
+
+    def volver_inicio(self):
+        self.contenedor_pre_registro.removeWidget(self.informacion_widget)
+        self.informacion_widget.hide()
+        self.contenedor_pre_registro.removeWidget(self.datos_y_opc_widget)
+        self.datos_y_opc_widget.hide()
+        self.setGeometry(500, 100, 400, 150)
+        self.login_widget.show()
         self.contenedor_pre_registro.addWidget(self.login_widget)
 
 

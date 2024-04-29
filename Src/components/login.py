@@ -7,7 +7,7 @@ from PyQt6 import QtCore
 vista = True
 
 
-def generar_formulario_login(self, boton_registrar):
+def generar_formulario_login(boton_registrar):
     empresa = QPixmap('src/images/LogoempresaA.png')
 
     etiqueta_imagen = QLabel()

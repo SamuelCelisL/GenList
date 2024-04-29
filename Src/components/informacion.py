@@ -152,3 +152,7 @@ def crear_botones():
                 }
             """)
     return boton_editar, boton_asistencia
+
+
+if __name__ == '__main__':
+    pass
