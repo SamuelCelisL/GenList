@@ -112,8 +112,6 @@ class inicio (QWidget):
         self.mensaje_emergente = QMessageBox()
         self.boton_registrar.clicked.connect(self.haz_dado_click)
 
-        # boton_registrar.clicked.connect(self.cambiar_pantalla)
-
         # Creacion de botones de cerrar sesion y crear curso
         self.boton_cerrar = QPushButton("Cerrar Sesion")
         self.boton_crear_curso = QPushButton("Crear Curso")
@@ -160,27 +158,39 @@ class inicio (QWidget):
         aprobacion = False
         usuario.append(self.usuario_input.text())
         usuario.append(self.Contra_input.text())
-        print(usuario)
+        # print(usuario)
         aprobacion = self.validiar_usuario(usuario)
-        if aprobacion is True:
-            self.usuario_input.clear()
+        if aprobacion is None:
             self.Contra_input.clear()
-            usuario.clear()
-            print(usuario)
-            self.cambiar_pantalla()
         else:
-            self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
-            self.mensaje_emergente.setText("Datos Incorrectos.")
-            self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
-            self.mensaje_emergente.exec()
-            self.usuario_input.clear()
-            self.Contra_input.clear()
+            if aprobacion is True:
+                self.usuario_input.clear()
+                self.Contra_input.clear()
+                usuario.clear()
+                # print(usuario)
+                self.cambiar_pantalla()
+            else:
+                self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+                self.mensaje_emergente.setText("Datos Incorrectos.")
+                self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
+                self.mensaje_emergente.exec()
+                self.usuario_input.clear()
+                self.Contra_input.clear()
 
     def validiar_usuario(self, usuario):
-        for sublist in self.usuarios:
-            if sublist == usuario:
-                aprobacion = True
-                return aprobacion
+        for i, sublist in enumerate(self.usuarios):
+            if sublist[0] == usuario[0]:
+                if sublist[1] == usuario[1]:
+                    aprobacion = True
+                    return aprobacion
+                else:
+                    self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+                    self.mensaje_emergente.setText("Contraseña Incorrecta.")
+                    self.mensaje_emergente.setIcon(
+                        QMessageBox.Icon.Warning)
+                    self.mensaje_emergente.exec()
+                    aprobacion = None
+                    return aprobacion
             else:
                 aprobacion = False
 
