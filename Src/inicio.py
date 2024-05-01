@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton)
+    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit, QMessageBox)
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
 from components import login, informacion, datos_y_opciones
@@ -20,6 +20,9 @@ class inicio (QWidget):
         self.show()
 
     def generar_formulario(self):
+
+        self.usuarios = [['adminSamuel', 'adminSamuel'], [
+            'adminMarquez', 'adminMarquez'], ['adminYorman', 'adminYorman']]
 
         font_titulo = QtGui.QFont()
         font_titulo.setBold(True)
@@ -98,12 +101,18 @@ class inicio (QWidget):
             self.widget_contenedor_pre_pre_registro)
 
         # CAMBIO DE PANTALLA CENTRAL
-        boton_registrar = QPushButton("REGISTRAR")
-        self.login_widget = login.generar_formulario_login(boton_registrar)
+        self.boton_registrar = QPushButton("REGISTRAR")
+        self.usuario_input = QLineEdit()
+        self.Contra_input = QLineEdit()
+        self.login_widget = login.generar_formulario_login(
+            self.boton_registrar, self.usuario_input, self.Contra_input)
 
         self.contenedor_pre_pre_registro.addWidget(
             self.login_widget)
-        boton_registrar.clicked.connect(self.cambiar_pantalla)
+        self.mensaje_emergente = QMessageBox()
+        self.boton_registrar.clicked.connect(self.haz_dado_click)
+
+        # boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         # Creacion de botones de cerrar sesion y crear curso
         self.boton_cerrar = QPushButton("Cerrar Sesion")
@@ -146,8 +155,38 @@ class inicio (QWidget):
         # Esta linea crea el primer layout ↓
         self.setLayout(fondo)
 
+    def haz_dado_click(self):
+        usuario = []
+        aprobacion = False
+        usuario.append(self.usuario_input.text())
+        usuario.append(self.Contra_input.text())
+        print(usuario)
+        aprobacion = self.validiar_usuario(usuario)
+        if aprobacion is True:
+            self.usuario_input.clear()
+            self.Contra_input.clear()
+            usuario.clear()
+            print(usuario)
+            self.cambiar_pantalla()
+        else:
+            self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+            self.mensaje_emergente.setText("Datos Incorrectos.")
+            self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
+            self.mensaje_emergente.exec()
+            self.usuario_input.clear()
+            self.Contra_input.clear()
+
+    def validiar_usuario(self, usuario):
+        for sublist in self.usuarios:
+            if sublist == usuario:
+                aprobacion = True
+                return aprobacion
+            else:
+                aprobacion = False
+
+        return aprobacion
+
     def cambiar_pantalla(self):
-        # self.setGeometry(200, 100, 1000, 700)
         self.contenedor_pre_pre_registro.removeWidget(self.login_widget)
         self.login_widget.hide()
         self.widget_contenedor_pre_pre_registro.hide()
@@ -164,7 +203,6 @@ class inicio (QWidget):
         self.informacion_widget.hide()
         self.contenedor_pre_pre_registro.removeWidget(self.datos_y_opc_widget)
         self.datos_y_opc_widget.hide()
-        # self.setGeometry(500, 100, 400, 150)
         self.login_widget.show()
         self.widget_contenedor_pre_pre_registro.show()
         self.contenedor_pre_pre_registro.addWidget(self.login_widget)

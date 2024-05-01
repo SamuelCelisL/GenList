@@ -1,11 +1,22 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QPushButton, QVBoxLayout, QHBoxLayout, QScrollBar)
+                             QPushButton, QVBoxLayout, QHBoxLayout, QScrollArea)
 from PyQt6.QtGui import QPixmap
 from PyQt6 import QtCore
 
 
 def generar_cursos():
+    # scroll = QScrollArea()
+    # scroll.setWidgetResizable(True)  # Hacer el widget interno redimensionable
+    # scroll.setHorizontalScrollBarPolicy(
+    #     QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+    # scroll.setVerticalScrollBarPolicy(
+    #     QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+    # scroll.setStyleSheet("""QWidget{
+    #                             background-color: #DBE5D9;
+    #                             border: 1px solid black;
+    #                             border-radius: 9px;
+    #                             }""")
 
     materias = [
         "Sistemas Inteligentes AR",
@@ -15,12 +26,8 @@ def generar_cursos():
         "Fundamentos AR",
         "Halo 2",
         "ER",
-        "busca",
-        "ggg",
-        "paco",
-        "adada"
+        "busca"
     ]
-    scrollArea = QScrollBar()
     contenedor_registro = QVBoxLayout()
     contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
     widget_contenedor_registro = QWidget()
@@ -68,7 +75,9 @@ def generar_cursos():
         primer_materia.addWidget(botonA)
         contenedor_registro.addWidget(widget_primer_materia)
 
-    # contenedor_scroll.addWidget(scrollArea)
+    # contenedor_registro.addWidget(widget_contenedor_registro)
+    # scroll.setWidget(widget_contenedor_registro)
+    # contenedor_registro.addWidget(scroll)
     # widget_contenedor_registro.setLayout(scrollArea)
 
     # nombre_materia = QLabel("Sistemas Inteligentes AR")

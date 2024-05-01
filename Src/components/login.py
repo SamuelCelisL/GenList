@@ -4,17 +4,14 @@ from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
 from PyQt6.QtGui import QPixmap
 from PyQt6 import QtCore
 
-vista = True
 
-
-def generar_formulario_login(boton_registrar):
+def generar_formulario_login(boton_registrar, usuario_input, Contra_input):
     empresa = QPixmap('src/images/LogoempresaA.png')
 
     etiqueta_imagen = QLabel()
     imagen_renden = empresa.scaledToWidth(150)
     etiqueta_imagen.setPixmap(imagen_renden)
     etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    etiqueta_imagen.setStyleSheet("")
     etiqueta_imagen.setStyleSheet("border: none;")
 
     usuario_label = QLabel("USUARIO")
@@ -26,22 +23,19 @@ def generar_formulario_login(boton_registrar):
                         border: none;
                         max-width: 60px;
                     }""")
-    usuario_input = QLineEdit()
     usuario_input.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
                         border: 1px solid black;
                         border-radius: 9px;
-                        max-width: 500px;
+                        max-width: 200px;
                     }""")
-    usuario_input.setFixedWidth(200)
     usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
     usuario_input.setPlaceholderText(
         "Escribe tu usuario")
 
     Contra_label = QLabel("CONTRASEÑA")
     Contra_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    Contra_label.setFixedWidth(80)
     Contra_label.setStyleSheet("""QLabel{
                         color: black;
                         font-family: sans-serif;
@@ -49,20 +43,18 @@ def generar_formulario_login(boton_registrar):
                         border: none;
                         max-width: 100px;
                     }""")
-    Contra_input = QLineEdit()
+
     Contra_input.setEchoMode(QLineEdit.EchoMode.Password)
     Contra_input.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
                         border-radius: 9px;
                         border: 1px solid black;
-                        max-width: 500px;
+                        max-width: 200px;
                     }""")
-    Contra_input.setFixedWidth(200)
     Contra_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
     Contra_input.setPlaceholderText("Escribe tu contraseña")
 
-    boton_registrar.setFixedWidth(150)
     boton_registrar.setStyleSheet("""
                 QPushButton {
                     background-color: #444847;
@@ -72,6 +64,7 @@ def generar_formulario_login(boton_registrar):
                     font-size: 10px;
                     font-weight: bold;
                     min-width: 100px;
+                    max-width: 100px;
                 }
                 QPushButton:hover {
                     background-color: #555555;
@@ -93,15 +86,16 @@ def generar_formulario_login(boton_registrar):
                                 min-width: 200px;
                                 margin: 1px 1px;
                                 }""")
-    contenedor_registro.addWidget(etiqueta_imagen)
+    contenedor_registro.addWidget(
+        etiqueta_imagen)
     contenedor_registro.addWidget(
         usuario_label, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
-        usuario_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        usuario_input)
     contenedor_registro.addWidget(
-        Contra_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        Contra_label)
     contenedor_registro.addWidget(
-        Contra_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        Contra_input)
     contenedor_registro.addWidget(
         boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
 
