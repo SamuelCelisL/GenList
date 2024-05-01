@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit, QMessageBox)
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
-from components import login, informacion, datos_y_opciones
+from components import login, informacion, datos_y_opciones, nuevo_curso
 
 
 class inicio (QWidget):
@@ -111,11 +111,13 @@ class inicio (QWidget):
             self.login_widget)
         self.mensaje_emergente = QMessageBox()
         self.boton_registrar.clicked.connect(self.haz_dado_click)
+        # self.boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         # Creacion de botones de cerrar sesion y crear curso
         self.boton_cerrar = QPushButton("Cerrar Sesion")
-        self.boton_crear_curso = QPushButton("Crear Curso")
         self.boton_cerrar.clicked.connect(self.volver_inicio)
+        self.boton_crear_curso = QPushButton("Crear Curso")
+        self.boton_crear_curso.clicked.connect(self.crear_curso)
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
 
@@ -214,8 +216,23 @@ class inicio (QWidget):
         self.contenedor_pre_pre_registro.removeWidget(self.datos_y_opc_widget)
         self.datos_y_opc_widget.hide()
         self.login_widget.show()
+        # self.contenedor_pre_pre_registro.removeWidget(self.cursos_widget)
+        # self.cursos_widget.hide()
         self.widget_contenedor_pre_pre_registro.show()
         self.contenedor_pre_pre_registro.addWidget(self.login_widget)
+
+    def crear_curso(self):
+        self.contenedor_pre_pre_registro.removeWidget(self.informacion_widget)
+        self.informacion_widget.hide()
+        self.contenedor_pre_pre_registro.removeWidget(self.datos_y_opc_widget)
+        self.datos_y_opc_widget.hide()
+        self.cursos_widget = nuevo_curso.generar_llenado_curso()
+        self.contenedor_pre_registro.addWidget(
+            self.cursos_widget, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.datos_y_opc_widget = datos_y_opciones.generar_espacio_datos(
+            self.boton_cerrar, self.boton_crear_curso)
+        self.contenedor_pre_registro.addWidget(
+            self.datos_y_opc_widget, alignment=Qt.AlignmentFlag.AlignCenter)
 
 
 if __name__ == '__main__':
