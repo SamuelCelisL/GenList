@@ -6,18 +6,7 @@ from PyQt6 import QtCore
 
 
 def generar_cursos():
-    # scroll = QScrollArea()
-    # scroll.setWidgetResizable(True)  # Hacer el widget interno redimensionable
-    # scroll.setHorizontalScrollBarPolicy(
-    #     QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-    # scroll.setVerticalScrollBarPolicy(
-    #     QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-    # scroll.setStyleSheet("""QWidget{
-    #                             background-color: #DBE5D9;
-    #                             border: 1px solid black;
-    #                             border-radius: 9px;
-    #                             }""")
-
+    # Tenemos que agregar el Scroll
     materias = [
         "Sistemas Inteligentes AR",
         "Fundamentos de programacion paralela y distribuida AR",

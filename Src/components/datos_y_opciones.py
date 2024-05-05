@@ -88,10 +88,7 @@ def generar_espacio_datos(boton_cerrar, boton_crear_curso):
                     background-color: #222222;
                 }
             """)
-    # contenedor_ayuda.addWidget(
-    #     etiqueta_imagen_usuario)
-    # contenedor_ayuda.addWidget(
-    #     nombre_docente, alignment=Qt.AlignmentFlag.AlignCenter)
+
     contenedor_ayuda.addWidget(
         boton_crear_curso, alignment=Qt.AlignmentFlag.AlignLeft)
     contenedor_ayuda.addWidget(

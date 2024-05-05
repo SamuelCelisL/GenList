@@ -12,9 +12,8 @@ def generar_llenado_curso():
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
                                 border-radius: 8px;
-                                min-width: 800px;
                                 margin: 1px 1px;
-                                max-height: 500px;
+                                min-width: 800px;
                                 min-height: 500px;
                                 }""")
     widget_contenedor_form_curso.setLayout(contenedor_form_curso)
@@ -27,7 +26,8 @@ def generar_llenado_curso():
                                 font-family: sans-serif;
                                 font-weight: bold;
                                 color: black;
-                                max-width: 80px;
+                                max-width: 180px;
+                                min-width: 180px;
                                 max-height: 60px;
                                 min-height: 60px;                                           
                                 }""")
@@ -35,10 +35,13 @@ def generar_llenado_curso():
     materia_input.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
+                        font-weight: bold;
                         border-radius: 8px;
                         border: 1px solid black;
-                        max-height: 60px;
-                        min-height: 60px;
+                        min-height: 40px;
+                        max-height: 40px;
+                        max-width: 500px;
+                        min-width: 500px;
     }""")
 # Creacion de una tabla (estamos probando XD)
     tabla = QTableWidget(10, 3)
@@ -49,22 +52,30 @@ def generar_llenado_curso():
     tabla.setColumnWidth(2, 100)
 
     contenedor_cabeza = QHBoxLayout()
-    contenedor_cabeza.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
+    contenedor_cabeza.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
     widget_contenedor_cabeza = QWidget()
     widget_contenedor_cabeza.setStyleSheet("""QWidget{
-                                border: none;           
+                                min-width: 800px;
+                                max-height: 80px;
+                                min-height: 80px;
+                                border: none;        
                                 }""")
     widget_contenedor_cabeza.setLayout(contenedor_cabeza)
 
     # Agregar los elementos al primer layout
     contenedor_cabeza.addWidget(
-        texto_informacion_materia, alignment=Qt.AlignmentFlag.AlignLeft)
+        texto_informacion_materia)
     contenedor_cabeza.addWidget(
-        materia_input)
+        materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
     # Agregar los elementos al segundo layout
 
     # Agregar las cosas al layout principal que es el que se va a mostrar
-    contenedor_form_curso.addWidget(widget_contenedor_cabeza)
+    contenedor_form_curso.addWidget(
+        widget_contenedor_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
     # contenedor_form_curso.addWidget(tabla)
 
     return widget_contenedor_form_curso
+
+
+if __name__ == '__main__':
+    pass
