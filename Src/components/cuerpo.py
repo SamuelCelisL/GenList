@@ -1,6 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QPushButton, QHBoxLayout, QVBoxLayout, QStackedLayout)
+                             QPushButton, QHBoxLayout, QVBoxLayout, QStackedLayout, QTableWidget,
+                             QHeaderView, QTableWidgetItem, QAbstractItemView)
 from PyQt6 import QtCore
 from PyQt6.QtGui import QPixmap
 
@@ -24,7 +25,9 @@ def generar_cursos(boton_cerrar, boton_crear_curso):
         "Fundamentos AR",
         "Halo 2",
         "ER",
-        "busca"
+        "busca",
+        "perros con queso",
+        "queso con perros"
     ]
     contenedor_registro = QVBoxLayout()
     contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
@@ -39,6 +42,7 @@ def generar_cursos(boton_cerrar, boton_crear_curso):
                                 min-height: 500px;
                                 margin: 1px 1px;
                                 }""")
+    widget_contenedor_registro.scroll(1, 1)
 
     for materia in materias:
         nombre_materia = QLabel(materia)
@@ -184,13 +188,145 @@ def generar_llenado_curso(boton_cancelar, boton_agregar_estudiante, boton_finalz
     contenedor_cabeza.addWidget(
         materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
 
+    tabla = QTableWidget()
+    tabla.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+    tabla.setDragDropOverwriteMode(False)
+    tabla.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+    tabla.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+    tabla.setTextElideMode(Qt.TextElideMode.ElideRight)
+    tabla.setWordWrap(False)
+    tabla.setColumnCount(4)
+    tabla.setRowCount(5)
+    tabla.horizontalHeader().setDefaultAlignment(Qt.AlignmentFlag.AlignHCenter |
+                                                 Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
+    tabla.horizontalHeader().setHighlightSections(False)
+    tabla.horizontalHeader().setStretchLastSection(True)
+    tabla.setAlternatingRowColors(True)
+    tabla.verticalHeader().setDefaultSectionSize(20)
+    nombreColumnas = ("nombre", "Documento", "Carrera", "Asistio")
+    tabla.setHorizontalHeaderLabels(nombreColumnas)
+    for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
+        tabla.setColumnWidth(indice, ancho)
+    tabla.resize(600, 250)
+
     contenedor_form_curso.addWidget(
         widget_contenedor_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
+    # contenedor_form_curso.addWidget(tabla)
 
     principal_pag2.addWidget(widget_contenedor_form_curso)
     principal_pag2.addWidget(barra_botones_pag2(
         boton_cancelar, boton_agregar_estudiante, boton_finalzar))
     return widget_principal_pag2
+
+
+def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
+    contenedro_pag3 = QVBoxLayout()
+    widget_contendor_pag3 = QWidget()
+    widget_contendor_pag3.setLayout(contenedro_pag3)
+
+    contenedor_llenado_informacion = QHBoxLayout()
+    widget_contenedor_llenado_informacion = QWidget()
+    widget_contenedor_llenado_informacion.setLayout(
+        contenedor_llenado_informacion)
+
+    contenedor_informacion = QVBoxLayout()
+    widget_contenedor_informacion = QWidget()
+    widget_contenedor_informacion.setLayout(contenedor_informacion)
+
+    nombre_completo = QLabel("Nombre Completo")
+    nombre_completo.setAttribute(
+        QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+    nombre_completo.setStyleSheet("""QLabel{
+                        color: black;
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        border: none;
+                        min-width: 400px;
+                        max-height: 20px;
+                        min-height: 20px;
+                    }""")
+    input_nombre_completo = QLineEdit()
+    input_nombre_completo.setStyleSheet("""QLineEdit{
+                        color: black;
+                        font-family: sans-serif;
+                        border: 1px solid black;
+                        border-radius: 8px;
+                        max-width: 200px;
+                    }""")
+    input_nombre_completo.setPlaceholderText(
+        "Escribe el nombre completo del estudiante")
+
+    documento = QLabel("Numero de Documento")
+    documento.setAttribute(
+        QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+    documento.setStyleSheet("""QLabel{
+                        color: black;
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        border: none;
+                        min-width: 400px;
+                        max-height: 20px;
+                        min-height: 20px;
+                    }""")
+    input_documento = QLineEdit()
+    input_documento.setPlaceholderText(
+        "Escribe el documento del estudiante")
+    input_documento.setStyleSheet("""QLineEdit{
+                        color: black;
+                        font-family: sans-serif;
+                        border: 1px solid black;
+                        border-radius: 8px;
+                        max-width: 200px;
+                    }""")
+    carrera = QLabel("Numero de Documento")
+    carrera.setAttribute(
+        QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+    carrera.setStyleSheet("""QLabel{
+                        color: black;
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        border: none;
+                        min-width: 400px;
+                        max-height: 20px;
+                        min-height: 20px;
+                    }""")
+    input_carrera = QLineEdit()
+    input_carrera.setPlaceholderText(
+        "Escriba la carrera a la cual el estudiante pertenece")
+    input_carrera.setStyleSheet("""QLineEdit{
+                        color: black;
+                        font-family: sans-serif;
+                        border: 1px solid black;
+                        border-radius: 8px;
+                        max-width: 200px;
+                    }""")
+    contenedor_informacion.addWidget(nombre_completo)
+    contenedor_informacion.addWidget(input_nombre_completo)
+    contenedor_informacion.addWidget(documento)
+    contenedor_informacion.addWidget(input_documento)
+    contenedor_informacion.addWidget(carrera)
+    contenedor_informacion.addWidget(input_carrera)
+
+    contenedor_camara = QHBoxLayout()
+    widget_contenedor_camara = QWidget()
+    widget_contenedor_camara.setLayout(contenedor_camara)
+    widget_contenedor_camara.setStyleSheet("""QWidget{
+                                background-color: #DBE5D9;
+                                border: 1px solid black;
+                                border-radius: 9px;
+                                max-width: 400px;
+                                min-width: 200px;
+                                margin: 1px 1px;
+                                }""")
+
+    contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
+    contenedor_llenado_informacion.addWidget(widget_contenedor_camara)
+
+    contenedro_pag3.addWidget(widget_contenedor_llenado_informacion)
+    contenedro_pag3.addWidget(barra_botones_pag2(
+        boton_cancelar2, boton_biometria, boton_registrar))
+
+    return widget_contendor_pag3
 
 
 def barra_botones_pag1(boton_cerrar, boton_crear_curso):
@@ -344,7 +480,7 @@ def barra_botones_pag2(boton_cancelar, boton_agregar_estudiante, boton_finalzar)
     contenedor_ayuda.addWidget(
         boton_cancelar, alignment=Qt.AlignmentFlag.AlignLeft)
     contenedor_ayuda.addWidget(
-        boton_agregar_estudiante, alignment=Qt.AlignmentFlag.AlignRight)
+        boton_agregar_estudiante, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_ayuda.addWidget(
         boton_finalzar, alignment=Qt.AlignmentFlag.AlignRight)
 

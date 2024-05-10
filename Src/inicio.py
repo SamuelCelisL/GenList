@@ -14,6 +14,8 @@ class inicio (QWidget):
         self.InicializarUI()
 
     def InicializarUI(self):
+        # Revisar lo de cargar la aplicacion en pantalla completa
+        self.showFullScreen()
         # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
         self.generar_formulario()
@@ -121,8 +123,12 @@ class inicio (QWidget):
         self.boton_cancelar = QPushButton("Cancelar")
         self.boton_cancelar.clicked.connect(self.cancelar)
         self.boton_agregar_estudiante = QPushButton("Agregar Estudiante")
-        # self.boton_agregar_estudiante.clicked.connect()
+        self.boton_agregar_estudiante.clicked.connect(self.llenar_curso)
+        # botones pag3
         self.boton_finalizar = QPushButton("Finalizar")
+        self.boton_cancelar2 = QPushButton("Cancelar")
+        self.boton_biometria = QPushButton("Biometria")
+        self.boton_guardar = QPushButton("Registrar")
         # self.boton_finalizar.clicked.connect()
 
         # Parte Azul ↓
@@ -152,7 +158,8 @@ class inicio (QWidget):
 # Agregar los Qwidget a al Layout original
         contenedor_principal.addWidget(widget_contenedor_titulo)
 
-        contenedor_principal.addWidget(self.widget_con_pre_registro)
+        contenedor_principal.addWidget(
+            self.widget_con_pre_registro)
 
         contenedor_principal.addWidget(widget_contenedor_credito)
 
@@ -215,28 +222,11 @@ class inicio (QWidget):
             self._boton_cerrar_sesion, self.boton_crear_curso)
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
-        # self.informacion_widget = informacion.generar_cursos()
-        # self.contenedor_pre_registro.addWidget(
-        #     self.informacion_widget, alignment=Qt.AlignmentFlag.AlignCenter)
-        # self.datos_y_opc_widget = datos_y_opciones.generar_espacio_datos(
-        #     self._boton_cerrar_sesion, self.boton_crear_curso)
-        # self.contenedor_pre_registro.addWidget(
-        #     self.datos_y_opc_widget, alignment=Qt.AlignmentFlag.AlignCenter)
 
     def volver_inicio(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
         self.widget_contenedor_pre_pre_registro.show()
-
-        # self.contenedor_pre_pre_registro.removeWidget(self.informacion_widget)
-        # self.informacion_widget.hide()
-        # self.contenedor_pre_pre_registro.removeWidget(self.datos_y_opc_widget)
-        # self.datos_y_opc_widget.hide()
-        # self.login_widget.show()
-        # self.contenedor_pre_pre_registro.removeWidget(self.cursos_widget)
-        # self.cursos_widget.hide()
-        # self.widget_contenedor_pre_pre_registro.show()
-        # self.contenedor_pre_pre_registro.addWidget(self.login_widget)
 
     def crear_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
@@ -245,22 +235,18 @@ class inicio (QWidget):
             self.boton_cancelar, self.boton_agregar_estudiante, self.boton_finalizar)
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo_pag2, alignment=Qt.AlignmentFlag.AlignCenter)
-        # self.contenedor_pre_pre_registro.removeWidget(self.informacion_widget)
-        # self.informacion_widget.hide()
-        # self.contenedor_pre_pre_registro.removeWidget(self.datos_y_opc_widget)
-        # self.datos_y_opc_widget.hide()
-        # self.cursos_widget = nuevo_curso.generar_llenado_curso()
-        # self.contenedor_pre_registro.addWidget(
-        #     self.cursos_widget, alignment=Qt.AlignmentFlag.AlignCenter)
-        # self.datos_y_opc_widget = datos_y_opciones.generar_espacio_datos(
-        #     self._boton_cerrar_sesion, self.boton_crear_curso)
-        # self.contenedor_pre_registro.addWidget(
-        #     self.datos_y_opc_widget, alignment=Qt.AlignmentFlag.AlignCenter)
 
     def cancelar(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.widget_cuerpo.show()
+
+    def llenar_curso(self):
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
+        self.widget_cuerpo_pag2.hide()
+        self.widget_cuerpo_pag3 = cuerpo.llenar_curso(
+            self.boton_cancelar2, self.boton_biometria, self.boton_guardar)
+        self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag3)
 
 
 if __name__ == '__main__':
