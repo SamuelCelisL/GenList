@@ -1,15 +1,14 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QPushButton, QHBoxLayout, QVBoxLayout, QStackedLayout, QTableWidget,
+                             QHBoxLayout, QVBoxLayout, QStackedLayout, QTableWidget,
                              QHeaderView, QTableWidgetItem, QAbstractItemView)
 from PyQt6 import QtCore
-from PyQt6.QtGui import QPixmap
 
 
-def cuerpo_aplicacion():
-    cambiador_de_pantalla = QStackedLayout()
-    cambiador_de_pantalla.addWidget(generar_cursos)
-    cambiador_de_pantalla.addWidget(generar_llenado_curso)
+# def cuerpo_aplicacion():
+#     cambiador_de_pantalla = QStackedLayout()
+#     cambiador_de_pantalla.addWidget(generar_cursos)
+#     cambiador_de_pantalla.addWidget(generar_llenado_curso)
 
 
 def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistencia):
