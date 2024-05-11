@@ -103,6 +103,7 @@ class inicio (QWidget):
             self.widget_contenedor_pre_pre_registro)
 
         # CAMBIO DE PANTALLA CENTRAL
+        # boton login
         self.boton_registrar = QPushButton("REGISTRAR")
         self.usuario_input = QLineEdit()
         self.Contra_input = QLineEdit()
@@ -116,20 +117,33 @@ class inicio (QWidget):
         self.boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         # Creacion de los botones de las barras de las paginas
+        # botones pag1
+        self.boton_editar = QPushButton("Editar")
+        self.boton_asistencia = QPushButton("Asistencia")
+        self.boton_asistencia.clicked.connect(self.marcar_asistencia)
         self._boton_cerrar_sesion = QPushButton("Cerrar Sesion")
         self._boton_cerrar_sesion.clicked.connect(self.volver_inicio)
         self.boton_crear_curso = QPushButton("Crear Curso")
         self.boton_crear_curso.clicked.connect(self.crear_curso)
+        # botones pag2
         self.boton_cancelar = QPushButton("Cancelar")
         self.boton_cancelar.clicked.connect(self.cancelar)
         self.boton_agregar_estudiante = QPushButton("Agregar Estudiante")
         self.boton_agregar_estudiante.clicked.connect(self.llenar_curso)
-        # botones pag3
         self.boton_finalizar = QPushButton("Finalizar")
+        self.boton_finalizar.clicked.connect(self.finalizar_curso)
+        # self.boton_finalizar.clicked.connect()
+        # botones pag3
         self.boton_cancelar2 = QPushButton("Cancelar")
+        self.boton_cancelar2.clicked.connect(self.volverpag2)
         self.boton_biometria = QPushButton("Biometria")
         self.boton_guardar = QPushButton("Registrar")
-        # self.boton_finalizar.clicked.connect()
+        self.boton_guardar.clicked.connect(self.registrar_estudiante)
+        # botones pag4
+        self.boton_cancelar3 = QPushButton("Cancelar")
+        self.boton_cancelar3.clicked.connect(self.volver_pag_cursos)
+        self.boton_asistio = QPushButton("Registrar Estudiante")
+        self.boton_pdf = QPushButton("Generar PDF")
 
         # Parte Azul ↓
         contenedor_credito = QVBoxLayout()
@@ -219,14 +233,22 @@ class inicio (QWidget):
         self.widget_contenedor_pre_pre_registro.hide()
 
         self.widget_cuerpo = cuerpo.generar_cursos(
-            self._boton_cerrar_sesion, self.boton_crear_curso)
+            self._boton_cerrar_sesion, self.boton_crear_curso, self.boton_editar, self.boton_asistencia)
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
 
+    # funcion boton cerrar sesion pag1
     def volver_inicio(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
         self.widget_contenedor_pre_pre_registro.show()
+
+    def marcar_asistencia(self):
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
+        self.widget_cuerpo.hide()
+        self.widget_cuerpo_pag4 = cuerpo.tomar_asistencia(
+            self.boton_cancelar3, self.boton_asistio, self.boton_pdf)
+        self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag4)
 
     def crear_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
@@ -236,7 +258,13 @@ class inicio (QWidget):
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo_pag2, alignment=Qt.AlignmentFlag.AlignCenter)
 
+    # Funcion boton cancelar pag2
     def cancelar(self):
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
+        self.widget_cuerpo_pag2.hide()
+        self.widget_cuerpo.show()
+
+    def finalizar_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.widget_cuerpo.show()
@@ -247,6 +275,21 @@ class inicio (QWidget):
         self.widget_cuerpo_pag3 = cuerpo.llenar_curso(
             self.boton_cancelar2, self.boton_biometria, self.boton_guardar)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag3)
+
+    def volverpag2(self):
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
+        self.widget_cuerpo_pag3.hide()
+        self.widget_cuerpo_pag2.show()
+
+    def registrar_estudiante(self):
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
+        self.widget_cuerpo_pag3.hide()
+        self.widget_cuerpo_pag2.show()
+
+    def volver_pag_cursos(self):
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag4)
+        self.widget_cuerpo_pag4.hide()
+        self.widget_cuerpo.show()
 
 
 if __name__ == '__main__':

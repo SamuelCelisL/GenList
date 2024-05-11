@@ -12,22 +12,17 @@ def cuerpo_aplicacion():
     cambiador_de_pantalla.addWidget(generar_llenado_curso)
 
 
-def generar_cursos(boton_cerrar, boton_crear_curso):
+def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistencia):
     general = QVBoxLayout()
     widget_general = QWidget()
     widget_general.setLayout(general)
     # Tenemos que agregar el Scroll
     materias = [
         "Sistemas Inteligentes AR",
-        "Fundamentos de programacion paralela y distribuida AR",
+        "Fundamentos de computacion paralela y distribuida AR",
         "ingenieria de Software I BR",
-        "REDES BB",
-        "Fundamentos AR",
-        "Halo 2",
-        "ER",
-        "busca",
-        "perros con queso",
-        "queso con perros"
+        "REDES BR",
+        "Fundamentos de programacion AR"
     ]
     contenedor_registro = QVBoxLayout()
     contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
@@ -70,7 +65,7 @@ def generar_cursos(boton_cerrar, boton_crear_curso):
                                     min-height: 50px;
                                     margin: 1px 1px;
                                     }""")
-        botonE, botonA = crear_botones()
+        botonE, botonA = crear_botones(boton_editar, boton_asistencia)
 
         primer_materia.addWidget(
             nombre_materia, alignment=Qt.AlignmentFlag.AlignLeft)
@@ -84,8 +79,8 @@ def generar_cursos(boton_cerrar, boton_crear_curso):
     return widget_general
 
 
-def crear_botones():
-    boton_editar = QPushButton("Editar")
+def crear_botones(boton_editar, boton_asistencia):
+
     boton_editar.setStyleSheet("""
                 QPushButton {
                     background-color: #F75A50;
@@ -106,7 +101,7 @@ def crear_botones():
                     background-color: #222222;
                 }
             """)
-    boton_asistencia = QPushButton("Asistencia")
+
     boton_asistencia.setStyleSheet("""
                 QPushButton {
                     background-color: #0A6EB0;
@@ -220,6 +215,7 @@ def generar_llenado_curso(boton_cancelar, boton_agregar_estudiante, boton_finalz
 
 
 def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
+
     contenedro_pag3 = QVBoxLayout()
     widget_contendor_pag3 = QWidget()
     widget_contendor_pag3.setLayout(contenedro_pag3)
@@ -232,6 +228,11 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     contenedor_informacion = QVBoxLayout()
     widget_contenedor_informacion = QWidget()
     widget_contenedor_informacion.setLayout(contenedor_informacion)
+    widget_contenedor_informacion.setStyleSheet("""QWidget{
+                                max-width: 500px;
+                                min-width: 500px;
+                                margin: 1px 1px;
+                                }""")
 
     nombre_completo = QLabel("Nombre Completo")
     nombre_completo.setAttribute(
@@ -239,9 +240,11 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     nombre_completo.setStyleSheet("""QLabel{
                         color: black;
                         font-family: sans-serif;
+                        font-size: 20px;
                         font-weight: bold;
                         border: none;
-                        min-width: 400px;
+                        min-width: 250px;
+                        max-width: 250px;
                         max-height: 20px;
                         min-height: 20px;
                     }""")
@@ -249,9 +252,13 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     input_nombre_completo.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
+                        font-size: 15px;
                         border: 1px solid black;
                         border-radius: 8px;
-                        max-width: 200px;
+                        min-width: 400px;
+                        max-width: 400px;
+                        max-height: 50px;
+                        min-height: 50px;
                     }""")
     input_nombre_completo.setPlaceholderText(
         "Escribe el nombre completo del estudiante")
@@ -262,9 +269,11 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     documento.setStyleSheet("""QLabel{
                         color: black;
                         font-family: sans-serif;
+                        font-size: 20px;
                         font-weight: bold;
                         border: none;
-                        min-width: 400px;
+                        min-width: 250px;
+                        max-width: 250px;
                         max-height: 20px;
                         min-height: 20px;
                     }""")
@@ -274,9 +283,13 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     input_documento.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
+                        font-size: 15px;
                         border: 1px solid black;
                         border-radius: 8px;
-                        max-width: 200px;
+                        min-width: 400px;
+                        max-width: 400px;
+                        max-height: 50px;
+                        min-height: 50px;
                     }""")
     carrera = QLabel("Numero de Documento")
     carrera.setAttribute(
@@ -284,9 +297,11 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     carrera.setStyleSheet("""QLabel{
                         color: black;
                         font-family: sans-serif;
+                        font-size: 20px;
                         font-weight: bold;
                         border: none;
-                        min-width: 400px;
+                        min-width: 250px;
+                        max-width: 250px;
                         max-height: 20px;
                         min-height: 20px;
                     }""")
@@ -296,9 +311,13 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     input_carrera.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
+                        font-size: 15px;
                         border: 1px solid black;
                         border-radius: 8px;
-                        max-width: 200px;
+                        min-width: 400px;
+                        max-width: 400px;
+                        max-height: 50px;
+                        min-height: 50px;
                     }""")
     contenedor_informacion.addWidget(nombre_completo)
     contenedor_informacion.addWidget(input_nombre_completo)
@@ -314,8 +333,6 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
                                 border-radius: 9px;
-                                max-width: 400px;
-                                min-width: 200px;
                                 margin: 1px 1px;
                                 }""")
 
@@ -329,6 +346,55 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
     return widget_contendor_pag3
 
 
+def tomar_asistencia(boton_cancelar3, boton_asistio, boton_pdf):
+    contenedor_pag4 = QVBoxLayout()
+    widget_contenedor_pag4 = QWidget()
+    widget_contenedor_pag4.setLayout(contenedor_pag4)
+
+    contenedor_toma_asistencia = QVBoxLayout()
+    widget_contenedor_toma_asistencia = QWidget()
+    widget_contenedor_toma_asistencia.setLayout(contenedor_toma_asistencia)
+
+    recomendacion = QLabel(
+        "IMPORTANTE: Solo debe salir en camara la persona a registrar")
+    # recomendacion.setAttribute(
+    #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+    recomendacion.setStyleSheet("""QLabel{
+                        color: black;
+                        font-family: sans-serif;
+                        font-size: 20px;
+                        font-weight: bold;
+                        border: none;
+                        min-width: 630px;
+                        max-width: 630px;
+                        max-height: 30px;
+                        min-height: 30px;
+                    }""")
+
+    contenedor_cargar_camara = QHBoxLayout()
+    widget_contenedor_cargar_camara = QWidget()
+    widget_contenedor_cargar_camara.setLayout(contenedor_cargar_camara)
+    widget_contenedor_cargar_camara.setStyleSheet("""QWidget{
+                                background-color: #DBE5D9;
+                                border: 1px solid black;
+                                border-radius: 9px;
+                                min-width: 800px;
+                                max-width: 800px;
+                                margin: 1px 1px;
+                                }""")
+
+    contenedor_toma_asistencia.addWidget(
+        recomendacion, alignment=Qt.AlignmentFlag.AlignHCenter)
+    contenedor_toma_asistencia.addWidget(
+        widget_contenedor_cargar_camara, alignment=Qt.AlignmentFlag.AlignHCenter)
+
+    contenedor_pag4.addWidget(widget_contenedor_toma_asistencia)
+    contenedor_pag4.addWidget(barra_botones_pag2(
+        boton_cancelar3, boton_asistio, boton_pdf))
+
+    return widget_contenedor_pag4
+
+
 def barra_botones_pag1(boton_cerrar, boton_crear_curso):
 
     # Creacion de contenerdor de datos y acciones basicas
@@ -337,7 +403,7 @@ def barra_botones_pag1(boton_cerrar, boton_crear_curso):
     widget_contenedor_ayuda.setStyleSheet("""QWidget{
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
-                                border-radius: 8px;
+                                border-radius: 9px;
                                 min-width: 800px;
                                 margin: 1px 1px;
                                 max-height: 60px;
@@ -348,7 +414,7 @@ def barra_botones_pag1(boton_cerrar, boton_crear_curso):
     boton_cerrar.setFixedWidth(150)
     boton_cerrar.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: #F75A50;
                     color: white;
                     border-radius: 5px;
                     padding: 1px;
@@ -370,7 +436,7 @@ def barra_botones_pag1(boton_cerrar, boton_crear_curso):
     boton_crear_curso.setFixedWidth(150)
     boton_crear_curso.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: #0A6EB0;
                     color: white;
                     border-radius: 5px;
                     padding: 1px;
@@ -404,7 +470,7 @@ def barra_botones_pag2(boton_cancelar, boton_agregar_estudiante, boton_finalzar)
     widget_contenedor_ayuda.setStyleSheet("""QWidget{
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
-                                border-radius: 8px;
+                                border-radius: 9px;
                                 min-width: 800px;
                                 margin: 1px 1px;
                                 max-height: 60px;
@@ -415,7 +481,7 @@ def barra_botones_pag2(boton_cancelar, boton_agregar_estudiante, boton_finalzar)
     boton_cancelar.setFixedWidth(150)
     boton_cancelar.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: #F75A50;
                     color: white;
                     border-radius: 5px;
                     padding: 1px;
@@ -437,7 +503,7 @@ def barra_botones_pag2(boton_cancelar, boton_agregar_estudiante, boton_finalzar)
     boton_agregar_estudiante.setFixedWidth(150)
     boton_agregar_estudiante.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: #43AB3A;
                     color: white;
                     border-radius: 5px;
                     padding: 1px;
@@ -459,7 +525,7 @@ def barra_botones_pag2(boton_cancelar, boton_agregar_estudiante, boton_finalzar)
     boton_finalzar.setFixedWidth(150)
     boton_finalzar.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: #0A6EB0;
                     color: white;
                     border-radius: 5px;
                     padding: 1px;
