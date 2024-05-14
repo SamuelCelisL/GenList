@@ -262,6 +262,8 @@ class inicio (QWidget):
         self.widget_cuerpo.hide()
         self.widget_cuerpo_pag2 = cuerpo.generar_llenado_curso(
             self.boton_cancelar, self.boton_agregar_estudiante, self.boton_finalizar)
+        # self.widget_cuerpo_pag2.setSizePolicy(
+        #     QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo_pag2, alignment=Qt.AlignmentFlag.AlignCenter)
 

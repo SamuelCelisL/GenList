@@ -152,10 +152,10 @@ def generar_llenado_curso(boton_cancelar, boton_agregar_estudiante, boton_finalz
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
                                 border-radius: 8px;
-                                margin: 1px 1px;
-                                min-width: 800px;
-                                min-height: 500px;
+                                margin: 1px 1px;                            
                                 }""")
+    widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
+                                               QSizePolicy.Policy.Expanding)
     widget_contenedor_form_curso.setLayout(contenedor_form_curso)
 
     texto_informacion_materia = QLabel("Nombre del curso y grupo : ")
@@ -199,13 +199,60 @@ def generar_llenado_curso(boton_cancelar, boton_agregar_estudiante, boton_finalz
         materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
 
     table = QTableWidget()
+    table.setFixedHeight(400)
     table.setRowCount(5)  # Establece el número de filas
     table.setColumnCount(3)  # Establece el número de columnas
+    # table.setSizePolicy(QSizePolicy.Policy.Expanding,
+    #                     QSizePolicy.Policy.Expanding)
+    table.setHorizontalHeaderLabels(
+        ["Nombres y Apellidos", "Documento", "Carrera"])
+    table.horizontalHeader().setStyleSheet("""
+                QHeaderView::section {
+                    background-color: #FFFFFF;
+                    color: black;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 0px;
+                }
+            """)
+    table.verticalHeader().setStyleSheet("""
+                QHeaderView::section {
+                    background-color: #FFFFFF;
+                    color: black;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 0px;
+                    min-height: 30px;
+                }
+            """)
+    table.setStyleSheet("""
+            QTableWidget {
+                background-color: white;
+                color: black;
+                border: none;
+                border-radius: 0px;
 
-    for i in range(5):  # Rellena la tabla con datos de ejemplo
-        for j in range(3):
-            table.setItem(
-                i, j, QTableWidgetItem(f"Celda {i+1}, {j+1}"))
+            }
+            QTableWidget::item {
+                color: black;
+                border: 1px solid black;
+                border-radius: 0px;
+            }
+            QTableWidget::item:selected {
+                color: black;
+                border: 1px solid transparent;
+            }            
+                        """)
+    row_labels = [str(i+1) for i in range(table.rowCount())]
+    table.setVerticalHeaderLabels(row_labels)
+    table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+    table.verticalHeader().setSectionResizeMode(
+        QHeaderView.ResizeMode.ResizeToContents)
+
+    # for i in range(5):  # Rellena la tabla con datos de ejemplo
+    #     for j in range(3):
+    #         table.setItem(
+    #             i, j, QTableWidgetItem(f"Celda {i+1}, {j+1}"))
 
     contenedor_form_curso.addWidget(
         widget_contenedor_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
