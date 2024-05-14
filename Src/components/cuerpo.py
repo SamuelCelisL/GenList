@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QHBoxLayout, QVBoxLayout, QStackedLayout, QTableWidget,
+                             QHBoxLayout, QVBoxLayout, QTableWidget,
                              QHeaderView, QTableWidgetItem, QAbstractItemView)
 from PyQt6 import QtCore
 

@@ -1,6 +1,5 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QPushButton, QHBoxLayout)
+from PyQt6.QtWidgets import (QWidget, QLabel, QHBoxLayout)
 from PyQt6.QtGui import QPixmap
 from PyQt6 import QtCore
 
