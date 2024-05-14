@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
                              QHBoxLayout, QVBoxLayout, QStackedLayout, QTableWidget,
-                             QHeaderView, QTableWidgetItem, QAbstractItemView)
+                             QHeaderView, QTableWidgetItem, QAbstractItemView, QScrollArea, QSizePolicy)
 from PyQt6 import QtCore
 
 
@@ -15,8 +15,24 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
     general = QVBoxLayout()
     widget_general = QWidget()
     widget_general.setLayout(general)
+
+    # Creamos el ScrollArea y lo configuramos
+    scroll_area = QScrollArea()
+    scroll_area.setWidgetResizable(True)
+    scroll_area.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)  # Nueva línea
+    general.addWidget(scroll_area)
+
+    # Creamos el widget que irá dentro del ScrollArea
+    widget_scroll = QWidget()
+    scroll_area.setWidget(widget_scroll)
+
     # Tenemos que agregar el Scroll
     materias = [
+        "Sistemas Inteligentes AR",
+        "Fundamentos de computacion paralela y distribuida AR",
+        "ingenieria de Software I BR",
+        "REDES BR",
+        "Fundamentos de programacion AR",
         "Sistemas Inteligentes AR",
         "Fundamentos de computacion paralela y distribuida AR",
         "ingenieria de Software I BR",
@@ -36,7 +52,6 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
                                 min-height: 500px;
                                 margin: 1px 1px;
                                 }""")
-    widget_contenedor_registro.scroll(1, 1)
 
     for materia in materias:
         nombre_materia = QLabel(materia)
@@ -72,10 +87,11 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
         primer_materia.addWidget(botonA)
         contenedor_registro.addWidget(widget_primer_materia)
 
-    general.addWidget(widget_contenedor_registro)
+    widget_scroll.setLayout(contenedor_registro)
     general.addWidget(barra_botones_pag1(
         boton_cerrar, boton_crear_curso))
     return widget_general
+
 
 
 def crear_botones(boton_editar, boton_asistencia):

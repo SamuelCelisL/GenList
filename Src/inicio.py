@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit, QMessageBox)
+    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit, QMessageBox, QSizePolicy)
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
 from components import login, cuerpo
@@ -72,7 +72,7 @@ class inicio (QWidget):
         widget_contenedor_principal = QWidget()
         widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
-                                    min-width: 500px;
+                                    min-    : 500px;
                                     }""")
         widget_contenedor_principal.setLayout(contenedor_principal)
 
@@ -226,16 +226,22 @@ class inicio (QWidget):
 
         return aprobacion
 
-    def cambiar_pantalla(self):
 
+
+    def cambiar_pantalla(self):
         self.contenedor_pre_registro.removeWidget(
             self.widget_contenedor_pre_pre_registro)
         self.widget_contenedor_pre_pre_registro.hide()
 
         self.widget_cuerpo = cuerpo.generar_cursos(
             self._boton_cerrar_sesion, self.boton_crear_curso, self.boton_editar, self.boton_asistencia)
+        
+        # Establecer la política de tamaño del widget_cuerpo
+        self.widget_cuerpo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
+
 
     # funcion boton cerrar sesion pag1
     def volver_inicio(self):
