@@ -102,7 +102,7 @@ def crear_botones(boton_editar, boton_asistencia):
                     color: white;
                     border-radius: 5px;
                     padding: 5px;
-                    font-size: 10px;
+                    font-size: 20px;
                     font-weight: bold;
                     min-width: 100px;
                     max-width: 100px;
@@ -123,7 +123,7 @@ def crear_botones(boton_editar, boton_asistencia):
                     color: white;
                     border-radius: 5px;
                     padding: 5px;
-                    font-size: 10px;
+                    font-size: 20px;
                     font-weight: bold;
                     min-width: 100px;
                     max-width: 100px;
@@ -198,30 +198,18 @@ def generar_llenado_curso(boton_cancelar, boton_agregar_estudiante, boton_finalz
     contenedor_cabeza.addWidget(
         materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
 
-    tabla = QTableWidget()
-    tabla.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-    tabla.setDragDropOverwriteMode(False)
-    tabla.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-    tabla.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
-    tabla.setTextElideMode(Qt.TextElideMode.ElideRight)
-    tabla.setWordWrap(False)
-    tabla.setColumnCount(4)
-    tabla.setRowCount(5)
-    tabla.horizontalHeader().setDefaultAlignment(Qt.AlignmentFlag.AlignHCenter |
-                                                 Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignCenter)
-    tabla.horizontalHeader().setHighlightSections(False)
-    tabla.horizontalHeader().setStretchLastSection(True)
-    tabla.setAlternatingRowColors(True)
-    tabla.verticalHeader().setDefaultSectionSize(20)
-    nombreColumnas = ("nombre", "Documento", "Carrera", "Asistio")
-    tabla.setHorizontalHeaderLabels(nombreColumnas)
-    for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
-        tabla.setColumnWidth(indice, ancho)
-    tabla.resize(600, 250)
+    table = QTableWidget()
+    table.setRowCount(5)  # Establece el número de filas
+    table.setColumnCount(3)  # Establece el número de columnas
+
+    for i in range(5):  # Rellena la tabla con datos de ejemplo
+        for j in range(3):
+            table.setItem(
+                i, j, QTableWidgetItem(f"Celda {i+1}, {j+1}"))
 
     contenedor_form_curso.addWidget(
         widget_contenedor_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
-    # contenedor_form_curso.addWidget(tabla)
+    contenedor_form_curso.addWidget(table)
 
     principal_pag2.addWidget(widget_contenedor_form_curso)
     principal_pag2.addWidget(barra_botones_pag2(
@@ -306,7 +294,7 @@ def llenar_curso(boton_cancelar2, boton_biometria, boton_registrar):
                         max-height: 50px;
                         min-height: 50px;
                     }""")
-    carrera = QLabel("Numero de Documento")
+    carrera = QLabel("Carrera del Estudiante")
     carrera.setAttribute(
         QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
     carrera.setStyleSheet("""QLabel{
