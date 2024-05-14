@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QFont
 from PyQt6 import QtGui, QtCore
 from components import login, cuerpo
-
+# que paso
 
 class inicio (QWidget):
 
@@ -226,8 +226,6 @@ class inicio (QWidget):
 
         return aprobacion
 
-
-
     def cambiar_pantalla(self):
         self.contenedor_pre_registro.removeWidget(
             self.widget_contenedor_pre_pre_registro)
@@ -249,6 +247,7 @@ class inicio (QWidget):
         self.widget_cuerpo.hide()
         self.widget_contenedor_pre_pre_registro.show()
 
+    # Boton Asistencia en las materias
     def marcar_asistencia(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
@@ -256,6 +255,7 @@ class inicio (QWidget):
             self.boton_cancelar3, self.boton_asistio, self.boton_pdf)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag4)
 
+    # Funcion del boton crear curso
     def crear_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
@@ -270,11 +270,13 @@ class inicio (QWidget):
         self.widget_cuerpo_pag2.hide()
         self.widget_cuerpo.show()
 
+    # Funcion boton finalizar en pag2
     def finalizar_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.widget_cuerpo.show()
 
+    # Funcion boton agregar estudiantes pag3
     def llenar_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
@@ -282,16 +284,19 @@ class inicio (QWidget):
             self.boton_cancelar2, self.boton_biometria, self.boton_guardar)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag3)
 
+    # Funcion boton cancelar pag3
     def volverpag2(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
         self.widget_cuerpo_pag2.show()
 
+    # Funcion boton regsitar pag3
     def registrar_estudiante(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
         self.widget_cuerpo_pag2.show()
 
+    # Funcion boton cancelar pag4
     def volver_pag_cursos(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag4)
         self.widget_cuerpo_pag4.hide()
