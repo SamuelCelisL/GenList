@@ -19,7 +19,8 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
     # Creamos el ScrollArea y lo configuramos
     scroll_area = QScrollArea()
     scroll_area.setWidgetResizable(True)
-    scroll_area.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)  # Nueva línea
+    scroll_area.setSizePolicy(
+        QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)  # Nueva línea
     general.addWidget(scroll_area)
 
     # Creamos el widget que irá dentro del ScrollArea
@@ -47,7 +48,7 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
                                 background-color: #DBE5D9;
                                 border: 1px solid black;
                                 border-radius: 9px;
-                                min-width: 800px;
+                                min-width: 1000px;
                                 max-height: 500px;
                                 min-height: 500px;
                                 margin: 1px 1px;
@@ -63,6 +64,7 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
                         font-weight: bold;
                         border: none;
                         min-width: 400px;
+                        max-width: 400px;
                         max-height: 20px;
                         min-height: 20px;
                     }""")
@@ -73,8 +75,7 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
                                     background-color: #FFFFFF;
                                     border: 1px solid black;
                                     border-radius: 2px;
-                                    max-width: 780px;
-                                    min-width: 780px;
+                                    min-width: 760px;
                                     max-height: 50px;
                                     min-height: 50px;
                                     margin: 1px 1px;
@@ -91,7 +92,6 @@ def generar_cursos(boton_cerrar, boton_crear_curso, boton_editar, boton_asistenc
     general.addWidget(barra_botones_pag1(
         boton_cerrar, boton_crear_curso))
     return widget_general
-
 
 
 def crear_botones(boton_editar, boton_asistencia):

@@ -7,6 +7,7 @@ from PyQt6 import QtGui, QtCore
 from components import login, cuerpo
 # que paso
 
+
 class inicio (QWidget):
 
     def __init__(self):
@@ -72,7 +73,6 @@ class inicio (QWidget):
         widget_contenedor_principal = QWidget()
         widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
-                                    min-    : 500px;
                                     }""")
         widget_contenedor_principal.setLayout(contenedor_principal)
 
@@ -233,15 +233,16 @@ class inicio (QWidget):
 
         self.widget_cuerpo = cuerpo.generar_cursos(
             self._boton_cerrar_sesion, self.boton_crear_curso, self.boton_editar, self.boton_asistencia)
-        
+
         # Establecer la política de tamaño del widget_cuerpo
-        self.widget_cuerpo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.widget_cuerpo.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
 
-
     # funcion boton cerrar sesion pag1
+
     def volver_inicio(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
