@@ -214,9 +214,24 @@ def generar_llenado_curso(boton_cancelar, boton_agregar_estudiante, boton_finalz
                     border: none;
                     border-radius: 0px;
                 }
+                QHeaderView {
+                    background-color: #FFFFFF;
+                    color: black;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 0px;
+                }
             """)
     table.verticalHeader().setStyleSheet("""
                 QHeaderView::section {
+                    background-color: #FFFFFF;
+                    color: black;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 0px;
+                    min-height: 30px;
+                }
+                QHeaderView {
                     background-color: #FFFFFF;
                     color: black;
                     font-weight: bold;
