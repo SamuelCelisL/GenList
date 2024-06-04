@@ -729,8 +729,8 @@ class inicio (QWidget):
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
-                                    min-width: 800px;
-                                    max-width: 800px;
+                                    min-width: 850px;
+                                    max-width: 850px;
                                     margin: 1px 1px;
                                     max-height: 60px;
                                     min-height: 60px;
