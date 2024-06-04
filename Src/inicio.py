@@ -15,9 +15,13 @@ class inicio (QWidget):
         self.InicializarUI()
 
     def InicializarUI(self):
+        screen = app.primaryScreen()
+        size = screen.size()
+        print("Ancho", size.width())
+        print("Alto", size.height())
         # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
-        self.setWindowIcon(QIcon('src/images/LogoempresaA.ico'))
+        self.setWindowIcon(QIcon('src/images/logo1icono.ico'))
         self.generar_formulario()
         self.showMaximized()
         self.show()
@@ -73,9 +77,12 @@ class inicio (QWidget):
         widget_contenedor_principal = QWidget()
         widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
-                                
                                     }""")
         # widget_contenedor_principal.showMaximized()
+        contenedor_principal.setStretch(0, 1)
+        contenedor_principal.setStretch(1, 7)
+        contenedor_principal.setStretch(2, 2)
+        # ↑↑↑↑☻↑↑↑ Arreglar
         widget_contenedor_principal.setLayout(contenedor_principal)
 
         # crear layaout
@@ -175,6 +182,7 @@ class inicio (QWidget):
             self.widget_con_pre_registro)
 
         contenedor_principal.addWidget(widget_contenedor_credito)
+
 
 # Agregar los layouts a al layoud original
         fondo.addWidget(widget_contenedor_principal)
