@@ -21,7 +21,7 @@ class inicio (QWidget):
         print("Alto", size.height())
         # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
-        self.setWindowIcon(QIcon('src/images/listaicono.ico'))
+        self.setWindowIcon(QIcon('src/images/LogoGenlisticono.ico'))
         self.generar_formulario()
         self.showMaximized()
         self.show()
