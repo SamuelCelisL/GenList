@@ -1,8 +1,9 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView)
-from PyQt6.QtGui import QFont
+    QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton,
+    QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView)
+from PyQt6.QtGui import QFont, QIcon
 from PyQt6 import QtGui, QtCore
 from components import login
 
@@ -14,11 +15,11 @@ class inicio (QWidget):
         self.InicializarUI()
 
     def InicializarUI(self):
-        # Revisar lo de cargar la aplicacion en pantalla completa
-        self.showFullScreen()
         # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
+        self.setWindowIcon(QIcon('src/images/LogoempresaA.ico'))
         self.generar_formulario()
+        self.showMaximized()
         self.show()
 
     def generar_formulario(self):
@@ -72,7 +73,9 @@ class inicio (QWidget):
         widget_contenedor_principal = QWidget()
         widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
+                                
                                     }""")
+        # widget_contenedor_principal.showMaximized()
         widget_contenedor_principal.setLayout(contenedor_principal)
 
         # crear layaout
@@ -187,12 +190,13 @@ class inicio (QWidget):
         # Creamos el ScrollArea y lo configuramos
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
-        scroll_area.setFixedHeight(600)
+        scroll_area.setFixedHeight(450)
         scroll_area.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         general.addWidget(scroll_area)
         scroll_area.setStyleSheet("""QScrollArea{
                                   border: 1px solid black;
+                                  border-radius: 5px;
         }""")
 
         # Creamos el widget que irá dentro del ScrollArea
@@ -216,14 +220,12 @@ class inicio (QWidget):
         contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         widget_contenedor_registro = QWidget()
         widget_contenedor_registro.setLayout(contenedor_registro)
-        widget_contenedor_registro.setFixedHeight(1000)
+        widget_contenedor_registro.setFixedHeight(500)
         # widget_contenedor_registro.setMinimumHeight(1500)
         widget_contenedor_registro.setStyleSheet("""QWidget{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
-
-
                                     margin: 1px 1px;
                                     }""")
 
@@ -379,7 +381,7 @@ class inicio (QWidget):
             materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
 
         table = QTableWidget()
-        table.setFixedHeight(400)
+        table.setFixedHeight(350)
         table.setRowCount(5)  # Establece el número de filas
         table.setColumnCount(3)  # Establece el número de columnas
         # table.setSizePolicy(QSizePolicy.Policy.Expanding,
@@ -390,7 +392,7 @@ class inicio (QWidget):
             ["Nombres y Apellidos", "Documento", "Carrera"])
         table.horizontalHeader().setStyleSheet("""
                     QHeaderView::section {
-                        background-color: #FFFFFF;
+                        background-color: #DBE5D9;
                         color: black;
                         font-weight: bold;
                         border: none;
@@ -403,7 +405,7 @@ class inicio (QWidget):
                 """)
         table.verticalHeader().setStyleSheet("""
                     QHeaderView::section {
-                        background-color: #FFFFFF;
+                        background-color: #DBE5D9;
                         color: black;
                         font-weight: bold;
                         border: none;
@@ -853,11 +855,12 @@ class inicio (QWidget):
             self._boton_cerrar_sesion, self.boton_crear_curso)
 
         # Establecer la política de tamaño del widget_cuerpo
-        self.widget_cuerpo.setSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        # self.widget_cuerpo.setSizePolicy(
+        #     QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.showMaximized()
 
     # FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # funcion boton cerrar sesion pag1
@@ -865,6 +868,7 @@ class inicio (QWidget):
     def volver_inicio(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
+        self.showMaximized()
         self.widget_contenedor_pre_pre_registro.show()
 
     # Boton Asistencia en las materias
@@ -874,6 +878,7 @@ class inicio (QWidget):
         self.widget_cuerpo_pag4 = self.tomar_asistencia(
             self.boton_cancelar3, self.boton_asistio, self.boton_pdf)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag4)
+        self.showMaximized()
 
     # Funcion del boton crear curso
     def crear_curso(self):
@@ -885,17 +890,20 @@ class inicio (QWidget):
         #     QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo_pag2, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.showMaximized()
 
     # Funcion boton cancelar pag2
     def cancelar(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
+        self.showMaximized()
         self.widget_cuerpo.show()
 
     # Funcion boton finalizar en pag2
     def finalizar_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
+        self.showMaximized()
         self.widget_cuerpo.show()
 
     # Funcion boton agregar estudiantes pag3
@@ -905,23 +913,27 @@ class inicio (QWidget):
         self.widget_cuerpo_pag3 = self.llenar_curso(
             self.boton_cancelar2, self.boton_biometria, self.boton_guardar)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag3)
+        self.showMaximized()
 
     # Funcion boton cancelar pag3
     def volverpag2(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
+        self.showMaximized()
         self.widget_cuerpo_pag2.show()
 
     # Funcion boton regsitar pag3
     def registrar_estudiante(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
+        self.showMaximized()
         self.widget_cuerpo_pag2.show()
 
     # Funcion boton cancelar pag4
     def volver_pag_cursos(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag4)
         self.widget_cuerpo_pag4.hide()
+        self.showMaximized()
         self.widget_cuerpo.show()
 
 

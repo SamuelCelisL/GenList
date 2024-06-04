@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QScrollArea, QLabel, QLineEdit
 from PyQt6.QtCore import Qt
 
+
 class Ventana(QWidget):
     def __init__(self, elementos):
         super().__init__()
@@ -42,6 +43,7 @@ class Ventana(QWidget):
 
     def editar_elemento(self):
         print('Editar elemento')
+
 
 if __name__ == "__main__":
     app = QApplication([])
