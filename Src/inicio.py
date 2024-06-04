@@ -21,7 +21,7 @@ class inicio (QWidget):
         print("Alto", size.height())
         # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
-        self.setWindowIcon(QIcon('src/images/logo1icono.ico'))
+        self.setWindowIcon(QIcon('src/images/listaicono.ico'))
         self.generar_formulario()
         self.showMaximized()
         self.show()
@@ -79,9 +79,9 @@ class inicio (QWidget):
                                     background-color: white;
                                     }""")
         # widget_contenedor_principal.showMaximized()
-        contenedor_principal.setStretch(0, 1)
-        contenedor_principal.setStretch(1, 7)
-        contenedor_principal.setStretch(2, 2)
+        # contenedor_principal.setStretch(0, 1)
+        # contenedor_principal.setStretch(1, 7)
+        # contenedor_principal.setStretch(2, 2)
         # ↑↑↑↑☻↑↑↑ Arreglar
         widget_contenedor_principal.setLayout(contenedor_principal)
 
