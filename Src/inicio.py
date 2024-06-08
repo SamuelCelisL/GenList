@@ -68,7 +68,7 @@ class inicio (QWidget):
         autor1.setStyleSheet(f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamaño_fuete_autores-0.1}px;
+                    font-size: {tamaño_fuete_autores-2}px;
                     min-height: {tamaño_fuete_autores}px;
         }}""")
         autor1.setAttribute(
@@ -79,7 +79,7 @@ class inicio (QWidget):
         autor2.setStyleSheet(f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamaño_fuete_autores-0.1}px;
+                    font-size: {tamaño_fuete_autores-2}px;
                     min-height: {tamaño_fuete_autores}px;
         }}""")
         autor2.setAttribute(
@@ -90,7 +90,7 @@ class inicio (QWidget):
         autor3.setStyleSheet(f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamaño_fuete_autores-0.1}px;
+                    font-size: {tamaño_fuete_autores-2}px;
                     min-height: {tamaño_fuete_autores}px;
         }}""")
         autor3.setAttribute(
