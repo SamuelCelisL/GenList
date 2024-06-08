@@ -49,12 +49,16 @@ class inicio (QWidget):
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         titulo_inicial.setStyleSheet('color: white')
 
-        tamaño_fuente_credito = self.altoC * 0.65
+        tamaño_fuente_credito = int(self.altoC * 0.40)
+        tamañao = tamaño_fuente_credito - 8
         stilo_credito = f"""QLabel{{
+                    background: red;
                     color: white;
                     font-family: sans-serif;
                     font-weight: bold;
-                    font-size: {tamaño_fuente_credito}px;
+                    font-size: {tamañao}px;
+                    min-height: {tamaño_fuente_credito}px;
+                    max-height: {tamaño_fuente_credito}px;
         }}"""
         credito = QLabel("Desarrollado por:")
         credito.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -62,39 +66,44 @@ class inicio (QWidget):
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         credito.setStyleSheet(stilo_credito)
 
-        tamaño_fuete_autores = self.altoC*0.01156
-        autor1 = QLabel("Juan Pablo Marquez Sanchez")
+        tamaño_fuete_autores = int((self.altoC*0.20))
+        tamaño = tamaño_fuete_autores - 0.5
+        print(tamaño_fuete_autores)
+        print(tamaño)
+        print(tamaño_fuente_credito)
+        print(tamañao)
+        autor1 = QLabel("JUYSAM®")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
+                    background: red;
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamaño_fuete_autores-2}px;
-                    min-height: {tamaño_fuete_autores}px;
+                    font-size: {tamaño_fuete_autores}px;
         }}""")
         autor1.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        print(credito.height())
+        print(autor1.height())
 
-        autor2 = QLabel("Samuel Andres Celis Lizcano")
-        autor2.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        autor2.setStyleSheet(f"""QLabel{{
-                    color: white;
-                    font-family: sans-serif;
-                    font-size: {tamaño_fuete_autores-2}px;
-                    min-height: {tamaño_fuete_autores}px;
-        }}""")
-        autor2.setAttribute(
-            QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        # autor2 = QLabel("Samuel Andres Celis Lizcano")
+        # autor2.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # autor2.setStyleSheet(f"""QLabel{{
+        #             color: white;
+        #             font-family: sans-serif;
+        #             font-size: {tamaño_fuete_autores-2}px;
+        # }}""")
+        # autor2.setAttribute(
+        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
-        autor3 = QLabel("Yorman Rodolfo Rodriguez Jaimes")
-        autor3.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        autor3.setStyleSheet(f"""QLabel{{
-                    color: white;
-                    font-family: sans-serif;
-                    font-size: {tamaño_fuete_autores-2}px;
-                    min-height: {tamaño_fuete_autores}px;
-        }}""")
-        autor3.setAttribute(
-            QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        # autor3 = QLabel("Yorman Rodolfo Rodriguez Jaimes")
+        # autor3.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # autor3.setStyleSheet(f"""QLabel{{
+        #             color: white;
+        #             font-family: sans-serif;
+        #             font-size: {tamaño_fuete_autores-2}px;
+        # }}""")
+        # autor3.setAttribute(
+        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
         contenedor_principal = QVBoxLayout()
         widget_contenedor_principal = QWidget()
@@ -196,8 +205,8 @@ class inicio (QWidget):
         # LAYOUT CREDITO↓
         contenedor_credito.addWidget(credito)
         contenedor_credito.addWidget(autor1)
-        contenedor_credito.addWidget(autor2)
-        contenedor_credito.addWidget(autor3)
+        # contenedor_credito.addWidget(autor2)
+        # contenedor_credito.addWidget(autor3)
 
         fondo = QVBoxLayout()
 # Agregar los Qwidget a al Layout original
