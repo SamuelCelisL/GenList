@@ -72,7 +72,7 @@ class inicio (QWidget):
         print(tamaño_etiqueta_autor)
         print(tamaño_fuente_credito)
         print(tamaño_fuente_credito)
-        autor1 = QLabel("JUYSAM®")
+        autor1 = QLabel("JUYSAM Corporation ®")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
                     background: red;
