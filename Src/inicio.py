@@ -62,13 +62,14 @@ class inicio (QWidget):
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         credito.setStyleSheet(stilo_credito)
 
-        tamañano_fuete_autores = self.altoC*0.01156
+        tamaño_fuete_autores = self.altoC*0.01156
         autor1 = QLabel("Juan Pablo Marquez Sanchez")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamañano_fuete_autores}px;
+                    font-size: {tamaño_fuete_autores}px;
+                    min-height: {tamaño_fuete_autores}px;
         }}""")
         autor1.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
@@ -78,7 +79,8 @@ class inicio (QWidget):
         autor2.setStyleSheet(f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamañano_fuete_autores}px;
+                    font-size: {tamaño_fuete_autores}px;
+                    min-height: {tamaño_fuete_autores}px;
         }}""")
         autor2.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
@@ -88,7 +90,8 @@ class inicio (QWidget):
         autor3.setStyleSheet(f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
-                    font-size: {tamañano_fuete_autores}px;
+                    font-size: {tamaño_fuete_autores}px;
+                    min-height: {tamaño_fuete_autores}px;
         }}""")
         autor3.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
@@ -235,7 +238,6 @@ class inicio (QWidget):
         # Creamos el widget que irá dentro del ScrollArea
         widget_scroll = QWidget()
         scroll_area.setWidget(widget_scroll)
-        # widget_scroll.setFixedHeight(1000)
 
         materias = [
             "Sistemas Inteligentes AR",
