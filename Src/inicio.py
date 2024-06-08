@@ -16,12 +16,11 @@ class inicio (QWidget):
 
     def InicializarUI(self):
         screen = app.primaryScreen()
-        size = screen.size()
-        print("Ancho", size.width())
-        print("Alto", size.height())
+        self.size = screen.size()
+        print(self.size)
         # self.setGeometry(500, 100, 400, 150)
         self.setWindowTitle("Login GenList")
-        self.setWindowIcon(QIcon('src/images/LogoGenlisticono.ico'))
+        self.setWindowIcon(QIcon('src/images/logo2.ico'))
         self.generar_formulario()
         self.showMaximized()
         self.show()
@@ -191,6 +190,9 @@ class inicio (QWidget):
         self.setLayout(fondo)
 
     def generar_cursos(self, boton_cerrar, boton_crear_curso):
+        print("ESTAS EN LA SEGUNDA VENTANA")
+        print("Ancho", self.size.width())
+        print("Alto", self.size.height())
         general = QVBoxLayout()
         widget_general = QWidget()
         widget_general.setLayout(general)
