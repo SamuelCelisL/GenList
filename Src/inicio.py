@@ -49,16 +49,16 @@ class inicio (QWidget):
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         titulo_inicial.setStyleSheet('color: white')
 
-        tamaño_fuente_credito = int(self.altoC * 0.40)
-        tamañao = tamaño_fuente_credito - 8
+        tamaño_eqtiqueta_credito = int(self.altoC * 0.30)
+        tamaño_fuente_credito = tamaño_eqtiqueta_credito - 8
         stilo_credito = f"""QLabel{{
                     background: red;
                     color: white;
                     font-family: sans-serif;
                     font-weight: bold;
-                    font-size: {tamañao}px;
-                    min-height: {tamaño_fuente_credito}px;
-                    max-height: {tamaño_fuente_credito}px;
+                    font-size: {tamaño_fuente_credito}px;
+                    min-height: {tamaño_eqtiqueta_credito}px;
+                    max-height: {tamaño_eqtiqueta_credito}px;
         }}"""
         credito = QLabel("Desarrollado por:")
         credito.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -66,12 +66,12 @@ class inicio (QWidget):
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         credito.setStyleSheet(stilo_credito)
 
-        tamaño_fuete_autores = int((self.altoC*0.20))
-        tamaño = tamaño_fuete_autores - 0.5
+        tamaño_etiqueta_autor = int((self.altoC*0.30))
+        tamaño_fuete_autores = int(tamaño_etiqueta_autor - 0.5)
         print(tamaño_fuete_autores)
-        print(tamaño)
+        print(tamaño_etiqueta_autor)
         print(tamaño_fuente_credito)
-        print(tamañao)
+        print(tamaño_fuente_credito)
         autor1 = QLabel("JUYSAM®")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
@@ -79,6 +79,8 @@ class inicio (QWidget):
                     color: white;
                     font-family: sans-serif;
                     font-size: {tamaño_fuete_autores}px;
+                    min-height: {tamaño_etiqueta_autor}px;
+                    max-height: {tamaño_etiqueta_autor}px;                    
         }}""")
         autor1.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
