@@ -6,7 +6,6 @@ from PyQt6 import QtCore
 
 
 def generar_formulario_login(boton_registrar, usuario_input, Contra_input):
-    # empresa = QPixmap('src/images/LogoempresaA.png')
     empresa = QPixmap('src/images/logo2Png.png')
 
     etiqueta_imagen = QLabel()

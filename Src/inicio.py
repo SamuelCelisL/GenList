@@ -17,8 +17,11 @@ class inicio (QWidget):
     def InicializarUI(self):
         screen = app.primaryScreen()
         self.size = screen.size()
-        print(self.size)
-        # self.setGeometry(500, 100, 400, 150)
+        # print(self.size)
+        # ancho = self.size.width()
+        # alto = (self.size.height())*0.20
+        # print(alto)
+        # self.setGeometry(0, 0, ancho, alto)
         self.setWindowTitle("Login GenList")
         self.setWindowIcon(QIcon('src/images/logo2.ico'))
         self.generar_formulario()
@@ -29,6 +32,10 @@ class inicio (QWidget):
 
         self.usuarios = [['adminSamuel', 'adminSamuel'], [
             'adminMarquez', 'adminMarquez'], ['adminYorman', 'adminYorman']]
+
+        # Creacion de los tamaños de los 3 LAYOUTS DE LA APLICACION
+        altoT = (self.size.height())*0.10
+        self.altoC = (self.size.height())*0.10
 
         font_titulo = QtGui.QFont()
         font_titulo.setBold(True)
@@ -41,34 +48,48 @@ class inicio (QWidget):
         titulo_inicial.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         titulo_inicial.setStyleSheet('color: white')
-        stilo_credito = """QLabel{
+
+        tamaño_fuente_credito = self.altoC * 0.65
+        stilo_credito = f"""QLabel{{
                     color: white;
                     font-family: sans-serif;
                     font-weight: bold;
-                    font-size: 20px;
-        }"""
+                    font-size: {tamaño_fuente_credito}px;
+        }}"""
         credito = QLabel("Desarrollado por:")
         credito.setAlignment(Qt.AlignmentFlag.AlignCenter)
         credito.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         credito.setStyleSheet(stilo_credito)
 
+        tamañano_fuete_autores = self.altoC*0.01156
         autor1 = QLabel("Juan Pablo Marquez Sanchez")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        autor1.setFont(QFont('sans-serif', 10))
-        autor1.setStyleSheet('color: white')
+        autor1.setStyleSheet(f"""QLabel{{
+                    color: white;
+                    font-family: sans-serif;
+                    font-size: {tamañano_fuete_autores}px;
+        }}""")
         autor1.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+
         autor2 = QLabel("Samuel Andres Celis Lizcano")
         autor2.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        autor2.setFont(QFont('sans-serif', 10))
-        autor2.setStyleSheet('color: white')
+        autor2.setStyleSheet(f"""QLabel{{
+                    color: white;
+                    font-family: sans-serif;
+                    font-size: {tamañano_fuete_autores}px;
+        }}""")
         autor2.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+
         autor3 = QLabel("Yorman Rodolfo Rodriguez Jaimes")
         autor3.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        autor3.setFont(QFont('sans-serif', 10))
-        autor3.setStyleSheet('color: white')
+        autor3.setStyleSheet(f"""QLabel{{
+                    color: white;
+                    font-family: sans-serif;
+                    font-size: {tamañano_fuete_autores}px;
+        }}""")
         autor3.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
@@ -84,17 +105,19 @@ class inicio (QWidget):
         # ↑↑↑↑☻↑↑↑ Arreglar
         widget_contenedor_principal.setLayout(contenedor_principal)
 
-        # crear layaout
+        # LAYOUT DEL TITULO GENLIST ↓↓↓
+
         contenedor_titulo = QHBoxLayout()
         # Cambiar el backgroud
         widget_contenedor_titulo = QWidget()
-        diseño_titulo = """QWidget{background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+        diseño_titulo = f"""QWidget{{background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
             stop:0.4 rgba(40, 125, 190, 255),
             stop:0.6 rgba(33, 104, 158, 255));
-            max-height: 55px;
-            }"""
+            max-height: {altoT}px;
+            }}"""
         widget_contenedor_titulo.setLayout(contenedor_titulo)
         widget_contenedor_titulo.setStyleSheet(diseño_titulo)
+        # LAYOUT DEL TITULO GENLIST ↑↑↑
 
         # Crear Layout Parte de Registro
 
@@ -150,24 +173,24 @@ class inicio (QWidget):
         self.boton_asistio = QPushButton("Registrar Estudiante")
         self.boton_pdf = QPushButton("Generar PDF")
 
-        # Parte Azul ↓
+        # LAYOUT DE LOS CREDITOS ↓↓↓↓
         contenedor_credito = QVBoxLayout()
 
-        diseño_barra_F = """QWidget {
+        diseño_barra_F = F"""QWidget {{
             background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400);
-            max-height: 110px;
-        }"""
+            max-height: {self.altoC}px;
+        }}"""
         # 110;
+
         widget_contenedor_credito = QWidget()
         widget_contenedor_credito.setLayout(contenedor_credito)
         widget_contenedor_credito.setStyleSheet(diseño_barra_F)
+        # LAYOUT DE LOS CREDITOS ↑↑↑↑
 
-        # 1 ↓
+        # AGREGAR ELEMENTOS A LOS LAYOUTS
+        # LAYOUT TITULO ↓
         contenedor_titulo.addWidget(titulo_inicial)
-        # 2 ↓
-
-        # contenedor_registro.addLayout(contenedor_registro_c)
-
+        # LAYOUT CREDITO↓
         contenedor_credito.addWidget(credito)
         contenedor_credito.addWidget(autor1)
         contenedor_credito.addWidget(autor2)
