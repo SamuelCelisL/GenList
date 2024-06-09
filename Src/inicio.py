@@ -298,7 +298,7 @@ class inicio (QWidget):
                         max-height: 20px;
                         min-height: 20px;
                     }""")
-        anchoEtiqueta = int((self.ventana.width()*0.495))
+        anchoEtiqueta = int((self.ventana.width()*0.49))
         primer_materia = QHBoxLayout()
         widget_primer_materia = QWidget()
         widget_primer_materia.setLayout(primer_materia)
@@ -375,6 +375,7 @@ class inicio (QWidget):
         widget_principal_pag2 = QWidget()
         widget_principal_pag2.setLayout(principal_pag2)
 
+        anchoContenedor = int((self.ventana.width()*0.553))
         contenedor_form_curso = QVBoxLayout()
         widget_contenedor_form_curso = QWidget()
         widget_contenedor_form_curso.setStyleSheet(f"""QWidget{{
@@ -382,9 +383,11 @@ class inicio (QWidget):
                                     border: 1px solid black;
                                     border-radius: 8px;
                                     margin: 1px 1px;
+                                    max-width: {anchoContenedor}px;
+                                    min-width: {anchoContenedor}px;
                                     }}""")
-        widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
-                                                   QSizePolicy.Policy.Expanding)
+        # widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
+        #                                            QSizePolicy.Policy.Expanding)
         widget_contenedor_form_curso.setLayout(contenedor_form_curso)
 
         texto_informacion_materia = QLabel("Nombre del curso y grupo : ")
@@ -428,7 +431,7 @@ class inicio (QWidget):
         contenedor_cabeza.addWidget(
             materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
 
-        anchoTabla = int((self.ventana.width()*0.543))
+        anchoTabla = int((self.ventana.width()*0.533))
         table = QTableWidget()
         table.setFixedHeight(350)
         table.setFixedWidth(anchoTabla)
@@ -439,20 +442,25 @@ class inicio (QWidget):
         table.setEnabled(False)
         table.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        anchoTituloTabla = int((self.ventana.width()*0.177))
         table.setHorizontalHeaderLabels(
             ["Nombres y Apellidos", "Documento", "Carrera"])
-        table.horizontalHeader().setStyleSheet("""
-                    QHeaderView::section {
+        table.horizontalHeader().setStyleSheet(f"""
+                    QHeaderView::section {{
                         background-color: #DBE5D9;
                         color: black;
                         font-weight: bold;
                         border: none;
                         border-radius: 0px;
-                    }
-                    QHeaderView {
+                        min-width: 272px;
+                        max-width: 272px;
+                    }}
+                    QHeaderView {{
                         border: none;
                         border-radius: 0px;
-                    }
+                        min-width: 272px;
+                        max-width: 272px;
+                    }}
                 """)
         table.verticalHeader().setStyleSheet("""
                     QHeaderView::section {
@@ -468,23 +476,27 @@ class inicio (QWidget):
                         border-radius: 0px;
                     }
                 """)
-        table.setStyleSheet("""
-                QTableWidget {
+        table.setStyleSheet(f"""
+                QTableWidget {{
                     background-color: white;
                     color: black;
                     border: none;
                     border-radius: 0px;
+                    min-width: {anchoTabla}px;
+                    max-width: {anchoTabla}px;                    
 
-                }
-                QTableWidget::item {
+                }}
+                QTableWidget::item {{
                     color: black;
                     border: 1px solid black;
                     border-radius: 0px;
-                }
-                QTableWidget::item:selected {
+                    min-width: 272px;
+                    max-width: 272px;                           
+                }}
+                QTableWidget::item:selected {{
                     color: black;
                     border: 1px solid transparent;
-                }
+                }}
                             """)
         row_labels = [str(i+1) for i in range(table.rowCount())]
         table.setVerticalHeaderLabels(row_labels)
