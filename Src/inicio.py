@@ -16,7 +16,7 @@ class inicio (QWidget):
 
     def InicializarUI(self):
         screen = app.primaryScreen()
-        self.size = screen.size()
+        self.ventana = screen.size()
         # print(self.size)
         # ancho = self.size.width()
         # alto = (self.size.height())*0.20
@@ -34,8 +34,8 @@ class inicio (QWidget):
             'adminMarquez', 'adminMarquez'], ['adminYorman', 'adminYorman']]
 
         # Creacion de los tamaños de los 3 LAYOUTS DE LA APLICACION
-        altoT = (self.size.height())*0.10
-        self.altoC = (self.size.height())*0.10
+        altoT = (self.ventana.height())*0.08
+        self.altoC = (self.ventana.height())*0.10
 
         font_titulo = QtGui.QFont()
         font_titulo.setBold(True)
@@ -72,12 +72,13 @@ class inicio (QWidget):
         print(tamaño_etiqueta_autor)
         print(tamaño_fuente_credito)
         print(tamaño_fuente_credito)
-        autor1 = QLabel("JUYSAM Corporation ®")
+        autor1 = QLabel("La Secta de Samuel ®")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
                     background: red;
                     color: white;
                     font-family: sans-serif;
+                    font-style: oblique;
                     font-size: {tamaño_fuete_autores}px;
                     min-height: {tamaño_etiqueta_autor}px;
                     max-height: {tamaño_etiqueta_autor}px;                    
@@ -112,11 +113,7 @@ class inicio (QWidget):
         widget_contenedor_principal.setStyleSheet("""QWidget{
                                     background-color: white;
                                     }""")
-        # widget_contenedor_principal.showMaximized()
-        # contenedor_principal.setStretch(0, 1)
-        # contenedor_principal.setStretch(1, 7)
-        # contenedor_principal.setStretch(2, 2)
-        # ↑↑↑↑☻↑↑↑ Arreglar
+
         widget_contenedor_principal.setLayout(contenedor_principal)
 
         # LAYOUT DEL TITULO GENLIST ↓↓↓
@@ -228,16 +225,17 @@ class inicio (QWidget):
 
     def generar_cursos(self, boton_cerrar, boton_crear_curso):
         print("ESTAS EN LA SEGUNDA VENTANA")
-        print("Ancho", self.size.width())
-        print("Alto", self.size.height())
+        print("Ancho", self.ventana.width())
+        print("Alto", self.ventana.height())
         general = QVBoxLayout()
         widget_general = QWidget()
         widget_general.setLayout(general)
 
         # Creamos el ScrollArea y lo configuramos
+        altoScroll = int((self.ventana.height())*0.55)
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
-        scroll_area.setFixedHeight(450)
+        scroll_area.setFixedHeight(altoScroll)
         scroll_area.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         general.addWidget(scroll_area)
@@ -627,18 +625,19 @@ class inicio (QWidget):
         contenedor_llenado_informacion.addWidget(widget_contenedor_camara)
 
         contenedro_pag3.addWidget(widget_contenedor_llenado_informacion)
+        anchoBarra3 = int((self.ventana.width()*0.944))
         auxiliar = self.barra_botones_pag2(
             boton_cancelar2, boton_biometria, boton_registrar)
-        auxiliar.setStyleSheet("""QWidget{
+        auxiliar.setStyleSheet(f"""QWidget{{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
-                                    min-width: 1450px;
-                                    max-width: 1450px;
+                                    min-width: {anchoBarra3}px;
+                                    max-width: {anchoBarra3}px;
                                     margin: 1px 1px;
                                     max-height: 60px;
                                     min-height: 60px;
-                                    }""")
+                                    }}""")
         contenedro_pag3.addWidget(
             auxiliar, alignment=Qt.AlignmentFlag.AlignHCenter)
 
@@ -669,17 +668,18 @@ class inicio (QWidget):
                             min-height: 30px;
                         }""")
 
+        anchoCamara = int((self.ventana.width()*0.553))
         contenedor_cargar_camara = QHBoxLayout()
         widget_contenedor_cargar_camara = QWidget()
         widget_contenedor_cargar_camara.setLayout(contenedor_cargar_camara)
-        widget_contenedor_cargar_camara.setStyleSheet("""QWidget{
+        widget_contenedor_cargar_camara.setStyleSheet(f"""QWidget{{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
-                                    min-width: 800px;
-                                    max-width: 800px;
+                                    min-width: {anchoCamara}px;
+                                    max-width: {anchoCamara}px;
                                     margin: 1px 1px;
-                                    }""")
+                                    }}""")
 
         contenedor_toma_asistencia.addWidget(
             recomendacion, alignment=Qt.AlignmentFlag.AlignHCenter)
@@ -695,17 +695,18 @@ class inicio (QWidget):
     def barra_botones_pag1(self, boton_cerrar, boton_crear_curso):
 
         # Creacion de contenerdor de datos y acciones basicas
+        anchoBarra = int((self.ventana.width()*0.52))
         contenedor_ayuda = QHBoxLayout()
         widget_contenedor_ayuda = QWidget()
-        widget_contenedor_ayuda.setStyleSheet("""QWidget{
+        widget_contenedor_ayuda.setStyleSheet(f"""QWidget{{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
-                                    min-width: 800px;
+                                    min-width: {anchoBarra}px;
                                     margin: 1px 1px;
                                     max-height: 60px;
                                     min-height: 60px;
-                                    }""")
+                                    }}""")
         widget_contenedor_ayuda.setLayout(contenedor_ayuda)
 
         boton_cerrar.setFixedWidth(150)
@@ -761,18 +762,19 @@ class inicio (QWidget):
     def barra_botones_pag2(self, boton_cancelar, boton_agregar_estudiante, boton_finalzar):
 
         # Creacion de contenerdor de datos y acciones basicas
+        anchoBarra2 = int((self.ventana.width()*0.553))
         contenedor_ayuda = QHBoxLayout()
         widget_contenedor_ayuda = QWidget()
-        widget_contenedor_ayuda.setStyleSheet("""QWidget{
+        widget_contenedor_ayuda.setStyleSheet(f"""QWidget{{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
-                                    min-width: 850px;
-                                    max-width: 850px;
+                                    min-width: {anchoBarra2}px;
+                                    max-width: {anchoBarra2}px;
                                     margin: 1px 1px;
                                     max-height: 60px;
                                     min-height: 60px;
-                                    }""")
+                                   }}""")
         widget_contenedor_ayuda.setLayout(contenedor_ayuda)
 
         boton_cancelar.setFixedWidth(150)
@@ -848,6 +850,8 @@ class inicio (QWidget):
             boton_finalzar, alignment=Qt.AlignmentFlag.AlignRight)
 
         return widget_contenedor_ayuda
+
+    #! FUNCIONES DE DESPLAZAMIENTO Y LLAMADO ↓↓↓
 
     def haz_dado_click(self):
         usuario = []
