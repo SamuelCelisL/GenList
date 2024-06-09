@@ -452,29 +452,32 @@ class inicio (QWidget):
                         font-weight: bold;
                         border: none;
                         border-radius: 0px;
-                        min-width: 272px;
-                        max-width: 272px;
+
                     }}
                     QHeaderView {{
                         border: none;
                         border-radius: 0px;
-                        min-width: 272px;
-                        max-width: 272px;
+
+
                     }}
                 """)
-        table.verticalHeader().setStyleSheet("""
-                    QHeaderView::section {
+        table.verticalHeader().setStyleSheet(f"""
+                    QHeaderView::section {{
                         background-color: #DBE5D9;
                         color: black;
                         font-weight: bold;
                         border: none;
                         border-radius: 0px;
                         min-height: 30px;
-                    }
-                    QHeaderView {
+                        min-width: {anchoTituloTabla}px;
+                        max-width: {anchoTituloTabla}px;
+                    }}
+                    QHeaderView {{
                         border: none;
                         border-radius: 0px;
-                    }
+                        min-width: {anchoTituloTabla}px;
+                        max-width: {anchoTituloTabla}px;
+                    }}
                 """)
         table.setStyleSheet(f"""
                 QTableWidget {{
@@ -490,8 +493,7 @@ class inicio (QWidget):
                     color: black;
                     border: 1px solid black;
                     border-radius: 0px;
-                    min-width: 272px;
-                    max-width: 272px;                           
+                          
                 }}
                 QTableWidget::item:selected {{
                     color: black;
