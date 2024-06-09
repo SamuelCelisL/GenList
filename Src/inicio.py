@@ -81,7 +81,7 @@ class inicio (QWidget):
                     font-style: oblique;
                     font-size: {tamaño_fuete_autores}px;
                     min-height: {tamaño_etiqueta_autor}px;
-                    max-height: {tamaño_etiqueta_autor}px;                    
+                    max-height: {tamaño_etiqueta_autor}px;
         }}""")
         autor1.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
@@ -233,9 +233,11 @@ class inicio (QWidget):
 
         # Creamos el ScrollArea y lo configuramos
         altoScroll = int((self.ventana.height())*0.55)
+        anchoScroll = int((self.ventana.width()*0.52))
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setFixedHeight(altoScroll)
+        scroll_area.setFixedWidth(anchoScroll)
         scroll_area.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         general.addWidget(scroll_area)
@@ -296,19 +298,20 @@ class inicio (QWidget):
                         max-height: 20px;
                         min-height: 20px;
                     }""")
+        anchoEtiqueta = int((self.ventana.width()*0.495))
         primer_materia = QHBoxLayout()
         widget_primer_materia = QWidget()
         widget_primer_materia.setLayout(primer_materia)
-        widget_primer_materia.setStyleSheet("""QWidget{
+        widget_primer_materia.setStyleSheet(f"""QWidget{{
                                     background-color: #FFFFFF;
                                     border: 1px solid black;
                                     border-radius: 2px;
-                                    min-width: 760px;
-                                    max-width: 760px;
+                                    min-width: {anchoEtiqueta}px;
+                                    max-width: {anchoEtiqueta}px;
                                     max-height: 50px;
                                     min-height: 50px;
                                     margin: 1px 1px;
-                                    }""")
+                                    }}""")
         boton_editar = QPushButton("Editar")
         boton_asistencia = QPushButton("Asistencia")
         botonE, botonA = self.crear_botones(
@@ -374,12 +377,12 @@ class inicio (QWidget):
 
         contenedor_form_curso = QVBoxLayout()
         widget_contenedor_form_curso = QWidget()
-        widget_contenedor_form_curso.setStyleSheet("""QWidget{
+        widget_contenedor_form_curso.setStyleSheet(f"""QWidget{{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 8px;
                                     margin: 1px 1px;
-                                    }""")
+                                    }}""")
         widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
                                                    QSizePolicy.Policy.Expanding)
         widget_contenedor_form_curso.setLayout(contenedor_form_curso)
@@ -397,8 +400,9 @@ class inicio (QWidget):
                                     max-height: 60px;
                                     min-height: 60px;
                                     }""")
+        anchomateria = int((self.ventana.width()*0.3252))
         materia_input = QLineEdit()
-        materia_input.setStyleSheet("""QLineEdit{
+        materia_input.setStyleSheet(f"""QLineEdit{{
                             color: black;
                             font-family: sans-serif;
                             font-weight: bold;
@@ -406,9 +410,9 @@ class inicio (QWidget):
                             border: 1px solid black;
                             min-height: 40px;
                             max-height: 40px;
-                            max-width: 500px;
-                            min-width: 500px;
-        }""")
+                            max-width: {anchomateria}px;
+                            min-width: {anchomateria}px;
+        }}""")
         contenedor_cabeza = QHBoxLayout()
         contenedor_cabeza.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         widget_contenedor_cabeza = QWidget()
@@ -424,12 +428,15 @@ class inicio (QWidget):
         contenedor_cabeza.addWidget(
             materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
 
+        anchoTabla = int((self.ventana.width()*0.543))
         table = QTableWidget()
         table.setFixedHeight(350)
+        table.setFixedWidth(anchoTabla)
         table.setRowCount(5)  # Establece el número de filas
         table.setColumnCount(3)  # Establece el número de columnas
         # table.setSizePolicy(QSizePolicy.Policy.Expanding,
         #                     QSizePolicy.Policy.Expanding)
+        table.setEnabled(False)
         table.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         table.setHorizontalHeaderLabels(
