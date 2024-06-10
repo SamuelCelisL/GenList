@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView)
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6 import QtGui, QtCore
-from components import login
+from components import login, conexcionBD
 
 
 class inicio (QWidget):
@@ -17,11 +17,7 @@ class inicio (QWidget):
     def InicializarUI(self):
         screen = app.primaryScreen()
         self.ventana = screen.size()
-        # print(self.size)
-        # ancho = self.size.width()
-        # alto = (self.size.height())*0.20
-        # print(alto)
-        # self.setGeometry(0, 0, ancho, alto)
+        self.profesor_id = None
         self.setWindowTitle("Login GenList")
         self.setWindowIcon(QIcon('src/images/logo2.ico'))
         self.generar_formulario()
@@ -68,10 +64,6 @@ class inicio (QWidget):
 
         tamaño_etiqueta_autor = int((self.altoC*0.30))
         tamaño_fuete_autores = int(tamaño_etiqueta_autor - 0.5)
-        print(tamaño_fuete_autores)
-        print(tamaño_etiqueta_autor)
-        print(tamaño_fuente_credito)
-        print(tamaño_fuente_credito)
         autor1 = QLabel("La Secta de Samuel ®")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
@@ -85,28 +77,6 @@ class inicio (QWidget):
         }}""")
         autor1.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        print(credito.height())
-        print(autor1.height())
-
-        # autor2 = QLabel("Samuel Andres Celis Lizcano")
-        # autor2.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        # autor2.setStyleSheet(f"""QLabel{{
-        #             color: white;
-        #             font-family: sans-serif;
-        #             font-size: {tamaño_fuete_autores-2}px;
-        # }}""")
-        # autor2.setAttribute(
-        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-
-        # autor3 = QLabel("Yorman Rodolfo Rodriguez Jaimes")
-        # autor3.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        # autor3.setStyleSheet(f"""QLabel{{
-        #             color: white;
-        #             font-family: sans-serif;
-        #             font-size: {tamaño_fuete_autores-2}px;
-        # }}""")
-        # autor3.setAttribute(
-        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
         contenedor_principal = QVBoxLayout()
         widget_contenedor_principal = QWidget()
@@ -155,8 +125,8 @@ class inicio (QWidget):
         self.contenedor_pre_pre_registro.addWidget(
             self.login_widget)
         self.mensaje_emergente = QMessageBox()
-        # self.boton_registrar.clicked.connect(self.haz_dado_click)
-        self.boton_registrar.clicked.connect(self.cambiar_pantalla)
+        self.boton_registrar.clicked.connect(self.haz_dado_click)
+        # self.boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         # Creacion de los botones de las barras de las paginas
         # botones pag1
@@ -204,8 +174,6 @@ class inicio (QWidget):
         # LAYOUT CREDITO↓
         contenedor_credito.addWidget(credito)
         contenedor_credito.addWidget(autor1)
-        # contenedor_credito.addWidget(autor2)
-        # contenedor_credito.addWidget(autor3)
 
         fondo = QVBoxLayout()
 # Agregar los Qwidget a al Layout original
@@ -216,7 +184,6 @@ class inicio (QWidget):
 
         contenedor_principal.addWidget(widget_contenedor_credito)
 
-
 # Agregar los layouts a al layoud original
         fondo.addWidget(widget_contenedor_principal)
         app.setStyle("Fusion")
@@ -224,9 +191,9 @@ class inicio (QWidget):
         self.setLayout(fondo)
 
     def generar_cursos(self, boton_cerrar, boton_crear_curso):
-        print("ESTAS EN LA SEGUNDA VENTANA")
-        print("Ancho", self.ventana.width())
-        print("Alto", self.ventana.height())
+        # print("ESTAS EN LA SEGUNDA VENTANA")
+        # print("Ancho", self.ventana.width())
+        # print("Alto", self.ventana.height())
         general = QVBoxLayout()
         widget_general = QWidget()
         widget_general.setLayout(general)
@@ -248,6 +215,9 @@ class inicio (QWidget):
 
         # Creamos el widget que irá dentro del ScrollArea
         widget_scroll = QWidget()
+        widget_scroll.setStyleSheet("""QWidget{
+                                    background: #DBE5D9;
+                                    }""")
         scroll_area.setWidget(widget_scroll)
 
         materias = [
@@ -269,7 +239,6 @@ class inicio (QWidget):
         widget_contenedor_registro.setFixedHeight(500)
         # widget_contenedor_registro.setMinimumHeight(1500)
         widget_contenedor_registro.setStyleSheet("""QWidget{
-                                    background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
                                     margin: 1px 1px;
@@ -303,7 +272,7 @@ class inicio (QWidget):
         widget_primer_materia = QWidget()
         widget_primer_materia.setLayout(primer_materia)
         widget_primer_materia.setStyleSheet(f"""QWidget{{
-                                    background-color: #FFFFFF;
+                                    background: #FFFFFF;
                                     border: 1px solid black;
                                     border-radius: 2px;
                                     min-width: {anchoEtiqueta}px;
@@ -434,7 +403,7 @@ class inicio (QWidget):
         anchoTabla = int((self.ventana.width()*0.533))
         table = QTableWidget()
         table.setFixedHeight(350)
-        table.setFixedWidth(anchoTabla)
+        # table.setFixedWidth(anchoTabla)
         table.setRowCount(5)  # Establece el número de filas
         table.setColumnCount(3)  # Establece el número de columnas
         # table.setSizePolicy(QSizePolicy.Policy.Expanding,
@@ -442,24 +411,23 @@ class inicio (QWidget):
         table.setEnabled(False)
         table.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        anchoTituloTabla = int((self.ventana.width()*0.177))
+        anchoTituloTabla = int((self.ventana.width()*0.173))
         table.setHorizontalHeaderLabels(
             ["Nombres y Apellidos", "Documento", "Carrera"])
-        table.horizontalHeader().setStyleSheet(f"""
-                    QHeaderView::section {{
+        table.horizontalHeader().setStyleSheet("""
+                    QHeaderView::section {
                         background-color: #DBE5D9;
                         color: black;
                         font-weight: bold;
                         border: none;
                         border-radius: 0px;
 
-                    }}
-                    QHeaderView {{
+                    }
+                    QHeaderView {
                         border: none;
                         border-radius: 0px;
 
-
-                    }}
+                    }
                 """)
         table.verticalHeader().setStyleSheet(f"""
                     QHeaderView::section {{
@@ -469,14 +437,14 @@ class inicio (QWidget):
                         border: none;
                         border-radius: 0px;
                         min-height: 30px;
-                        min-width: {anchoTituloTabla}px;
-                        max-width: {anchoTituloTabla}px;
+                        min-width: {20}px;
+                        max-width: {20}px;
                     }}
                     QHeaderView {{
                         border: none;
                         border-radius: 0px;
-                        min-width: {anchoTituloTabla}px;
-                        max-width: {anchoTituloTabla}px;
+                        min-width: {20}px;
+                        max-width: {20}px;
                     }}
                 """)
         table.setStyleSheet(f"""
@@ -486,7 +454,7 @@ class inicio (QWidget):
                     border: none;
                     border-radius: 0px;
                     min-width: {anchoTabla}px;
-                    max-width: {anchoTabla}px;                    
+                    max-width: {anchoTabla}px;            
 
                 }}
                 QTableWidget::item {{
@@ -500,9 +468,15 @@ class inicio (QWidget):
                     border: 1px solid transparent;
                 }}
                             """)
+
+        # table.setColumnWidth(0, anchoTituloTabla)
+        table.setColumnWidth(1, anchoTituloTabla)
+        table.setColumnWidth(2, anchoTituloTabla)
+
         row_labels = [str(i+1) for i in range(table.rowCount())]
         table.setVerticalHeaderLabels(row_labels)
-        table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        table.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Fixed)
         table.verticalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
 
@@ -875,47 +849,25 @@ class inicio (QWidget):
     #! FUNCIONES DE DESPLAZAMIENTO Y LLAMADO ↓↓↓
 
     def haz_dado_click(self):
-        usuario = []
         aprobacion = False
-        usuario.append(self.usuario_input.text())
-        usuario.append(self.Contra_input.text())
+        usuario = int(self.usuario_input.text())
+        contraseña = self.Contra_input.text()
         # print(usuario)
-        aprobacion = self.validiar_usuario(usuario)
-        if aprobacion is None:
+        aprobacion = conexcionBD.validar_credenciales_profesor(
+            usuario, contraseña)
+        if aprobacion is True:
+            self.profesor_id = conexcionBD.obtener_id_profesor(usuario)
+            self.usuario_input.clear()
             self.Contra_input.clear()
+            self.cambiar_pantalla()
+
         else:
-            if aprobacion is True:
-                self.usuario_input.clear()
-                self.Contra_input.clear()
-                usuario.clear()
-                # print(usuario)
-                self.cambiar_pantalla()
-            else:
-                self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
-                self.mensaje_emergente.setText("Datos Incorrectos.")
-                self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
-                self.mensaje_emergente.exec()
-                self.usuario_input.clear()
-                self.Contra_input.clear()
-
-    def validiar_usuario(self, usuario):
-        for i, sublist in enumerate(self.usuarios):
-            if sublist[0] == usuario[0]:
-                if sublist[1] == usuario[1]:
-                    aprobacion = True
-                    return aprobacion
-                else:
-                    self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
-                    self.mensaje_emergente.setText("Contraseña Incorrecta.")
-                    self.mensaje_emergente.setIcon(
-                        QMessageBox.Icon.Warning)
-                    self.mensaje_emergente.exec()
-                    aprobacion = None
-                    return aprobacion
-            else:
-                aprobacion = False
-
-        return aprobacion
+            self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+            self.mensaje_emergente.setText("Datos Incorrectos.")
+            self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
+            self.mensaje_emergente.exec()
+            self.usuario_input.clear()
+            self.Contra_input.clear()
 
     def cambiar_pantalla(self):
         self.contenedor_pre_registro.removeWidget(
@@ -924,10 +876,6 @@ class inicio (QWidget):
 
         self.widget_cuerpo = self.generar_cursos(
             self._boton_cerrar_sesion, self.boton_crear_curso)
-
-        # Establecer la política de tamaño del widget_cuerpo
-        # self.widget_cuerpo.setSizePolicy(
-        #     QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
