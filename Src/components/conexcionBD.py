@@ -209,3 +209,41 @@ def obtener_estudiantes_de_una_clase(clase_id, estudiantes):
     cursor.close()
     conexion.close()
     return estudiantes
+
+
+def eliminar_datos_por_clase_id(clase_id):
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Eliminar estudiantes de la clase especificada
+    cursor.execute('DELETE FROM ESTUDIANTES WHERE Clase_ID = ?', (clase_id,))
+    conexion.commit()  # Confirmar los cambios
+
+    # Verificar si existen clases sin estudiantes
+    cursor.execute(
+        'SELECT COUNT(*) FROM CLASES WHERE ID_Clase NOT IN (SELECT Clase_ID FROM ESTUDIANTES)')
+    clases_sin_estudiantes = cursor.fetchone()[0]
+
+    if clases_sin_estudiantes:
+        # Eliminar clases sin estudiantes
+        cursor.execute(
+            'DELETE FROM CLASES WHERE ID_Clase NOT IN (SELECT Clase_ID FROM ESTUDIANTES)')
+        conexion.commit()
+
+    # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()
+
+
+def editar_contrasena_profesor():
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Editar la contraseña del profesor
+    cursor.execute(
+        'UPDATE PROFESORES SET Contraseña = ? WHERE ID_Profesor = ?', ("123", 1))
+    conexion.commit()  # Confirmar los cambios
+
+    # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()

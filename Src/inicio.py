@@ -219,18 +219,6 @@ class inicio (QWidget):
                                     }""")
         scroll_area.setWidget(widget_scroll)
 
-        # materias = [
-        #     "Sistemas Inteligentes AR",
-        #     "Fundamentos de computacion paralela y distribuida AR",
-        #     "ingenieria de Software I BR",
-        #     "REDES BR",
-        #     "Fundamentos de programacion AR",
-        #     "Sistemas Inteligentes AR",
-        #     "Fundamentos de computacion paralela y distribuida AR",
-        #     "ingenieria de Software I BR",
-        #     "REDES BR",
-        #     "Fundamentos de programacion AR"
-        # ]
         contenedor_registro = QVBoxLayout()
         contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         widget_contenedor_registro = QWidget()
@@ -280,10 +268,12 @@ class inicio (QWidget):
                                     min-height: 50px;
                                     margin: 1px 1px;
                                     }}""")
-        boton_editar = QPushButton("Editar")
+        boton_editar = QPushButton("Borrar")
         boton_asistencia = QPushButton("Asistencia")
         botonE, botonA = self.crear_botones(
             boton_editar, boton_asistencia)
+        botonE.clicked.connect(
+            lambda checked, id=materia: self.borrar_materias(id))
         botonA.clicked.connect(self.marcar_asistencia)
 
         primer_materia.addWidget(
@@ -882,17 +872,11 @@ class inicio (QWidget):
         nombreEstudiante = self.input_nombre_completo.text()
         documentoEstudiante = self.input_documento.text()
         carreraEstudiante = self.input_carrera.text()
-        # print(nombreEstudiante)
-        # print(documentoEstudiante)
-        # print(carreraEstudiante)
 
         datos_estudiante = [nombreEstudiante,
                             documentoEstudiante, carreraEstudiante]
 
         self.estudiantes.append(datos_estudiante)
-        # for estudiante in self.estudiantes:
-        #     print(estudiante)
-        pass
 
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? funcion boton registrar del Login
@@ -923,6 +907,15 @@ class inicio (QWidget):
             self.boton_cancelar3, self.boton_asistio, self.boton_pdf)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag4)
         self.showMaximized()
+
+    # ? Bototn Editar en las materias
+    def borrar_materias(self, materia):
+        print(materia)
+        id_clase_borrar = conexcionBD.obtener_id_clase(materia)
+        conexcionBD.eliminar_datos_por_clase_id(id_clase_borrar)
+        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
+        self.widget_cuerpo.hide()
+        self.cambiar_pantalla()
 
     # ? Funcion del boton crear curso
     def crear_curso(self):
