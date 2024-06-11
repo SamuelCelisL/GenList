@@ -1,5 +1,4 @@
 import os
-import shutil
 import numpy as np
 from sklearn import svm
 import pickle
@@ -29,4 +28,4 @@ def train_model():
     with open(modelPath, 'wb') as f:
         pickle.dump(clf, f)
 
-    # shutil.rmtree(dataPath)
+    

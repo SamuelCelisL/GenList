@@ -1,6 +1,8 @@
 import cv2
 import os
 import numpy as np
+import json
+import shutil
 import pickle
 import sys
 from PyQt6.QtCore import Qt
@@ -26,6 +28,16 @@ class inicio (QWidget):
         self.is_recognizing = False
         self.model = None
         self.clf = None
+
+        self.current_dir = os.path.dirname(os.path.realpath(__file__))
+        self.project_dir = os.path.dirname(self.current_dir)
+        self.dataPath = None
+        self.person_data_file_path = os.path.join(self.project_dir, 'src', 'JSON', 'estudiantes.json')
+        if os.path.exists(self.person_data_file_path):
+            self.person_data_file = self.person_data_file_path
+        else:
+            self.person_data_file = None
+        
         self.InicializarUI()
 
     def InicializarUI(self):
@@ -947,6 +959,7 @@ class inicio (QWidget):
     # ? Boton Asistencia en las materias pag2
     def marcar_asistencia(self, materia):
         self.materia_asistencia = materia
+        self.descargarJSON()
         self.descargarModel()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
@@ -989,7 +1002,10 @@ class inicio (QWidget):
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
         nombre_clase = self.materia_input.text()
-        conexcionBD.insertar_clase(nombre_clase, self.profesor_id)
+        json_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'JSON', 'estudiantes.json')
+        with open(json_path, 'r') as f:
+            datos = f.read()
+        conexcionBD.insertar_clase(nombre_clase, self.profesor_id, datos)
         clase_id = conexcionBD.obtener_id_clase(nombre_clase)
         for i in range(len(self.estudiantes)):
             conexcionBD.insertar_estudiante(int(
@@ -1045,12 +1061,18 @@ class inicio (QWidget):
         pickled_data = pickle.dumps(data)
         return pickled_data
 
+    def descargarJSON(self):
+        id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
+        datos = conexcionBD.obtener_json_clase(id_clase)
+        print(datos)
+
     def descargarModel(self):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
         pickled_data = conexcionBD.obtener_datos_biometricos(id_clase)
         data = pickle.loads(pickled_data)
+        model_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Models', 'ModeloFaceFrontalData2024.pkl')
         # Guarda los datos en un archivo .pkl
-        with open('ModeloFaceFrontalData2024.pkl', 'wb') as f:
+        with open(model_path, 'wb') as f:
             pickle.dump(data, f)
 
     # ? Captura de imagenes
@@ -1065,6 +1087,19 @@ class inicio (QWidget):
     # ? Entrenado de Modelo
     def train(self):
         train_model.train_model()
+        self.dataPath = os.path.join(os.path.dirname(
+            os.path.dirname(os.path.realpath(__file__))), 'src', 'Data')
+        self.person_data_file = os.path.join(self.project_dir, 'src', 'JSON', 'estudiantes.json')
+        # Listar las carpetas en el directorio Data
+        peopleList = os.listdir(self.dataPath)
+        # Crear un diccionario con la correspondencia entre índices y nombres de carpetas
+        person_data = {str(index): person for index, person in enumerate(peopleList)}
+        # Guardar el diccionario en un archivo JSON
+        with open(self.person_data_file, 'w') as f:
+            json.dump(person_data, f, indent=4)
+        
+        
+        shutil.rmtree(self.dataPath)
         # QtWidgets.QMessageBox.information(self, "Entrenamiento", "Modelo entrenado y guardado exitosamente.")
 
     # ? Iniciador de reconocimiento
@@ -1148,10 +1183,9 @@ class inicio (QWidget):
 
     # ? Obtencion de Persona
     def get_person_name(self, label):
-        dataPath = os.path.join(os.path.dirname(
-            os.path.dirname(os.path.realpath(__file__))), 'src', 'Data')
-        peopleList = os.listdir(dataPath)
-        return peopleList[label]
+        with open(self.person_data_file, 'r') as f:
+            person_data = json.load(f)
+        return person_data[str(label)]
 
     # ? Apagador de Camara
     def closeEvent(self, event):

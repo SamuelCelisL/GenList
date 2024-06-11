@@ -30,7 +30,7 @@ def validar_credenciales_profesor(documento_profesor, contrasena):
     # Verificar si la contraseña es correcta para el documento proporcionado
     cursor.execute('''
         SELECT COUNT(*) FROM PROFESORES
-        WHERE Documento_Profesor = ? AND Contraseña = ?
+        WHERE Documento_Profesor = ? AND Contrasena = ?
     ''', (documento_profesor, contrasena))
     contrasena_valida = cursor.fetchone()[0] > 0
 
@@ -65,15 +65,15 @@ def obtener_id_profesor(documento_profesor):
 #!HOJA DE WORD 2
 
 
-def insertar_clase(nombre_clase, profesor_id):
+def insertar_clase(nombre_clase, profesor_id, datos):
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()
 
     # Preparar la sentencia SQL para insertar la clase
     cursor.execute('''
-        INSERT INTO CLASES (Nombre_Clase, Profesor_ID)
-        VALUES (?, ?)
-    ''', (nombre_clase, profesor_id))
+        INSERT INTO CLASES (Nombre_Clase, Profesor_ID, Datos_clase)
+        VALUES (?, ?, ?)
+    ''', (nombre_clase, profesor_id, datos))
 
     # Guardar los cambios en la base de datos
     conexion.commit()
@@ -103,6 +103,29 @@ def obtener_id_clase(nombre_clase):
     cursor.close()
     conexion.close()
     return clase_id
+
+def obtener_json_clase(id_clase):
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Buscar el ID_Clase en la base de datos
+    cursor.execute('''
+        SELECT Datos_clase
+        FROM CLASES
+        WHERE ID_Clase = ?
+    ''', (id_clase,))
+    resultado = cursor.fetchone()
+
+    # Si se encontró un registro, extraer el ID_Clase
+    if resultado:
+        datos = resultado[0]
+    else:
+        datos = None
+
+    # Retornar el ID_Clase o None
+    cursor.close()
+    conexion.close()
+    return datos
 
 #!Hoja de WORD 3
 
@@ -260,7 +283,7 @@ def editar_contrasena_profesor():
 
     # Editar la contraseña del profesor
     cursor.execute(
-        'UPDATE PROFESORES SET Contraseña = ? WHERE ID_Profesor = ?', ("123", 1))
+        'UPDATE PROFESORES SET Contrasena = ? WHERE ID_Profesor = ?', ("123", 1))
     conexion.commit()  # Confirmar los cambios
 
     # Cerrar la conexión a la base de datos
@@ -275,7 +298,7 @@ def crear_profesor():
     cursor = conexion.cursor()
 
     # Insertar los datos del nuevo profesor
-    cursor.execute('INSERT INTO PROFESORES (Documento_Profesor, Contraseña, Nombre_Profesor) VALUES (?, ?, ?)',
+    cursor.execute('INSERT INTO PROFESORES (Documento_Profesor, Contrasena, Nombre_Profesor) VALUES (?, ?, ?)',
                    (123, "123", "JP Admin"))
     conexion.commit()  # Confirmar los cambios
 
