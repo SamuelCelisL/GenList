@@ -7,12 +7,9 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton,
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
-from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtGui import QIcon
 from PyQt6 import QtWidgets, QtGui, QtCore
-from components import login, conexcionBD
-from components import capture_and_save
-from components import train_model
-from components import recognize
+from components import login, conexcionBD, capture_and_save, train_model, recognize
 
 
 class inicio (QWidget):
