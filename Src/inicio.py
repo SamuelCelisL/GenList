@@ -366,7 +366,8 @@ class inicio (QWidget):
                                     border: 1px solid black;
                                     border-radius: 8px;
                                     margin: 1px 1px;
-
+                                    max-width: {anchoContenedor}px;
+                                    min-width: {anchoContenedor}px;
                                     }}""")
         # widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
         #                                            QSizePolicy.Policy.Expanding)
@@ -428,6 +429,9 @@ class inicio (QWidget):
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         # anchoTituloTabla = int((self.ventana.width()*0.50))
         anchoTituloTabla = int(anchoTabla - 12)
+        anchoTituloTabla1 = int(anchoTabla/3)
+        # header = table.horizontalHeader()
+        # header.resizeSection(1, anchoTituloTabla1)
         table.setHorizontalHeaderLabels(
             ["Nombres y Apellidos", "Documento", "Carrera"])
         table.horizontalHeader().setStyleSheet(f"""
@@ -437,6 +441,7 @@ class inicio (QWidget):
                         font-weight: bold;
                         border: none;
                         border-radius: 0px;
+                        min-height: 30px;
                         min-width: {anchoTituloTabla}px;
                         max-width: {anchoTituloTabla}px; 
 
@@ -497,6 +502,7 @@ class inicio (QWidget):
 
         row_labels = [str(i+1) for i in range(table.rowCount())]
         table.setVerticalHeaderLabels(row_labels)
+        # header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
         table.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch)
         table.verticalHeader().setSectionResizeMode(

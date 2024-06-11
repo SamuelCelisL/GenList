@@ -136,6 +136,7 @@ def insertar_datos_biometricos(datos_biometricos, clase_id):
     cursor.close()
     conexion.close()
 
+
 def obtener_datos_biometricos(clase_id):
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()
@@ -164,7 +165,6 @@ def obtener_nombres_clases(profesor_id):
     cursor = conexion.cursor()
 
     # Buscar los nombres de las clases del profesor
-    print(profesor_id)
     cursor.execute('''
         SELECT Nombre_Clase
         FROM CLASES
@@ -177,7 +177,6 @@ def obtener_nombres_clases(profesor_id):
     for registro in resultado:
         nombres_clases.append(registro[0])
 
-    print(nombres_clases)
     # Retornar el array con los nombres de las clases
     cursor.close()
     conexion.close()
@@ -269,6 +268,8 @@ def editar_contrasena_profesor():
     conexion.close()
 
 # ? IMPORTANTE PARA PRESENTAR
+
+
 def crear_profesor():
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()
@@ -278,6 +279,6 @@ def crear_profesor():
                    (123, "123", "JP Admin"))
     conexion.commit()  # Confirmar los cambios
 
-    #Cerrar la conexión a la base de datos 
+    # Cerrar la conexión a la base de datos
     cursor.close()
     conexion.close()
