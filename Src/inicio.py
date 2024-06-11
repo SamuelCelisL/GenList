@@ -1068,6 +1068,12 @@ class inicio (QWidget):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
         datos = conexcionBD.obtener_json_clase(id_clase)
         print(datos)
+        # Convertir la cadena JSON a un diccionario
+        datos_dict = json.loads(datos)
+
+        # Escribir los datos en el archivo JSON sin indentación
+        with open(self.person_data_file_path, 'w') as f:
+            json.dump(datos_dict, f, indent=None)
 
     def descargarModel(self):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
@@ -1187,7 +1193,8 @@ class inicio (QWidget):
     # ? Obtencion de Persona
     def get_person_name(self, label):
         with open(self.person_data_file, 'r') as f:
-            person_data = json.load(f)
+            json_string = f.read()
+        person_data = json.loads(json_string)
         return person_data[str(label)]
 
     # ? Apagador de Camara
