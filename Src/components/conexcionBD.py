@@ -136,6 +136,26 @@ def insertar_datos_biometricos(datos_biometricos, clase_id):
     cursor.close()
     conexion.close()
 
+def obtener_datos_biometricos(clase_id):
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    cursor.execute('''
+        SELECT Datos_Biometricos
+        FROM DATOS_BIOMETRICOS
+        WHERE Clase_ID = ?
+    ''', (clase_id,))
+    resultado = cursor.fetchone()
+
+    if resultado:
+        datos_biometricos = resultado[0]
+    else:
+        datos_biometricos = None
+
+    cursor.close()
+    conexion.close()
+    return datos_biometricos
+
 #! Funciones de WhatsApp
 
 
@@ -245,5 +265,19 @@ def editar_contrasena_profesor():
     conexion.commit()  # Confirmar los cambios
 
     # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()
+
+# ? IMPORTANTE PARA PRESENTAR
+def crear_profesor():
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Insertar los datos del nuevo profesor
+    cursor.execute('INSERT INTO PROFESORES (Documento_Profesor, Contraseña, Nombre_Profesor) VALUES (?, ?, ?)',
+                   (123, "123", "JP Admin"))
+    conexion.commit()  # Confirmar los cambios
+
+    #Cerrar la conexión a la base de datos 
     cursor.close()
     conexion.close()
