@@ -991,6 +991,9 @@ class inicio (QWidget):
 
     # ? Funcion boton cancelar pag3
     def cancelar(self):
+        self.dataPath = os.path.join(os.path.dirname(
+            os.path.dirname(os.path.realpath(__file__))), 'src', 'Data')
+        shutil.rmtree(self.dataPath)
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
