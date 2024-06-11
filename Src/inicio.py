@@ -366,8 +366,7 @@ class inicio (QWidget):
                                     border: 1px solid black;
                                     border-radius: 8px;
                                     margin: 1px 1px;
-                                    max-width: {anchoContenedor}px;
-                                    min-width: {anchoContenedor}px;
+
                                     }}""")
         # widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
         #                                            QSizePolicy.Policy.Expanding)
@@ -420,30 +419,35 @@ class inicio (QWidget):
         table = QTableWidget()
         table.setFixedHeight(350)
         # table.setFixedWidth(anchoTabla)
-        table.setRowCount(5)  # Establece el número de filas
+        table.setRowCount(6)  # Establece el número de filas
         table.setColumnCount(3)  # Establece el número de columnas
-        # table.setSizePolicy(QSizePolicy.Policy.Expanding,
-        #                     QSizePolicy.Policy.Expanding)
+        table.setSizePolicy(QSizePolicy.Policy.Expanding,
+                            QSizePolicy.Policy.Expanding)
         table.setEnabled(False)
         table.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        anchoTituloTabla = int((self.ventana.width()*0.173))
+        # anchoTituloTabla = int((self.ventana.width()*0.50))
+        anchoTituloTabla = int(anchoTabla - 12)
         table.setHorizontalHeaderLabels(
             ["Nombres y Apellidos", "Documento", "Carrera"])
-        table.horizontalHeader().setStyleSheet("""
-                    QHeaderView::section {
+        table.horizontalHeader().setStyleSheet(f"""
+                    QHeaderView::section {{
                         background-color: #DBE5D9;
                         color: black;
                         font-weight: bold;
                         border: none;
                         border-radius: 0px;
+                        min-width: {anchoTituloTabla}px;
+                        max-width: {anchoTituloTabla}px; 
 
-                    }
-                    QHeaderView {
+                    }}
+                    QHeaderView {{
                         border: none;
                         border-radius: 0px;
+                        min-width: {anchoTituloTabla}px;
+                        max-width: {anchoTituloTabla}px; 
 
-                    }
+                    }}
                 """)
         table.verticalHeader().setStyleSheet(f"""
                     QHeaderView::section {{
@@ -453,14 +457,14 @@ class inicio (QWidget):
                         border: none;
                         border-radius: 0px;
                         min-height: 30px;
-                        min-width: {20}px;
-                        max-width: {20}px;
+                        min-width: {10}px;
+                        max-width: {10}px;
                     }}
                     QHeaderView {{
                         border: none;
                         border-radius: 0px;
-                        min-width: {20}px;
-                        max-width: {20}px;
+                        min-width: {10}px;
+                        max-width: {10}px;
                     }}
                 """)
         table.setStyleSheet(f"""
@@ -477,6 +481,8 @@ class inicio (QWidget):
                     color: black;
                     border: 1px solid black;
                     border-radius: 0px;
+                    min-width: {anchoTituloTabla}px;
+                    max-width: {anchoTituloTabla}px;               
                           
                 }}
                 QTableWidget::item:selected {{
@@ -486,13 +492,13 @@ class inicio (QWidget):
                             """)
 
         # table.setColumnWidth(0, anchoTituloTabla)
-        table.setColumnWidth(1, anchoTituloTabla)
-        table.setColumnWidth(2, anchoTituloTabla)
+        # table.setColumnWidth(1, anchoTituloTabla)
+        # table.setColumnWidth(2, anchoTituloTabla)
 
         row_labels = [str(i+1) for i in range(table.rowCount())]
         table.setVerticalHeaderLabels(row_labels)
         table.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeMode.Fixed)
+            QHeaderView.ResizeMode.Stretch)
         table.verticalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
 
