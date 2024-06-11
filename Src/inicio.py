@@ -32,12 +32,13 @@ class inicio (QWidget):
         self.current_dir = os.path.dirname(os.path.realpath(__file__))
         self.project_dir = os.path.dirname(self.current_dir)
         self.dataPath = None
-        self.person_data_file_path = os.path.join(self.project_dir, 'src', 'JSON', 'estudiantes.json')
+        self.person_data_file_path = os.path.join(
+            self.project_dir, 'src', 'JSON', 'estudiantes.json')
         if os.path.exists(self.person_data_file_path):
             self.person_data_file = self.person_data_file_path
         else:
             self.person_data_file = None
-        
+
         self.InicializarUI()
 
     def InicializarUI(self):
@@ -46,6 +47,7 @@ class inicio (QWidget):
         self.profesor_id = None
         self.clase_id = None
         self.estudiantes = []
+        self.Titulomateria = None
         self.materia_asistencia = None
         self.setWindowTitle("Login GenList")
         self.setWindowIcon(QIcon('src/images/logo2.ico'))
@@ -408,8 +410,11 @@ class inicio (QWidget):
                             max-width: {anchomateria}px;
                             min-width: {anchomateria}px;
         }}""")
-        self.materia_input.setPlaceholderText(
-            "Ejemplo: Sistemas Inteligentes AR")
+        if self.Titulomateria is None:
+            self.materia_input.setPlaceholderText(
+                "Ejemplo: Sistemas Inteligentes AR")
+        else:
+            self.materia_input.setText(self.Titulomateria)
         contenedor_cabeza = QHBoxLayout()
         contenedor_cabeza.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         widget_contenedor_cabeza = QWidget()
@@ -993,7 +998,12 @@ class inicio (QWidget):
     def cancelar(self):
         self.dataPath = os.path.join(os.path.dirname(
             os.path.dirname(os.path.realpath(__file__))), 'src', 'Data')
-        shutil.rmtree(self.dataPath)
+        if os.path.exists(self.dataPath):
+            shutil.rmtree(self.dataPath)
+        else:
+            pass
+        self.estudiantes = []
+        self.materia_input = None
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
@@ -1005,7 +1015,8 @@ class inicio (QWidget):
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
         nombre_clase = self.materia_input.text()
-        json_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'JSON', 'estudiantes.json')
+        json_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), 'JSON', 'estudiantes.json')
         with open(json_path, 'r') as f:
             datos = f.read()
         conexcionBD.insertar_clase(nombre_clase, self.profesor_id, datos)
@@ -1022,6 +1033,7 @@ class inicio (QWidget):
 
     # ?Funcion boton agregar estudiantes pag3
     def b_llenar_curso(self):
+        self.Titulomateria = self.materia_input.text()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.widget_cuerpo_pag3 = self.llenar_curso(
@@ -1079,7 +1091,8 @@ class inicio (QWidget):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
         pickled_data = conexcionBD.obtener_datos_biometricos(id_clase)
         data = pickle.loads(pickled_data)
-        model_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Models', 'ModeloFaceFrontalData2024.pkl')
+        model_path = os.path.join(os.path.dirname(os.path.realpath(
+            __file__)), 'Models', 'ModeloFaceFrontalData2024.pkl')
         # Guarda los datos en un archivo .pkl
         with open(model_path, 'wb') as f:
             pickle.dump(data, f)
@@ -1098,16 +1111,17 @@ class inicio (QWidget):
         train_model.train_model()
         self.dataPath = os.path.join(os.path.dirname(
             os.path.dirname(os.path.realpath(__file__))), 'src', 'Data')
-        self.person_data_file = os.path.join(self.project_dir, 'src', 'JSON', 'estudiantes.json')
+        self.person_data_file = os.path.join(
+            self.project_dir, 'src', 'JSON', 'estudiantes.json')
         # Listar las carpetas en el directorio Data
         peopleList = os.listdir(self.dataPath)
         # Crear un diccionario con la correspondencia entre índices y nombres de carpetas
-        person_data = {str(index): person for index, person in enumerate(peopleList)}
+        person_data = {str(index): person for index,
+                       person in enumerate(peopleList)}
         # Guardar el diccionario en un archivo JSON
         with open(self.person_data_file, 'w') as f:
             json.dump(person_data, f, indent=4)
-        
-        
+
         shutil.rmtree(self.dataPath)
         # QtWidgets.QMessageBox.information(self, "Entrenamiento", "Modelo entrenado y guardado exitosamente.")
 
