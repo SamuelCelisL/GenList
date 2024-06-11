@@ -5,7 +5,7 @@ from PyQt6.QtGui import QPixmap
 from PyQt6 import QtCore
 
 
-def generar_formulario_login(boton_registrar, usuario_input, Contra_input):
+def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton_crear_usuario):
     empresa = QPixmap('src/images/logo2Png.png')
 
     etiqueta_imagen = QLabel()
@@ -73,6 +73,24 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input):
                     background-color: #222222;
                 }
             """)
+    boton_crear_usuario.setStyleSheet("""
+                QPushButton {
+                    background-color: #444847;
+                    color: white;
+                    border-radius: 5px;
+                    padding: 5px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    min-width: 100px;
+                    max-width: 100px;
+                }
+                QPushButton:hover {
+                    background-color: #555555;
+                }
+                QPushButton:pressed {
+                    background-color: #222222;
+                }
+            """)
 
     contenedor_registro = QVBoxLayout()
     contenedor_registro.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -98,9 +116,11 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input):
         Contra_input)
     contenedor_registro.addWidget(
         boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
+    contenedor_registro.addWidget(
+        boton_crear_usuario, alignment=Qt.AlignmentFlag.AlignCenter)
 
     return widget_contenedor_registro
 
 
-if __name__ == '__main__':
-    pass
+# if __name__ == '__main__':
+#     pass

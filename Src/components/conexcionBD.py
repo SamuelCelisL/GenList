@@ -104,6 +104,7 @@ def obtener_id_clase(nombre_clase):
     conexion.close()
     return clase_id
 
+
 def obtener_json_clase(id_clase):
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()
@@ -299,7 +300,7 @@ def crear_profesor():
 
     # Insertar los datos del nuevo profesor
     cursor.execute('INSERT INTO PROFESORES (Documento_Profesor, Contrasena, Nombre_Profesor) VALUES (?, ?, ?)',
-                   (123, "123", "JP Admin"))
+                   (1127349566, "123", "Chacon Admin"))
     conexion.commit()  # Confirmar los cambios
 
     # Cerrar la conexión a la base de datos

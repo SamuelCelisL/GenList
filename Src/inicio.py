@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
 from PyQt6.QtGui import QIcon
 from PyQt6 import QtWidgets, QtGui, QtCore
-from components import login, conexcionBD, capture_and_save, train_model, recognize
+from components import login, new_usuario, conexcionBD, capture_and_save, train_model, recognize
 
 
 class inicio (QWidget):
@@ -143,21 +143,29 @@ class inicio (QWidget):
         self.contenedor_pre_registro.addWidget(
             self.widget_contenedor_pre_pre_registro)
 
-        # CAMBIO DE PANTALLA CENTRAL
-        # boton login
-        self.boton_registrar = QPushButton("REGISTRAR")
+        #! ELEMENTOS LOGIN ↓↓↓
+        self.boton_registrar = QPushButton("INGRESAR")
+        self.boton_crear_usuario = QPushButton("REGISTRARSE")
         self.usuario_input = QLineEdit()
         self.Contra_input = QLineEdit()
         self.login_widget = login.generar_formulario_login(
-            self.boton_registrar, self.usuario_input, self.Contra_input)
-
+            self.boton_registrar, self.usuario_input, self.Contra_input, self.boton_crear_usuario)
         self.contenedor_pre_pre_registro.addWidget(
             self.login_widget)
         self.mensaje_emergente = QMessageBox()
+        # todo ELEMENTOS pag Crear usuario ↓↓↓
+        self.boton_volver_login = QPushButton("Cancelar")
+        self.boton_confirmar_usuario = QPushButton("Crear")
+        self.crear_usuario_input = QLineEdit()
+        self.crear_contra_input = QLineEdit()
+        self.confirmar_contra_input = QLineEdit()
+        # ? llamado funciones botones LOGIN
         self.boton_registrar.clicked.connect(self.haz_dado_click)
+        self.boton_crear_usuario.clicked.connect(self.crear_usuario)
+        self.boton_volver_login.clicked.connect(self.cerrar_crear_usuario)
         # self.boton_registrar.clicked.connect(self.cambiar_pantalla)
 
-        #! Creacion de los botones de las barras de las paginas
+        #! Creacion de los botones de las barras de las paginas ↓↓↓‼
         # todo botones pag2
         self._boton_cerrar_sesion = QPushButton("Cerrar Sesion")
         self._boton_cerrar_sesion.clicked.connect(self.volver_inicio)
@@ -456,6 +464,7 @@ class inicio (QWidget):
                         border: none;
                         border-radius: 0px;
                         min-height: 30px;
+                        max-height:30px;
                         min-width: {anchoTituloTabla}px;
                         max-width: {anchoTituloTabla}px; 
 
@@ -463,6 +472,8 @@ class inicio (QWidget):
                     QHeaderView {{
                         border: none;
                         border-radius: 0px;
+                        min-height: 30px;
+                        max-height:30px;
                         min-width: {anchoTituloTabla}px;
                         max-width: {anchoTituloTabla}px; 
 
@@ -941,7 +952,7 @@ class inicio (QWidget):
         self.estudiantes.append(datos_estudiante)
 
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
-    # ? funcion boton registrar del Login pag1
+    # ? funcion boton INGRESAR del LOGIN pag1
     def cambiar_pantalla(self):
         self.contenedor_pre_registro.removeWidget(
             self.widget_contenedor_pre_pre_registro)
@@ -953,6 +964,18 @@ class inicio (QWidget):
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
         self.showMaximized()
+
+    # ? Funcion boton Registrarse del LOGING pag1
+    def crear_usuario(self):
+        self.segunda_ventana = new_usuario.crear_usuario(self.boton_volver_login, self.boton_confirmar_usuario,
+                                                         self.crear_usuario_input, self.crear_contra_input, self.confirmar_contra_input)
+        self.segunda_ventana.show()
+
+    def cerrar_crear_usuario(self):
+        self.crear_usuario_input.setText("")
+        self.crear_contra_input.setText("")
+        self.confirmar_contra_input.setText("")
+        self.segunda_ventana.close()
 
     # ?funcion boton cerrar sesion pag2
     def volver_inicio(self):
@@ -1028,8 +1051,8 @@ class inicio (QWidget):
 
         conexcionBD.insertar_datos_biometricos(datos_biometricos, clase_id)
         self.estudiantes = []
+        self.materia_input = None
         self.cambiar_pantalla()
-        # self.widget_cuerpo.show()
 
     # ?Funcion boton agregar estudiantes pag3
     def b_llenar_curso(self):
@@ -1079,7 +1102,6 @@ class inicio (QWidget):
     def descargarJSON(self):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
         datos = conexcionBD.obtener_json_clase(id_clase)
-        print(datos)
         # Convertir la cadena JSON a un diccionario
         datos_dict = json.loads(datos)
 
