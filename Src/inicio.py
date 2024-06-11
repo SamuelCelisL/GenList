@@ -15,7 +15,6 @@ from components import train_model
 from components import recognize
 
 
-
 class inicio (QWidget):
 
     def __init__(self):
@@ -24,7 +23,7 @@ class inicio (QWidget):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_frame)
         self.cameraLabel = QtWidgets.QLabel()
-        
+
         self.cap = None
         self.is_capturing = False
         self.is_recognizing = False
@@ -212,7 +211,6 @@ class inicio (QWidget):
 
     def generar_cursos(self, boton_cerrar, boton_crear_curso):
 
-        print(self.profesor_id)
         materias = conexcionBD.obtener_nombres_clases(self.profesor_id)
         general = QVBoxLayout()
         widget_general = QWidget()
@@ -295,7 +293,8 @@ class inicio (QWidget):
             boton_editar, boton_asistencia)
         botonE.clicked.connect(
             lambda checked, id=materia: self.borrar_materias(id))
-        botonA.clicked.connect(lambda checked, id=materia: self.marcar_asistencia(id))
+        botonA.clicked.connect(
+            lambda checked, id=materia: self.marcar_asistencia(id))
 
         primer_materia.addWidget(
             nombre_materia, alignment=Qt.AlignmentFlag.AlignLeft)
@@ -624,7 +623,6 @@ class inicio (QWidget):
         contenedor_informacion.addWidget(carrera)
         contenedor_informacion.addWidget(self.input_carrera)
 
-        
         contenedor_camara = QHBoxLayout()
 
         widget_contenedor_camara = QWidget()
@@ -635,7 +633,7 @@ class inicio (QWidget):
                                     border-radius: 9px;
                                     margin: 1px 1px;
                                     }""")
-        
+
         contenedor_camara.addWidget(self.cameraLabel)
 
         contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
@@ -657,7 +655,7 @@ class inicio (QWidget):
                                     }}""")
         contenedro_pag3.addWidget(
             auxiliar, alignment=Qt.AlignmentFlag.AlignHCenter)
-        
+
         return widget_contendor_pag3
 
     def tomar_asistencia(self, boton_cancelar3, boton_asistio, boton_pdf):
@@ -706,7 +704,6 @@ class inicio (QWidget):
             recomendacion, alignment=Qt.AlignmentFlag.AlignHCenter)
         contenedor_toma_asistencia.addWidget(
             widget_contenedor_cargar_camara, alignment=Qt.AlignmentFlag.AlignHCenter)
-        
 
         contenedor_pag4.addWidget(widget_contenedor_toma_asistencia)
         contenedor_pag4.addWidget(self.barra_botones_pag2(
@@ -943,7 +940,6 @@ class inicio (QWidget):
 
     # ? Bototn Editar en las materias
     def borrar_materias(self, materia):
-        print(materia)
         id_clase_borrar = conexcionBD.obtener_id_clase(materia)
         conexcionBD.eliminar_datos_por_clase_id(id_clase_borrar)
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
@@ -1030,7 +1026,7 @@ class inicio (QWidget):
         # Serializa los datos
         pickled_data = pickle.dumps(data)
         return pickled_data
-    
+
     def descargarModel(self):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
         pickled_data = conexcionBD.obtener_datos_biometricos(id_clase)
@@ -1047,18 +1043,18 @@ class inicio (QWidget):
         self.is_capturing = True
         self.personName = personName
         self.model = cv2.dnn.readNetFromTorch('openface.nn4.small2.v1.t7')
-    
-    # ? Entrenado de Modelo 
+
+    # ? Entrenado de Modelo
     def train(self):
         train_model.train_model()
         # QtWidgets.QMessageBox.information(self, "Entrenamiento", "Modelo entrenado y guardado exitosamente.")
-    
+
     # ? Iniciador de reconocimiento
     def start_recognition(self):
         self.start_camera()
         self.is_recognizing = True
         self.load_model()
-    
+
     # ? Identificador de Personas para Asistencia
     def identify_person(self):
         if self.is_recognizing and self.cap:
@@ -1071,32 +1067,35 @@ class inicio (QWidget):
                     else:
                         personName = self.get_person_name(label)
                         message = f'Persona reconocida: {personName}'
-                    QtWidgets.QMessageBox.information(self, "Reconocimiento", message)
+                    QtWidgets.QMessageBox.information(
+                        self, "Reconocimiento", message)
                     return
-    
+
     # ? Iniciador de Camara
     def start_camera(self):
         if self.cap is None:
             self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         self.timer.start(30)
-    
+
     # ? Detencion de Camara
     def stop_camera(self):
         self.timer.stop()
         if self.cap is not None:
             self.cap.release()
             self.cap = None
-    
+
     # ? Actualizacion de Frame osea imagen
     def update_frame(self):
         ret, frame = self.cap.read()
         if ret:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            image = QtGui.QImage(frame, frame.shape[1], frame.shape[0], frame.strides[0], QtGui.QImage.Format.Format_RGB888)
+            image = QtGui.QImage(
+                frame, frame.shape[1], frame.shape[0], frame.strides[0], QtGui.QImage.Format.Format_RGB888)
             self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
-            
+
             if self.is_capturing:
-                capture_and_save.capture_and_save(self.personName, self.cameraLabel, self.model)
+                capture_and_save.capture_and_save(
+                    self.personName, self.cameraLabel, self.model)
                 self.is_capturing = False
             elif self.is_recognizing:
                 self.display_recognition(frame)
@@ -1108,33 +1107,39 @@ class inicio (QWidget):
         results = recognize.recognize_face(frame, self.clf, self.model)
         for (x, y, w, h, label) in results:
             if label == 'Desconocido':
-                cv2.putText(frame, 'Desconocido', (x, y-20), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 1, cv2.LINE_AA)
+                cv2.putText(frame, 'Desconocido', (x, y-20),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 1, cv2.LINE_AA)
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
             else:
                 personName = str(self.get_person_name(label))
-                cv2.putText(frame, personName, (x, y-20), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
+                cv2.putText(frame, personName, (x, y-20),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        image = QtGui.QImage(frame, frame.shape[1], frame.shape[0], frame.strides[0], QtGui.QImage.Format.Format_RGB888)
+        image = QtGui.QImage(
+            frame, frame.shape[1], frame.shape[0], frame.strides[0], QtGui.QImage.Format.Format_RGB888)
         self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
-    
+
     # ? Carga modelo
     def load_model(self):
-        model_path = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'src','Models', 'ModeloFaceFrontalData2024.pkl')
+        model_path = os.path.join(os.path.dirname(os.path.dirname(
+            os.path.realpath(__file__))), 'src', 'Models', 'ModeloFaceFrontalData2024.pkl')
         with open(model_path, 'rb') as f:
             self.clf = pickle.load(f)
         self.model = cv2.dnn.readNetFromTorch('openface.nn4.small2.v1.t7')
-    
-    #? Obtencion de Persona
+
+    # ? Obtencion de Persona
     def get_person_name(self, label):
-        dataPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'src','Data')
+        dataPath = os.path.join(os.path.dirname(
+            os.path.dirname(os.path.realpath(__file__))), 'src', 'Data')
         peopleList = os.listdir(dataPath)
         return peopleList[label]
-    
+
     # ? Apagador de Camara
     def closeEvent(self, event):
         self.stop_camera()
         event.accept()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
