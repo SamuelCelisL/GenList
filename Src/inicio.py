@@ -44,6 +44,7 @@ class inicio (QWidget):
         self.showMaximized()
         self.show()
 
+    #! Funcion de inicio de la aplicacion, en esta carga el LOGIN ↓↓↓
     def generar_formulario(self):
 
         # Creacion de los tamaños de los 3 LAYOUTS DE LA APLICACION
@@ -146,12 +147,12 @@ class inicio (QWidget):
         # self.boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         #! Creacion de los botones de las barras de las paginas
-        # todo botones pag1
+        # todo botones pag2
         self._boton_cerrar_sesion = QPushButton("Cerrar Sesion")
         self._boton_cerrar_sesion.clicked.connect(self.volver_inicio)
         self.boton_crear_curso = QPushButton("Crear Curso")
         self.boton_crear_curso.clicked.connect(self.crear_curso)
-        # todo botones pag2
+        # todo botones pag3
         self.boton_cancelar = QPushButton("Cancelar")
         self.boton_cancelar.clicked.connect(self.cancelar)
         self.boton_agregar_estudiante = QPushButton("Agregar Estudiante")
@@ -159,7 +160,7 @@ class inicio (QWidget):
         self.boton_finalizar = QPushButton("Finalizar")
         self.boton_finalizar.clicked.connect(self.train)
         self.boton_finalizar.clicked.connect(self.finalizar_curso)
-        # todo botones pag3
+        # todo botones pag4
         self.boton_cancelar2 = QPushButton("Cancelar")
         self.boton_cancelar2.clicked.connect(self.volverpag2)
         self.boton_biometria = QPushButton("Biometria")
@@ -167,7 +168,7 @@ class inicio (QWidget):
         self.boton_guardar = QPushButton("Registrar")
         self.boton_guardar.clicked.connect(self.creacion_vector)
         self.boton_guardar.clicked.connect(self.registrar_estudiante)
-        # todo botones pag4
+        # todo botones pag5
         self.boton_cancelar3 = QPushButton("Cancelar")
         self.boton_cancelar3.clicked.connect(self.volver_pag_cursos)
         self.boton_asistio = QPushButton("Registrar Estudiante")
@@ -209,6 +210,7 @@ class inicio (QWidget):
         # Esta linea crea el primer layout ↓
         self.setLayout(fondo)
 
+    #! Funcion para crear la ventana 2, Clase Docente↓↓↓
     def generar_cursos(self, boton_cerrar, boton_crear_curso):
 
         materias = conexcionBD.obtener_nombres_clases(self.profesor_id)
@@ -259,6 +261,7 @@ class inicio (QWidget):
             boton_cerrar, boton_crear_curso))
         return widget_general
 
+    #! Funcion utilizada en generar cursos, para crear los label de Clase↓↓↓
     def crear_materias(self, materia):
         nombre_materia = QLabel(materia)
         nombre_materia.setAttribute(
@@ -302,6 +305,7 @@ class inicio (QWidget):
         primer_materia.addWidget(botonA)
         return widget_primer_materia
 
+    #! Funcion utilizada en crear materis, para dar estilo a los botones de opciones↓↓↓
     def crear_botones(self, boton_editar, boton_asistencia):
 
         boton_editar.setStyleSheet("""
@@ -347,6 +351,7 @@ class inicio (QWidget):
                 """)
         return boton_editar, boton_asistencia
 
+    #! Funcion para crear la ventana 3, creacion de la clase↓↓↓
     def generar_llenado_curso(self, boton_cancelar, boton_agregar_estudiante, boton_finalzar):
 
         principal_pag2 = QVBoxLayout()
@@ -511,6 +516,7 @@ class inicio (QWidget):
             boton_cancelar, boton_agregar_estudiante, boton_finalzar))
         return widget_principal_pag2
 
+    #! Funcion para crear la ventana 4, creacion de estudiante ↓↓↓
     def llenar_curso(self, boton_cancelar2, boton_biometria, boton_registrar):
 
         contenedro_pag3 = QVBoxLayout()
@@ -658,6 +664,7 @@ class inicio (QWidget):
 
         return widget_contendor_pag3
 
+    #! Funcion para crear la ventana 5, toma de asistencia del estudiante↓↓↓
     def tomar_asistencia(self, boton_cancelar3, boton_asistio, boton_pdf):
 
         contenedor_pag4 = QVBoxLayout()
@@ -711,6 +718,7 @@ class inicio (QWidget):
 
         return widget_contenedor_pag4
 
+    #! Funcion para crear la barra de opciones de la ventana 2↓↓↓
     def barra_botones_pag1(self, boton_cerrar, boton_crear_curso):
 
         # Creacion de contenerdor de datos y acciones basicas
@@ -778,6 +786,7 @@ class inicio (QWidget):
             boton_cerrar, alignment=Qt.AlignmentFlag.AlignRight)
         return widget_contenedor_ayuda
 
+    #! Funcion para crear la barra de opciones de la ventana 3,4,5↓↓↓
     def barra_botones_pag2(self, boton_cancelar, boton_agregar_estudiante, boton_finalzar):
 
         # Creacion de contenerdor de datos y acciones basicas
@@ -871,7 +880,7 @@ class inicio (QWidget):
         return widget_contenedor_ayuda
 
     #! FUNCIONES DE VALIDACIONES ↓↓↓
-    # todo Funcion boton Registrar/Login
+    # todo Funcion boton Registrar/Login pag1
     def haz_dado_click(self):
         aprobacion = False
         usuario = int(self.usuario_input.text())
@@ -893,7 +902,7 @@ class inicio (QWidget):
             self.usuario_input.clear()
             self.Contra_input.clear()
 
-    # todo Funcion boton Registrar acomodar con lo WhatsApp ↓↓
+    # todo Funcion boton Registrar acomodar con lo WhatsApp ↓↓ pag4
     def creacion_vector(self):
 
         nombreEstudiante = self.input_nombre_completo.text()
@@ -906,7 +915,7 @@ class inicio (QWidget):
         self.estudiantes.append(datos_estudiante)
 
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
-    # ? funcion boton registrar del Login
+    # ? funcion boton registrar del Login pag1
     def cambiar_pantalla(self):
         self.contenedor_pre_registro.removeWidget(
             self.widget_contenedor_pre_pre_registro)
@@ -919,14 +928,14 @@ class inicio (QWidget):
             self.widget_cuerpo, alignment=Qt.AlignmentFlag.AlignCenter)
         self.showMaximized()
 
-    # ?funcion boton cerrar sesion pag1
+    # ?funcion boton cerrar sesion pag2
     def volver_inicio(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
         self.showMaximized()
         self.widget_contenedor_pre_pre_registro.show()
 
-    # ? Boton Asistencia en las materias
+    # ? Boton Asistencia en las materias pag2
     def marcar_asistencia(self, materia):
         self.materia_asistencia = materia
         self.descargarModel()
@@ -938,7 +947,7 @@ class inicio (QWidget):
         self.start_recognition()
         self.showMaximized()
 
-    # ? Bototn Editar en las materias
+    # ? Bototn Editar en las materias pag2
     def borrar_materias(self, materia):
         id_clase_borrar = conexcionBD.obtener_id_clase(materia)
         conexcionBD.eliminar_datos_por_clase_id(id_clase_borrar)
@@ -946,7 +955,7 @@ class inicio (QWidget):
         self.widget_cuerpo.hide()
         self.cambiar_pantalla()
 
-    # ? Funcion del boton crear curso
+    # ? Funcion del boton crear curso pag2
     def crear_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
@@ -958,14 +967,14 @@ class inicio (QWidget):
             self.widget_cuerpo_pag2, alignment=Qt.AlignmentFlag.AlignCenter)
         self.showMaximized()
 
-    # ? Funcion boton cancelar pag2
+    # ? Funcion boton cancelar pag3
     def cancelar(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
         self.widget_cuerpo.show()
 
-    # ? Funcion boton finalizar en pag2
+    # ? Funcion boton finalizar en pag3
     def finalizar_curso(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
@@ -992,14 +1001,14 @@ class inicio (QWidget):
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag3)
         self.showMaximized()
 
-    # ? Funcion boton cancelar pag3
+    # ? Funcion boton cancelar pag4
     def volverpag2(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
         self.showMaximized()
         self.widget_cuerpo_pag2.show()
 
-    # ? Funcion boton regsitar pag3
+    # ? Funcion boton regsitar pag4
     def registrar_estudiante(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
@@ -1007,7 +1016,7 @@ class inicio (QWidget):
         self.crear_curso()
         # self.widget_cuerpo_pag2.show()
 
-    # ? Funcion boton cancelar pag4
+    # ? Funcion boton cancelar pag5
     def volver_pag_cursos(self):
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag4)
         self.widget_cuerpo_pag4.hide()
