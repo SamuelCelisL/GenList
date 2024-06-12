@@ -121,7 +121,7 @@ class crear_usuario(QWidget):
             "Confirma tu Contraseña")
         boton_volver_login.setStyleSheet("""
                     QPushButton {
-                        background-color: #F75A50;
+                        background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #B22222, stop: 0.6 #FF0000);
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
@@ -143,7 +143,9 @@ class crear_usuario(QWidget):
 
         boton_crear_usuario.setStyleSheet("""
                     QPushButton {
-                        background-color: #0A6EB0;
+                        background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+                    stop:0.4 rgba(40, 125, 190, 255),
+                    stop:0.6 rgba(33, 104, 158, 255));
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
