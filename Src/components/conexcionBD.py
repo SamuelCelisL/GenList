@@ -294,13 +294,13 @@ def editar_contrasena_profesor():
 # ? IMPORTANTE PARA PRESENTAR
 
 
-def crear_profesor():
+def crear_profesor(documento, contrasena):
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()
 
     # Insertar los datos del nuevo profesor
     cursor.execute('INSERT INTO PROFESORES (Documento_Profesor, Contrasena, Nombre_Profesor) VALUES (?, ?, ?)',
-                   (1127349566, "123", "Chacon Admin"))
+                   (documento, contrasena, "Chacon Admin"))
     conexion.commit()  # Confirmar los cambios
 
     # Cerrar la conexión a la base de datos

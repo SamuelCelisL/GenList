@@ -7,16 +7,16 @@ from PyQt6 import QtCore
 
 class crear_usuario(QWidget):
 
-    def __init__(self, boton_volver_login, boton_crear_usuario, crear_usuario_input, crear_contra_input, confirmar_contra_input):
+    def __init__(self, boton_volver_login, boton_crear_usuario, crear_usuario_input, crear_contra_input, confirmar_contra_input, nombre_usuario_input):
         super().__init__()
-        self.setWindowTitle("Login GenList")
+        self.setWindowTitle("Crear Usuario GenList")
         self.setWindowIcon(QIcon('src/images/logo2.ico'))
         self.usuario(boton_volver_login, boton_crear_usuario,
-                     crear_usuario_input, crear_contra_input, confirmar_contra_input)
-        self.setGeometry(580, 200, 400, 300)
+                     crear_usuario_input, crear_contra_input, confirmar_contra_input, nombre_usuario_input)
+        self.setGeometry(580, 200, 400, 380)
         self.show()
 
-    def usuario(self, boton_volver_login, boton_crear_usuario, crear_usuario_input, crear_contra_input, confirmar_contra_input):
+    def usuario(self, boton_volver_login, boton_crear_usuario, crear_usuario_input, crear_contra_input, confirmar_contra_input, nombre_usuario_input):
 
         layout_form_usuario = QVBoxLayout()
         widget_layout_form_usuario = QWidget()
@@ -35,6 +35,28 @@ class crear_usuario(QWidget):
         etiqueta_imagen.setPixmap(imagen_renden)
         etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
         etiqueta_imagen.setStyleSheet("border: none;")
+
+        etiqueta_nombre_usuario = QLabel("Nombre de Usuario")
+        etiqueta_nombre_usuario.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        etiqueta_nombre_usuario.setStyleSheet("""QLabel{
+                            color: black;
+                            font-family: sans-serif;
+                            font-weight: bold;
+                            border: none;
+                            max-width: 60px;
+                        }""")
+
+        nombre_usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        nombre_usuario_input.setStyleSheet("""QLineEdit{
+                            color: black;
+                            font-family: sans-serif;
+                            border: 1px solid black;
+                            border-radius: 9px;
+                            min-width: 180px;
+                            max-width: 180px;
+                        }""")
+        nombre_usuario_input.setPlaceholderText(
+            "Ejemplo: Samuel Celis")
 
         etiqueta_usuario = QLabel("Usuario")
         etiqueta_usuario.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -156,6 +178,10 @@ class crear_usuario(QWidget):
         # todo Agregar elementos de formulario de crear
         layout_form_usuario.addWidget(
             etiqueta_imagen, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout_form_usuario.addWidget(
+            etiqueta_nombre_usuario, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout_form_usuario.addWidget(
+            nombre_usuario_input, alignment=Qt.AlignmentFlag.AlignCenter)
         layout_form_usuario.addWidget(
             etiqueta_usuario, alignment=Qt.AlignmentFlag.AlignCenter)
         layout_form_usuario.addWidget(

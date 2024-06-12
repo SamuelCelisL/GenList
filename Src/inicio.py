@@ -14,6 +14,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from components import login, new_usuario, conexcionBD, capture_and_save, train_model, recognize
 
 
+#! Se implemento la clase MiBoton Para asigar el evento entrar a boton
 class MiBoton(QPushButton):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -158,7 +159,7 @@ class inicio (QWidget):
             self.widget_contenedor_pre_pre_registro)
 
         #! ELEMENTOS LOGIN ↓↓↓
-        self.boton_registrar = MiBoton('Registrar', self)
+        self.boton_registrar = MiBoton('INGRESAR', self)
         self.boton_crear_usuario = QPushButton("REGISTRARSE")
         self.usuario_input = QLineEdit()
         self.Contra_input = QLineEdit()
@@ -170,6 +171,7 @@ class inicio (QWidget):
         # todo ELEMENTOS pag Crear usuario ↓↓↓
         self.boton_volver_login = QPushButton("Cancelar")
         self.boton_confirmar_usuario = QPushButton("Crear")
+        self.nombre_usuario_input = QLineEdit()
         self.crear_usuario_input = QLineEdit()
         self.crear_contra_input = QLineEdit()
         self.confirmar_contra_input = QLineEdit()
@@ -993,10 +995,12 @@ class inicio (QWidget):
     # ? Funcion boton Registrarse del LOGING pag1
     def crear_usuario(self):
         self.segunda_ventana = new_usuario.crear_usuario(self.boton_volver_login, self.boton_confirmar_usuario,
-                                                         self.crear_usuario_input, self.crear_contra_input, self.confirmar_contra_input)
+                                                         self.crear_usuario_input, self.crear_contra_input, self.confirmar_contra_input, self.nombre_usuario_input)
         self.segunda_ventana.show()
 
+    # ? Funcion boton Cancelar de la ventana Crear usuario
     def cerrar_crear_usuario(self):
+        self.nombre_usuario_input.setText("")
         self.crear_usuario_input.setText("")
         self.crear_contra_input.setText("")
         self.confirmar_contra_input.setText("")

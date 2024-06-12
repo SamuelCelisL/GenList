@@ -57,7 +57,7 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
 
     boton_registrar.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: #179400;
                     color: white;
                     border-radius: 5px;
                     padding: 5px;
@@ -75,7 +75,7 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
             """)
     boton_crear_usuario.setStyleSheet("""
                 QPushButton {
-                    background-color: #444847;
+                    background-color: rgba(46, 145, 221, 255);
                     color: white;
                     border-radius: 5px;
                     padding: 5px;
