@@ -14,6 +14,20 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from components import login, new_usuario, conexcionBD, capture_and_save, train_model, recognize
 
 
+class MiBoton(QPushButton):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.comprobar = None
+
+    def setHazDadoClick(self, func):
+        self.comprobar = func
+
+    def enterEvent(self, event):
+        if self.comprobar:
+            self.comprobar()
+        super().enterEvent(event)
+
+
 class inicio (QWidget):
 
     def __init__(self):
@@ -144,7 +158,7 @@ class inicio (QWidget):
             self.widget_contenedor_pre_pre_registro)
 
         #! ELEMENTOS LOGIN ↓↓↓
-        self.boton_registrar = QPushButton("INGRESAR")
+        self.boton_registrar = MiBoton('Registrar', self)
         self.boton_crear_usuario = QPushButton("REGISTRARSE")
         self.usuario_input = QLineEdit()
         self.Contra_input = QLineEdit()
@@ -160,6 +174,8 @@ class inicio (QWidget):
         self.crear_contra_input = QLineEdit()
         self.confirmar_contra_input = QLineEdit()
         # ? llamado funciones botones LOGIN
+        self.boton_registrar.setEnabled(False)
+        self.boton_registrar.setHazDadoClick(self.comprobar)
         self.boton_registrar.clicked.connect(self.haz_dado_click)
         self.boton_crear_usuario.clicked.connect(self.crear_usuario)
         self.boton_volver_login.clicked.connect(self.cerrar_crear_usuario)
@@ -936,6 +952,7 @@ class inicio (QWidget):
             self.mensaje_emergente.setText("Datos Incorrectos.")
             self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
             self.mensaje_emergente.exec()
+            self.boton_registrar.setEnabled(False)
             self.usuario_input.clear()
             self.Contra_input.clear()
 
@@ -950,6 +967,14 @@ class inicio (QWidget):
                             documentoEstudiante, carreraEstudiante]
 
         self.estudiantes.append(datos_estudiante)
+
+    # todo Funcion para validar si el campo de usuario en el LOGIN esta vacio
+    def comprobar(self):
+        comprobacion = self.usuario_input.text()
+        if comprobacion == "":
+            pass
+        else:
+            self.boton_registrar.setEnabled(True)
 
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? funcion boton INGRESAR del LOGIN pag1
@@ -979,6 +1004,7 @@ class inicio (QWidget):
 
     # ?funcion boton cerrar sesion pag2
     def volver_inicio(self):
+        self.boton_registrar.setEnabled(False)
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
         self.showMaximized()
