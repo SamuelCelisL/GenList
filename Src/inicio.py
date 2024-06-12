@@ -320,7 +320,7 @@ class inicio (QWidget):
         widget_primer_materia.setStyleSheet(f"""QWidget{{
                                     background: #FFFFFF;
                                     border: 1px solid black;
-                                    border-radius: 2px;
+                                    border-radius: 4px;
                                     min-width: {anchoEtiqueta}px;
                                     max-width: {anchoEtiqueta}px;
                                     max-height: 50px;
@@ -347,7 +347,7 @@ class inicio (QWidget):
 
         boton_editar.setStyleSheet("""
                     QPushButton {
-                        background-color: #F75A50;
+                        background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #B22222, stop: 0.6 #FF0000);
                         color: white;
                         border-radius: 5px;
                         padding: 5px;
@@ -368,7 +368,9 @@ class inicio (QWidget):
 
         boton_asistencia.setStyleSheet("""
                     QPushButton {
-                        background-color: #0A6EB0;
+                        background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+                    stop:0.4 rgba(40, 125, 190, 255),
+                    stop:0.6 rgba(33, 104, 158, 255));
                         color: white;
                         border-radius: 5px;
                         padding: 5px;
@@ -794,7 +796,7 @@ class inicio (QWidget):
         boton_cerrar.setFixedWidth(150)
         boton_cerrar.setStyleSheet("""
                     QPushButton {
-                        background-color: #F75A50;
+                        background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #B22222, stop: 0.6 #FF0000);
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
@@ -816,7 +818,9 @@ class inicio (QWidget):
         boton_crear_curso.setFixedWidth(150)
         boton_crear_curso.setStyleSheet("""
                     QPushButton {
-                        background-color: #0A6EB0;
+                        background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+                    stop:0.4 rgba(40, 125, 190, 255),
+                    stop:0.6 rgba(33, 104, 158, 255));
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
@@ -863,7 +867,7 @@ class inicio (QWidget):
         boton_cancelar.setFixedWidth(150)
         boton_cancelar.setStyleSheet("""
                     QPushButton {
-                        background-color: #F75A50;
+                        background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #B22222, stop: 0.6 #FF0000);
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
@@ -885,7 +889,7 @@ class inicio (QWidget):
         boton_agregar_estudiante.setFixedWidth(150)
         boton_agregar_estudiante.setStyleSheet("""
                     QPushButton {
-                        background-color: #43AB3A;
+                        background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400);
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
@@ -907,7 +911,9 @@ class inicio (QWidget):
         boton_finalzar.setFixedWidth(150)
         boton_finalzar.setStyleSheet("""
                     QPushButton {
-                        background-color: #0A6EB0;
+                        background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+                    stop:0.4 rgba(40, 125, 190, 255),
+                    stop:0.6 rgba(33, 104, 158, 255));
                         color: white;
                         border-radius: 5px;
                         padding: 1px;
@@ -974,6 +980,7 @@ class inicio (QWidget):
     def comprobar(self):
         comprobacion = self.usuario_input.text()
         if comprobacion == "":
+            self.boton_registrar.setEnabled(False)
             pass
         else:
             self.boton_registrar.setEnabled(True)

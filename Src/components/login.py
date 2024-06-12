@@ -57,7 +57,9 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
 
     boton_registrar.setStyleSheet("""
                 QPushButton {
-                    background-color: #179400;
+                    background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+                    stop:0.4 rgba(40, 125, 190, 255),
+                    stop:0.6 rgba(33, 104, 158, 255));
                     color: white;
                     border-radius: 5px;
                     padding: 5px;
@@ -73,9 +75,30 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
                     background-color: #222222;
                 }
             """)
+    espacio = QLabel()
+    espacio.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    espacio.setStyleSheet("""QLabel{
+                        border: none;
+                        max-width: 60px;
+                    }""")
+    espacio2 = QLabel()
+    espacio2.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    espacio2.setStyleSheet("""QLabel{
+                        border: none;
+                        max-width: 60px;
+                    }""")
+    pregunta_registro = QLabel("¿Aun no te haz registrado?")
+    pregunta_registro.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    pregunta_registro.setStyleSheet("""QLabel{
+                        color: black;
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        border: none;
+                        max-width: 60px;
+                    }""")
     boton_crear_usuario.setStyleSheet("""
                 QPushButton {
-                    background-color: rgba(46, 145, 221, 255);
+                    background: qlineargradient(x1: 0, y1: 0, x2: 0.707, y2: 0.707, stop: 0.04 #45DC20, stop: 0.6 #179400);
                     color: white;
                     border-radius: 5px;
                     padding: 5px;
@@ -107,6 +130,8 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
     contenedor_registro.addWidget(
         etiqueta_imagen)
     contenedor_registro.addWidget(
+        espacio, alignment=Qt.AlignmentFlag.AlignCenter)
+    contenedor_registro.addWidget(
         usuario_label, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
         usuario_input)
@@ -115,7 +140,13 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
     contenedor_registro.addWidget(
         Contra_input)
     contenedor_registro.addWidget(
+        espacio2, alignment=Qt.AlignmentFlag.AlignCenter)
+    contenedor_registro.addWidget(
         boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
+    # contenedor_registro.addWidget(
+    #     espacio2, alignment=Qt.AlignmentFlag.AlignCenter)
+    contenedor_registro.addWidget(
+        pregunta_registro, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
         boton_crear_usuario, alignment=Qt.AlignmentFlag.AlignCenter)
 
