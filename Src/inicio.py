@@ -37,6 +37,8 @@ class inicio (QWidget):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_frame)
         self.cameraLabel = QtWidgets.QLabel()
+        self.cameraLabel.setScaledContents(True)
+
 
         self.cap = None
         self.is_capturing = False
@@ -1223,9 +1225,13 @@ class inicio (QWidget):
     def update_frame(self):
         ret, frame = self.cap.read()
         if ret:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            # Redimensionar la imagen capturada a las dimensiones del QLabel
+            resized_frame = cv2.resize(frame, (self.cameraLabel.width(), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
+
+            resized_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
             image = QtGui.QImage(
-                frame, frame.shape[1], frame.shape[0], frame.strides[0], QtGui.QImage.Format.Format_RGB888)
+                resized_frame, resized_frame.shape[1], resized_frame.shape[0], resized_frame.strides[0], QtGui.QImage.Format.Format_RGB888)
+
             self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
 
             if self.is_capturing:
@@ -1233,7 +1239,7 @@ class inicio (QWidget):
                     self.personName, self.cameraLabel, self.model)
                 self.is_capturing = False
             elif self.is_recognizing:
-                self.display_recognition(frame)
+                self.display_recognition(resized_frame)
         else:
             self.stop_camera()
 
