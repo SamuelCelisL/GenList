@@ -32,7 +32,7 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
                     }""")
     usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
     usuario_input.setPlaceholderText(
-        "Escribe tu usuario(Documento)")
+        "Escribe tu usuario (Documento)")
 
     Contra_label = QLabel("CONTRASEÑA")
     Contra_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
