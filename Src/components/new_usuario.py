@@ -78,7 +78,7 @@ class crear_usuario(QWidget):
                             max-width: 180px;
                         }""")
         crear_usuario_input.setPlaceholderText(
-            "Escribe tu usuario (Documento)")
+            "Numero de Documento")
         etiqueta_contraseña = QLabel("Contraseña")
         etiqueta_contraseña.setAlignment(Qt.AlignmentFlag.AlignCenter)
         etiqueta_contraseña.setStyleSheet("""QLabel{

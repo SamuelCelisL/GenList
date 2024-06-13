@@ -262,6 +262,8 @@ def eliminar_datos_por_clase_id(clase_id):
     cursor.execute('DELETE FROM ESTUDIANTES WHERE Clase_ID = ?', (clase_id,))
     conexion.commit()  # Confirmar los cambios
 
+    eliminar_datos_biometricos_por_clase_id(clase_id)
+
     # Verificar si existen clases sin estudiantes
     cursor.execute(
         'SELECT COUNT(*) FROM CLASES WHERE ID_Clase NOT IN (SELECT Clase_ID FROM ESTUDIANTES)')
@@ -294,14 +296,83 @@ def editar_contrasena_profesor():
 # ? IMPORTANTE PARA PRESENTAR
 
 
-def crear_profesor(documento, contrasena):
+def crear_profesor(documento, contrasena, nombre_usuario):
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()
 
     # Insertar los datos del nuevo profesor
     cursor.execute('INSERT INTO PROFESORES (Documento_Profesor, Contrasena, Nombre_Profesor) VALUES (?, ?, ?)',
-                   (documento, contrasena, "Chacon Admin"))
+                   (documento, contrasena, nombre_usuario))
     conexion.commit()  # Confirmar los cambios
+
+    # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()
+
+
+def eliminar_datos_biometricos_por_clase_id(clase_id):
+
+    # Establecer conexión con la base de datos
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Eliminar los datos biométricos de la tabla DATOS_BIOMETRICOS
+    cursor.execute(
+        'DELETE FROM DATOS_BIOMETRICOS WHERE Clase_ID = ?', (clase_id,))
+
+    conexion.commit()  # Confirmar los cambios
+
+    # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()
+
+
+def obtener_id_clases(profesor_id):
+
+    # Establecer conexión con la base de datos
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Buscar los ID_Clases del profesor
+    cursor.execute('''
+        SELECT ID_Clase
+        FROM CLASES
+        WHERE Profesor_ID = ?
+    ''', (profesor_id,))
+
+    # Extraer los ID_Clases del resultado
+    id_clases = []
+    for registro in cursor.fetchall():
+        id_clases.append(registro[0])
+
+    # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()
+
+    # Devolver la lista de ID_Clases
+    return id_clases
+
+
+def eliminar_profesor_por_id(documento_profesor):
+   # Establecer conexión con la base de datos
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # obtener la ID_Profesor asociadas al documento
+    profesor_id_delete = obtener_id_profesor(documento_profesor)
+
+    # Obtener las clase_id asociadas al profesor
+    clases_borrar = obtener_id_clases(profesor_id_delete)
+
+    # Eliminar las clases del profesor y sus respectivos datos biometricos
+    for i in range(len(clases_borrar)):
+        eliminar_datos_por_clase_id(clases_borrar[i])
+        eliminar_datos_biometricos_por_clase_id(clases_borrar[i])
+
+    # Eliminar el profesor de la tabla PROFESORES
+    cursor.execute('DELETE FROM PROFESORES WHERE ID_Profesor = ?',
+                   (profesor_id_delete,))
+    conexion.commit()
 
     # Cerrar la conexión a la base de datos
     cursor.close()

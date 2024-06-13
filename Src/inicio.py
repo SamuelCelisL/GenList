@@ -19,13 +19,18 @@ class MiBoton(QPushButton):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.comprobar = None
+        self.comprobarcrear = None
 
     def setHazDadoClick(self, func):
         self.comprobar = func
+        self.comprobarcrear = func
 
     def enterEvent(self, event):
         if self.comprobar:
             self.comprobar()
+
+        if self.comprobarcrear:
+            self.comprobarcrear()
         super().enterEvent(event)
 
 
@@ -171,7 +176,7 @@ class inicio (QWidget):
         self.mensaje_emergente = QMessageBox()
         # todo ELEMENTOS pag Crear usuario ↓↓↓
         self.boton_volver_login = QPushButton("Cancelar")
-        self.boton_confirmar_usuario = QPushButton("Crear")
+        self.boton_confirmar_usuario = MiBoton('Crear', self)
         self.nombre_usuario_input = QLineEdit()
         self.crear_usuario_input = QLineEdit()
         self.crear_contra_input = QLineEdit()
@@ -182,6 +187,8 @@ class inicio (QWidget):
         self.boton_registrar.clicked.connect(self.haz_dado_click)
         self.boton_crear_usuario.clicked.connect(self.crear_usuario)
         self.boton_volver_login.clicked.connect(self.cerrar_crear_usuario)
+        self.boton_confirmar_usuario.setHazDadoClick(self.comprobarcrear)
+        self.boton_confirmar_usuario.clicked.connect(self.usuario_nuevo)
 
         #! Creacion de los botones de las barras de las paginas ↓↓↓‼
         # todo botones pag2
@@ -747,9 +754,8 @@ class inicio (QWidget):
                         }""")
 
         anchoCamara = int((self.ventana.width()*0.553))
-        print(anchoCamara)
         anchoetiquetaCamara = anchoCamara-20
-        print(anchoetiquetaCamara)
+        largoCamara = int((self.ventana.height()*0.52))
         contenedor_cargar_camara = QHBoxLayout()
         widget_contenedor_cargar_camara = QWidget()
         widget_contenedor_cargar_camara.setLayout(contenedor_cargar_camara)
@@ -759,7 +765,7 @@ class inicio (QWidget):
                                     border-radius: 9px;
                                     min-width: {anchoCamara}px;
                                     max-width: {anchoCamara}px;
-                                    max-height: 450px;
+                                    max-height: {largoCamara}px;
                                     margin: 1px 1px;
                                     }}""")
         self.cameraLabel.setStyleSheet(f"""QWidget{{
@@ -986,9 +992,32 @@ class inicio (QWidget):
         comprobacion = self.usuario_input.text()
         if comprobacion == "":
             self.boton_registrar.setEnabled(False)
-            pass
         else:
             self.boton_registrar.setEnabled(True)
+
+    # todo Fucion para validar si los campos de la ventana Crear Usuario estan LLenos
+    def comprobarcrear(self):
+        comprobacionlarga = []
+        comprobacionBol = []
+        comprobacion = self.nombre_usuario_input.text()
+        comprobacion2 = self.crear_usuario_input.text()
+        comprobacion3 = self.crear_contra_input.text()
+        comprobacion4 = self.confirmar_contra_input.text()
+
+        comprobacionlarga = [comprobacion,
+                             comprobacion2, comprobacion3, comprobacion4]
+        for elemento in comprobacionlarga:
+            if elemento == "":
+                comprobacionBol.append(False)
+            else:
+                comprobacionBol.append(True)
+
+        for campo in comprobacionBol:
+            if campo == False:
+                self.boton_confirmar_usuario.setEnabled(False)
+                break
+            else:
+                self.boton_confirmar_usuario.setEnabled(True)
 
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? funcion boton INGRESAR del LOGIN pag1
@@ -1018,7 +1047,29 @@ class inicio (QWidget):
         self.confirmar_contra_input.setText("")
         self.segunda_ventana.close()
 
+    # ? Funcion boton crear de la ventana Crear Usuario
+    def usuario_nuevo(self):
+        nombre_usuario = self.nombre_usuario_input.text()
+        usuario_documento = int(self.crear_usuario_input.text())
+        pasword = self.crear_contra_input.text()
+        confirma_pasword = self.confirmar_contra_input.text()
+        if pasword == confirma_pasword:
+            conexcionBD.crear_profesor(
+                usuario_documento, pasword, nombre_usuario)
+            self.nombre_usuario_input.setText("")
+            self.crear_usuario_input.setText("")
+            self.crear_contra_input.setText("")
+            self.confirmar_contra_input.setText("")
+        else:
+            self.crear_contra_input.setText("")
+            self.confirmar_contra_input.setText("")
+            self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+            self.mensaje_emergente.setText("La Contraseña NO coincide.")
+            self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
+            self.mensaje_emergente.exec()
+
     # ?funcion boton cerrar sesion pag2
+
     def volver_inicio(self):
         self.boton_registrar.setEnabled(False)
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
