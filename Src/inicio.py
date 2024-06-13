@@ -406,7 +406,6 @@ class inicio (QWidget):
                                     border-radius: 8px;
                                     margin: 1px 1px;
                                     max-width: {anchoContenedor}px;
-                                    min-width: {anchoContenedor}px;
                                     }}""")
         # widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
         #                                            QSizePolicy.Policy.Expanding)
@@ -447,7 +446,6 @@ class inicio (QWidget):
         contenedor_cabeza.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         widget_contenedor_cabeza = QWidget()
         widget_contenedor_cabeza.setStyleSheet("""QWidget{
-                                    min-width: 800px;
                                     max-height: 80px;
                                     min-height: 80px;
                                     border: none;
@@ -530,9 +528,7 @@ class inicio (QWidget):
                 QTableWidget::item {{
                     color: black;
                     border: 1px solid black;
-                    border-radius: 0px;
-                    min-width: {anchoTituloTabla}px;
-                    max-width: {anchoTituloTabla}px;               
+                    border-radius: 0px;             
                           
                 }}
                 QTableWidget::item:selected {{
@@ -1233,7 +1229,8 @@ class inicio (QWidget):
         ret, frame = self.cap.read()
         if ret:
             # Redimensionar la imagen capturada a las dimensiones del QLabel
-            resized_frame = cv2.resize(frame, (self.cameraLabel.width(), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
+            resized_frame = cv2.resize(frame, (self.cameraLabel.width(
+            ), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
 
             resized_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
             image = QtGui.QImage(
@@ -1242,7 +1239,8 @@ class inicio (QWidget):
             self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
 
             if self.is_capturing:
-                capture_and_save.capture_and_save(self.personName, self.cameraLabel, self.model)
+                capture_and_save.capture_and_save(
+                    self.personName, self.cameraLabel, self.model)
                 self.is_capturing = False
             elif self.is_recognizing:
                 self.display_recognition(resized_frame)
@@ -1251,9 +1249,9 @@ class inicio (QWidget):
 
     # ? Muestra la camara de reconocimiento
     def display_recognition(self, frame):
-        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR) 
+        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         results = recognize.recognize_face(frame_bgr, self.clf, self.model)
-        
+
         for (x, y, w, h, label) in results:
             if label == 'Desconocido':
                 cv2.putText(frame_bgr, 'Desconocido', (x, y-20),
@@ -1264,8 +1262,9 @@ class inicio (QWidget):
                 cv2.putText(frame_bgr, personName, (x, y-20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
                 cv2.rectangle(frame_bgr, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        
-        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)  # Cambia el color a azul a normal
+
+        # Cambia el color a azul a normal
+        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
         image = QtGui.QImage(
             frame_rgb, frame_rgb.shape[1], frame_rgb.shape[0], frame_rgb.strides[0], QtGui.QImage.Format.Format_RGB888)
         self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
