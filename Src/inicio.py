@@ -39,7 +39,6 @@ class inicio (QWidget):
         self.cameraLabel = QtWidgets.QLabel()
         self.cameraLabel.setScaledContents(True)
 
-
         self.cap = None
         self.is_capturing = False
         self.is_recognizing = False
@@ -183,7 +182,6 @@ class inicio (QWidget):
         self.boton_registrar.clicked.connect(self.haz_dado_click)
         self.boton_crear_usuario.clicked.connect(self.crear_usuario)
         self.boton_volver_login.clicked.connect(self.cerrar_crear_usuario)
-        # self.boton_registrar.clicked.connect(self.cambiar_pantalla)
 
         #! Creacion de los botones de las barras de las paginas ↓↓↓‼
         # todo botones pag2
@@ -698,7 +696,9 @@ class inicio (QWidget):
                                     border-radius: 9px;
                                     margin: 1px 1px;
                                     }""")
-
+        self.cameraLabel.setStyleSheet("""QWidget{
+                                       border-radius: 1px;
+                                       }""")
         contenedor_camara.addWidget(self.cameraLabel)
 
         contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
@@ -751,7 +751,9 @@ class inicio (QWidget):
                         }""")
 
         anchoCamara = int((self.ventana.width()*0.553))
-
+        print(anchoCamara)
+        anchoetiquetaCamara = anchoCamara-20
+        print(anchoetiquetaCamara)
         contenedor_cargar_camara = QHBoxLayout()
         widget_contenedor_cargar_camara = QWidget()
         widget_contenedor_cargar_camara.setLayout(contenedor_cargar_camara)
@@ -761,9 +763,14 @@ class inicio (QWidget):
                                     border-radius: 9px;
                                     min-width: {anchoCamara}px;
                                     max-width: {anchoCamara}px;
+                                    max-height: 450px;
                                     margin: 1px 1px;
                                     }}""")
-
+        self.cameraLabel.setStyleSheet(f"""QWidget{{
+                                    border-radius: 1px;
+                                    min-width: {anchoetiquetaCamara}px;
+                                    max-width: {anchoetiquetaCamara}px;
+                                       }}""")
         contenedor_cargar_camara.addWidget(self.cameraLabel)
 
         contenedor_toma_asistencia.addWidget(
@@ -1226,7 +1233,8 @@ class inicio (QWidget):
         ret, frame = self.cap.read()
         if ret:
             # Redimensionar la imagen capturada a las dimensiones del QLabel
-            resized_frame = cv2.resize(frame, (self.cameraLabel.width(), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
+            resized_frame = cv2.resize(frame, (self.cameraLabel.width(
+            ), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
 
             resized_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
             image = QtGui.QImage(
