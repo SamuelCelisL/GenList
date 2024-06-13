@@ -1233,8 +1233,7 @@ class inicio (QWidget):
         ret, frame = self.cap.read()
         if ret:
             # Redimensionar la imagen capturada a las dimensiones del QLabel
-            resized_frame = cv2.resize(frame, (self.cameraLabel.width(
-            ), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
+            resized_frame = cv2.resize(frame, (self.cameraLabel.width(), self.cameraLabel.height()), interpolation=cv2.INTER_AREA)
 
             resized_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
             image = QtGui.QImage(
@@ -1243,8 +1242,7 @@ class inicio (QWidget):
             self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
 
             if self.is_capturing:
-                capture_and_save.capture_and_save(
-                    self.personName, self.cameraLabel, self.model)
+                capture_and_save.capture_and_save(self.personName, self.cameraLabel, self.model)
                 self.is_capturing = False
             elif self.is_recognizing:
                 self.display_recognition(resized_frame)
@@ -1253,20 +1251,23 @@ class inicio (QWidget):
 
     # ? Muestra la camara de reconocimiento
     def display_recognition(self, frame):
-        results = recognize.recognize_face(frame, self.clf, self.model)
+        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR) 
+        results = recognize.recognize_face(frame_bgr, self.clf, self.model)
+        
         for (x, y, w, h, label) in results:
             if label == 'Desconocido':
-                cv2.putText(frame, 'Desconocido', (x, y-20),
+                cv2.putText(frame_bgr, 'Desconocido', (x, y-20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 1, cv2.LINE_AA)
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
+                cv2.rectangle(frame_bgr, (x, y), (x+w, y+h), (0, 0, 255), 2)
             else:
                 personName = str(self.get_person_name(label))
-                cv2.putText(frame, personName, (x, y-20),
+                cv2.putText(frame_bgr, personName, (x, y-20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 1, cv2.LINE_AA)
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                cv2.rectangle(frame_bgr, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        
+        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)  # Cambia el color a azul a normal
         image = QtGui.QImage(
-            frame, frame.shape[1], frame.shape[0], frame.strides[0], QtGui.QImage.Format.Format_RGB888)
+            frame_rgb, frame_rgb.shape[1], frame_rgb.shape[0], frame_rgb.strides[0], QtGui.QImage.Format.Format_RGB888)
         self.cameraLabel.setPixmap(QtGui.QPixmap.fromImage(image))
 
     # ? Carga modelo

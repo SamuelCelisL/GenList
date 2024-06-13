@@ -17,7 +17,7 @@ def recognize_face(frame, clf, model):
         result = clf.predict([vec.flatten()])
         proba = clf.predict_proba([vec.flatten()])
 
-        if np.max(proba) < 0.75:
+        if np.max(proba) < 0.5:
             results.append((x, y, w, h, 'Desconocido'))
         else:
             results.append((x, y, w, h, result[0]))
