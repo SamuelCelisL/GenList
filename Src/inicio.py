@@ -803,8 +803,9 @@ class inicio (QWidget):
                         }""")
 
         anchoCamara = int((self.ventana.width()*0.553))
-        anchoetiquetaCamara = anchoCamara-20
+        anchoetiquetaCamara = anchoCamara-25
         largoCamara = int((self.ventana.height()*0.52))
+        largoetiquetacamara = largoCamara - 25
         contenedor_cargar_camara = QHBoxLayout()
         widget_contenedor_cargar_camara = QWidget()
         widget_contenedor_cargar_camara.setLayout(contenedor_cargar_camara)
@@ -821,6 +822,7 @@ class inicio (QWidget):
                                     border-radius: 1px;
                                     min-width: {anchoetiquetaCamara}px;
                                     max-width: {anchoetiquetaCamara}px;
+                                    max-height: {largoetiquetacamara}px;
                                        }}""")
         contenedor_cargar_camara.addWidget(self.cameraLabel)
 
