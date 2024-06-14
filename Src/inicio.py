@@ -54,7 +54,7 @@ class inicio (QWidget):
         self.timer.timeout.connect(self.update_frame)
         self.cameraLabel = QtWidgets.QLabel()
         self.progressBar = QtWidgets.QProgressBar()
-        self.progressBar.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # self.progressBar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.cameraLabel.setScaledContents(True)
 
         self.cap = None
@@ -733,6 +733,21 @@ class inicio (QWidget):
                                        border-radius: 1px;
                                        }""")
         contenedor_camara.addWidget(self.cameraLabel)
+        self.progressBar.setStyleSheet("""
+                        QProgressBar {
+                            border: 2px solid black;
+                            border-radius: 1px;
+                            background-color: #E0E0E0;
+                            color: black;
+                            text-align: center;
+                            font: bold 14px;
+                        }
+                        QProgressBar::chunk {
+                            background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
+                    stop:0.4 rgba(40, 125, 190, 255),
+                    stop:0.6 rgba(33, 104, 158, 255));
+                        }
+                    """)
         contenedor_camara.addWidget(self.progressBar)
 
         contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
