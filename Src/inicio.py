@@ -206,12 +206,12 @@ class inicio (QWidget):
         #! Creacion de los botones de las barras de las paginas ↓↓↓‼
         # todo botones pag2
         self._boton_cerrar_sesion = QPushButton("Cerrar Sesion")
-        self._boton_cerrar_sesion.clicked.connect(self.volver_inicio)
+        self._boton_cerrar_sesion.clicked.connect(self.show_validacion)
         self.boton_crear_curso = QPushButton("Crear Curso")
         self.boton_crear_curso.clicked.connect(self.crear_curso)
         # todo botones pag3
         self.boton_cancelar = QPushButton("Cancelar")
-        self.boton_cancelar.clicked.connect(self.cancelar)
+        self.boton_cancelar.clicked.connect(self.show_validacion2)
         self.boton_agregar_estudiante = QPushButton("Agregar Estudiante")
         self.boton_agregar_estudiante.clicked.connect(self.b_llenar_curso)
         self.boton_finalizar = QPushButton("Finalizar")
@@ -219,7 +219,7 @@ class inicio (QWidget):
         self.boton_finalizar.clicked.connect(self.finalizar_curso)
         # todo botones pag4
         self.boton_cancelar2 = QPushButton("Cancelar")
-        self.boton_cancelar2.clicked.connect(self.volverpag2)
+        self.boton_cancelar2.clicked.connect(self.show_validacion3)
         self.boton_biometria = MiBoton('Biometria', self)
         self.boton_biometria.setHazDadoClick(self.comprobarbiometria)
         self.boton_biometria.clicked.connect(self.capture)
@@ -229,7 +229,7 @@ class inicio (QWidget):
         self.boton_guardar.clicked.connect(self.registrar_estudiante)
         # todo botones pag5
         self.boton_cancelar3 = QPushButton("Cancelar")
-        self.boton_cancelar3.clicked.connect(self.volver_pag_cursos)
+        self.boton_cancelar3.clicked.connect(self.show_validacion4)
         self.boton_asistio = QPushButton("Registrar Estudiante")
         self.boton_pdf = QPushButton("Generar PDF")
 
@@ -1101,6 +1101,82 @@ class inicio (QWidget):
         else:
             self.boton_biometria.setEnabled(True)
 
+    # todo Validacion de salida del boton Cerrar Sesion pag2
+    def show_validacion(self):
+        # Crear una ventana emergente
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("GenList")
+        msg_box.setWindowIcon(QIcon('src/images/logo2.ico'))
+        msg_box.setText("¿Deseas cerrar la Sesión?")
+        msg_box.setIcon(QMessageBox.Icon.Question)
+        msg_box.setStandardButtons(
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+
+        # Mostrar la ventana emergente y capturar la respuesta
+        response = msg_box.exec()
+        if response == QMessageBox.StandardButton.Yes:
+            self.volver_inicio()
+        else:
+            msg_box.close()
+    # todo Funcion de validacion de salida del boton cancelar pag 3
+
+    def show_validacion2(self):
+        # Crear una ventana emergente
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("GenList")
+        msg_box.setWindowIcon(QIcon('src/images/logo2.ico'))
+        msg_box.setText("¿Seguro que quieres dejar de crear la clase?")
+        msg_box.setIcon(QMessageBox.Icon.Question)
+        msg_box.setStandardButtons(
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+
+        # Mostrar la ventana emergente y capturar la respuesta
+        response = msg_box.exec()
+        if response == QMessageBox.StandardButton.Yes:
+            self.cancelar()
+        else:
+            msg_box.close()
+
+    # todo Funcion validacion de salida del boton cancelar pag4
+    def show_validacion3(self):
+        # Crear una ventana emergente
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("GenList")
+        msg_box.setWindowIcon(QIcon('src/images/logo2.ico'))
+        msg_box.setText(
+            "¿Seguro que quieres dejar de registrar al estudiante?")
+        msg_box.setIcon(QMessageBox.Icon.Question)
+        msg_box.setStandardButtons(
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+
+        # Mostrar la ventana emergente y capturar la respuesta
+        response = msg_box.exec()
+        if response == QMessageBox.StandardButton.Yes:
+            self.volverpag2()
+        else:
+            msg_box.close()
+
+    def show_validacion4(self):
+        # Crear una ventana emergente
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("GenList")
+        msg_box.setWindowIcon(QIcon('src/images/logo2.ico'))
+        msg_box.setText(
+            "¿Seguro que quieres eliminar la toma de asistencia en proceso?")
+        msg_box.setIcon(QMessageBox.Icon.Question)
+        msg_box.setStandardButtons(
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+
+        # Mostrar la ventana emergente y capturar la respuesta
+        response = msg_box.exec()
+        if response == QMessageBox.StandardButton.Yes:
+            self.volver_pag_cursos()
+        else:
+            msg_box.close()
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? funcion boton INGRESAR del LOGIN pag1
 
@@ -1169,7 +1245,7 @@ class inicio (QWidget):
             self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
             self.mensaje_emergente.exec()
 
-    # ?funcion boton cerrar sesion pag20
+    # ?funcion boton cerrar sesion pag2
     def volver_inicio(self):
         self.boton_registrar.setEnabled(False)
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
