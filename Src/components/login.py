@@ -1,11 +1,11 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
-                             QVBoxLayout)
+                             QVBoxLayout, QPushButton)
 from PyQt6.QtGui import QPixmap, QIntValidator
 from PyQt6 import QtCore
 
 
-def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton_crear_usuario):
+def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton_crear_usuario, boton_ver_contra):
     empresa = QPixmap('src/images/logo2Png.png')
 
     etiqueta_imagen = QLabel()
@@ -56,6 +56,30 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
                     }""")
     Contra_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
     Contra_input.setPlaceholderText("Escribe tu contraseña")
+
+    boton_ver_contra.setAttribute(
+        QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+    boton_ver_contra.setStyleSheet("""
+                QPushButton {
+                    color: black;
+                    border-radius: none;
+                    border: none;
+                    padding: 5px;
+                    font-size: 8px;
+                    font-weight: bold;
+                    min-width: 100px;
+                    max-width: 100px;
+                }
+                QPushButton:hover {
+                    color: blue;
+                    font-size: 10px;
+                }
+                QPushButton:pressed {
+                    color: blue;
+                    font-size: 12px;
+                }
+            """)
+    boton_ver_contra.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
     boton_registrar.setStyleSheet("""
                 QPushButton {
@@ -142,11 +166,13 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
     contenedor_registro.addWidget(
         Contra_input)
     contenedor_registro.addWidget(
-        espacio2, alignment=Qt.AlignmentFlag.AlignCenter)
-    contenedor_registro.addWidget(
-        boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
+        boton_ver_contra, alignment=Qt.AlignmentFlag.AlignCenter)
     # contenedor_registro.addWidget(
     #     espacio2, alignment=Qt.AlignmentFlag.AlignCenter)
+    contenedor_registro.addWidget(
+        boton_registrar, alignment=Qt.AlignmentFlag.AlignCenter)
+    contenedor_registro.addWidget(
+        espacio2, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
         pregunta_registro, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(

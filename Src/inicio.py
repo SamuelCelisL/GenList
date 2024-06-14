@@ -180,10 +180,11 @@ class inicio (QWidget):
         #! ELEMENTOS LOGIN ↓↓↓
         self.boton_registrar = MiBoton('INGRESAR', self)
         self.boton_crear_usuario = QPushButton("REGISTRARSE")
+        self.boton_ver_contra = QPushButton("Ver contraseña")
         self.usuario_input = QLineEdit()
         self.Contra_input = QLineEdit()
         self.login_widget = login.generar_formulario_login(
-            self.boton_registrar, self.usuario_input, self.Contra_input, self.boton_crear_usuario)
+            self.boton_registrar, self.usuario_input, self.Contra_input, self.boton_crear_usuario,self.boton_ver_contra)
         self.contenedor_pre_pre_registro.addWidget(
             self.login_widget)
         self.mensaje_emergente = QMessageBox()
@@ -198,6 +199,7 @@ class inicio (QWidget):
         self.boton_registrar.setEnabled(False)
         self.boton_registrar.setHazDadoClick(self.comprobar)
         self.boton_registrar.clicked.connect(self.haz_dado_click)
+        self.boton_ver_contra.clicked.connect(self.toggleVisibility)
         self.boton_crear_usuario.clicked.connect(self.crear_usuario)
         self.boton_volver_login.clicked.connect(self.cerrar_crear_usuario)
         self.boton_confirmar_usuario.setHazDadoClick(self.comprobarcrear)
@@ -1197,6 +1199,12 @@ class inicio (QWidget):
         self.segunda_ventana = new_usuario.crear_usuario(self.boton_volver_login, self.boton_confirmar_usuario,
                                                          self.crear_usuario_input, self.crear_contra_input, self.confirmar_contra_input, self.nombre_usuario_input)
         self.segunda_ventana.show()
+
+    def toggleVisibility(self):
+        if self.Contra_input.echoMode() == QLineEdit.EchoMode.Password:
+            self.Contra_input.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self.Contra_input.setEchoMode(QLineEdit.EchoMode.Password)
 
     # ? Funcion boton Cancelar de la ventana Crear usuario
     def cerrar_crear_usuario(self):
