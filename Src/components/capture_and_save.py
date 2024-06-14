@@ -4,7 +4,7 @@ import numpy as np
 import imutils
 from PyQt6 import QtCore, QtGui
 
-def capture_and_save(personName, cameraLabel, model):
+def capture_and_save(personName, cameraLabel, model, progressBar):
     current_dir = os.path.dirname(os.path.realpath(__file__))
     project_dir = os.path.dirname(current_dir)
     dataPath = os.path.join(project_dir, 'Data')
@@ -44,11 +44,11 @@ def capture_and_save(personName, cameraLabel, model):
         cameraLabel.setPixmap(QtGui.QPixmap.fromImage(qt_image))
         QtCore.QCoreApplication.processEvents()
 
-        # progressBar.setValue(int((count / total_images) * 100))
+        progressBar.setValue(int((count / total_images) * 100))
 
         if cv2.waitKey(1) & 0xFF == 27:
             break
 
     cap.release()
     cv2.destroyAllWindows()
-    # progressBar.setValue(0)
+    

@@ -53,6 +53,8 @@ class inicio (QWidget):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_frame)
         self.cameraLabel = QtWidgets.QLabel()
+        self.progressBar = QtWidgets.QProgressBar()
+        self.progressBar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.cameraLabel.setScaledContents(True)
 
         self.cap = None
@@ -717,7 +719,7 @@ class inicio (QWidget):
         contenedor_informacion.addWidget(carrera)
         contenedor_informacion.addWidget(self.input_carrera)
 
-        contenedor_camara = QHBoxLayout()
+        contenedor_camara = QVBoxLayout()
 
         widget_contenedor_camara = QWidget()
         widget_contenedor_camara.setLayout(contenedor_camara)
@@ -731,6 +733,7 @@ class inicio (QWidget):
                                        border-radius: 1px;
                                        }""")
         contenedor_camara.addWidget(self.cameraLabel)
+        contenedor_camara.addWidget(self.progressBar)
 
         contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
         contenedor_llenado_informacion.addWidget(widget_contenedor_camara)
@@ -1214,6 +1217,7 @@ class inicio (QWidget):
 
     # ?Funcion boton agregar estudiantes pag3
     def b_llenar_curso(self):
+        self.progressBar.setValue(0)
         self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
         self.Titulomateria = self.materia_input.text()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
@@ -1359,7 +1363,7 @@ class inicio (QWidget):
 
             if self.is_capturing:
                 capture_and_save.capture_and_save(
-                    self.personName, self.cameraLabel, self.model)
+                    self.personName, self.cameraLabel, self.model, self.progressBar)
                 self.is_capturing = False
             elif self.is_recognizing:
                 self.display_recognition(resized_frame)
