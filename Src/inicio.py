@@ -184,7 +184,7 @@ class inicio (QWidget):
         self.usuario_input = QLineEdit()
         self.Contra_input = QLineEdit()
         self.login_widget = login.generar_formulario_login(
-            self.boton_registrar, self.usuario_input, self.Contra_input, self.boton_crear_usuario,self.boton_ver_contra)
+            self.boton_registrar, self.usuario_input, self.Contra_input, self.boton_crear_usuario, self.boton_ver_contra)
         self.contenedor_pre_pre_registro.addWidget(
             self.login_widget)
         self.mensaje_emergente = QMessageBox()
@@ -1200,6 +1200,7 @@ class inicio (QWidget):
                                                          self.crear_usuario_input, self.crear_contra_input, self.confirmar_contra_input, self.nombre_usuario_input)
         self.segunda_ventana.show()
 
+    # ? Funcion para hacer visible o invisible la contraseña boton en LOGIN
     def toggleVisibility(self):
         if self.Contra_input.echoMode() == QLineEdit.EchoMode.Password:
             self.Contra_input.setEchoMode(QLineEdit.EchoMode.Normal)
