@@ -9,7 +9,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton,
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6 import QtWidgets, QtGui, QtCore
 from components import login, new_usuario, conexcionBD, capture_and_save, train_model, recognize
 
@@ -20,10 +20,14 @@ class MiBoton(QPushButton):
         super().__init__(*args, **kwargs)
         self.comprobar = None
         self.comprobarcrear = None
+        self.comprobarguardar = None
+        self.comprobarbiometria = None
 
     def setHazDadoClick(self, func):
         self.comprobar = func
         self.comprobarcrear = func
+        self.comprobarguardar = func
+        self.comprobarbiometria = func
 
     def enterEvent(self, event):
         if self.comprobar:
@@ -31,6 +35,13 @@ class MiBoton(QPushButton):
 
         if self.comprobarcrear:
             self.comprobarcrear()
+
+        if self.comprobarguardar:
+            self.comprobarguardar()
+
+        if self.comprobarbiometria:
+            self.comprobarbiometria()
+
         super().enterEvent(event)
 
 
@@ -207,9 +218,11 @@ class inicio (QWidget):
         # todo botones pag4
         self.boton_cancelar2 = QPushButton("Cancelar")
         self.boton_cancelar2.clicked.connect(self.volverpag2)
-        self.boton_biometria = QPushButton("Biometria")
+        self.boton_biometria = MiBoton('Biometria', self)
+        self.boton_biometria.setHazDadoClick(self.comprobarbiometria)
         self.boton_biometria.clicked.connect(self.capture)
-        self.boton_guardar = QPushButton("Registrar")
+        self.boton_guardar = MiBoton('Registrar', self)
+        self.boton_guardar.setHazDadoClick(self.comprobarguardar)
         self.boton_guardar.clicked.connect(self.creacion_vector)
         self.boton_guardar.clicked.connect(self.registrar_estudiante)
         # todo botones pag5
@@ -261,10 +274,27 @@ class inicio (QWidget):
         general = QVBoxLayout()
         widget_general = QWidget()
         widget_general.setLayout(general)
-
-        # Creamos el ScrollArea y lo configuramos
-        altoScroll = int((self.ventana.height())*0.55)
         anchoScroll = int((self.ventana.width()*0.52))
+
+        informacion = QLabel(
+            "BIENVENIDO!! Recuerda que para crear una clase debes usar el boton ""Crear Curso")
+        informacion.setAttribute(
+            QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        informacion.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        informacion.setStyleSheet(f"""QLabel{{
+                        color: black;
+                        font-family: sans-serif;
+                        font-weight: bold;         
+                        border: none;
+                        min-width: {anchoScroll}px;
+                        max-width: {anchoScroll}px;
+                        max-height: 20px;
+                        min-height: 20px;
+                    }}""")
+        general.addWidget(informacion)
+        # Creamos el ScrollArea y lo configuramos
+        altoScroll = int((self.ventana.height())*0.52)
+
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setFixedHeight(altoScroll)
@@ -276,7 +306,6 @@ class inicio (QWidget):
                                   border: 1px solid black;
                                   border-radius: 5px;
         }""")
-
         # Creamos el widget que irá dentro del ScrollArea
         widget_scroll = QWidget()
         widget_scroll.setStyleSheet("""QWidget{
@@ -289,7 +318,6 @@ class inicio (QWidget):
         widget_contenedor_registro = QWidget()
         widget_contenedor_registro.setLayout(contenedor_registro)
         widget_contenedor_registro.setFixedHeight(500)
-        # widget_contenedor_registro.setMinimumHeight(1500)
         widget_contenedor_registro.setStyleSheet("""QWidget{
                                     border: 1px solid black;
                                     border-radius: 9px;
@@ -1019,8 +1047,40 @@ class inicio (QWidget):
             else:
                 self.boton_confirmar_usuario.setEnabled(True)
 
+    # todo Funcion para validar si los campos estan vacios en la seccion de registrar estudiante pag 4
+    def comprobarguardar(self):
+        comprobacionlarga = []
+        comprobacionBol = []
+        comprobacion = self.input_nombre_completo.text()
+        comprobacion2 = self.input_documento.text()
+        comprobacion3 = self.input_carrera.text()
+
+        comprobacionlarga = [comprobacion,
+                             comprobacion2, comprobacion3]
+        for elemento in comprobacionlarga:
+            if elemento == "":
+                comprobacionBol.append(False)
+            else:
+                comprobacionBol.append(True)
+
+        for campo in comprobacionBol:
+            if campo == False:
+                self.boton_guardar.setEnabled(False)
+                break
+            else:
+                self.boton_guardar.setEnabled(True)
+
+    # todo Funcion para validar si el campo biometria esta vacio en la pag4
+    def comprobarbiometria(self):
+        comprobacion = self.input_documento.text()
+        if comprobacion == "":
+            self.boton_biometria.setEnabled(False)
+        else:
+            self.boton_biometria.setEnabled(True)
+
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? funcion boton INGRESAR del LOGIN pag1
+
     def cambiar_pantalla(self):
         self.contenedor_pre_registro.removeWidget(
             self.widget_contenedor_pre_pre_registro)
@@ -1060,6 +1120,11 @@ class inicio (QWidget):
             self.crear_usuario_input.setText("")
             self.crear_contra_input.setText("")
             self.confirmar_contra_input.setText("")
+            self.segunda_ventana.close()
+            self.mensaje_emergente.setWindowTitle("Mensaje de Exito")
+            self.mensaje_emergente.setText("Usuario Creado Exitosamente")
+            self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
+            self.mensaje_emergente.exec()
         else:
             self.crear_contra_input.setText("")
             self.confirmar_contra_input.setText("")
@@ -1068,8 +1133,7 @@ class inicio (QWidget):
             self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
             self.mensaje_emergente.exec()
 
-    # ?funcion boton cerrar sesion pag2
-
+    # ?funcion boton cerrar sesion pag20
     def volver_inicio(self):
         self.boton_registrar.setEnabled(False)
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
@@ -1145,10 +1209,12 @@ class inicio (QWidget):
         conexcionBD.insertar_datos_biometricos(datos_biometricos, clase_id)
         self.estudiantes = []
         self.materia_input = None
+        self.Titulomateria = ""
         self.cambiar_pantalla()
 
     # ?Funcion boton agregar estudiantes pag3
     def b_llenar_curso(self):
+        self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
         self.Titulomateria = self.materia_input.text()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
@@ -1166,6 +1232,7 @@ class inicio (QWidget):
 
     # ? Funcion boton regsitar pag4
     def registrar_estudiante(self):
+        self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
         self.showMaximized()
@@ -1174,6 +1241,7 @@ class inicio (QWidget):
 
     # ? Funcion boton cancelar pag5
     def volver_pag_cursos(self):
+        self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag4)
         self.widget_cuerpo_pag4.hide()
         self.stop_camera()

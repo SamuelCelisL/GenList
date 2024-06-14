@@ -58,7 +58,7 @@ class crear_usuario(QWidget):
         nombre_usuario_input.setPlaceholderText(
             "Ejemplo: Samuel Celis")
 
-        etiqueta_usuario = QLabel("Usuario")
+        etiqueta_usuario = QLabel("Documento")
         etiqueta_usuario.setAlignment(Qt.AlignmentFlag.AlignCenter)
         etiqueta_usuario.setStyleSheet("""QLabel{
                             color: black;
@@ -97,6 +97,7 @@ class crear_usuario(QWidget):
                             min-width: 180px;
                             max-width: 180px;
                         }""")
+        crear_contra_input.setEchoMode(QLineEdit.EchoMode.Password)
         crear_contra_input.setPlaceholderText(
             "Escribe tu Contraseña")
         etiqueta_confirmacion = QLabel("Confirma Contraseña")
@@ -117,6 +118,7 @@ class crear_usuario(QWidget):
                             min-width: 180px;
                             max-width: 180px;
                         }""")
+        confirmar_contra_input.setEchoMode(QLineEdit.EchoMode.Password)
         confirmar_contra_input.setPlaceholderText(
             "Confirma tu Contraseña")
         boton_volver_login.setStyleSheet("""

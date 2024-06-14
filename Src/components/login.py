@@ -14,7 +14,7 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
     etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
     etiqueta_imagen.setStyleSheet("border: none;")
 
-    usuario_label = QLabel("USUARIO")
+    usuario_label = QLabel("DOCUMENTO")
     usuario_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
     usuario_label.setStyleSheet("""QLabel{
                         color: black;
@@ -32,7 +32,7 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
                     }""")
     usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
     usuario_input.setPlaceholderText(
-        "Escribe tu usuario (Documento)")
+        "Escribe tu Documento")
 
     Contra_label = QLabel("CONTRASEÑA")
     Contra_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
