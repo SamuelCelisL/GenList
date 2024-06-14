@@ -9,7 +9,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton,
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
-from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtGui import QIcon, QPixmap, QIntValidator
 from PyQt6 import QtWidgets, QtGui, QtCore
 from components import login, new_usuario, conexcionBD, capture_and_save, train_model, recognize
 
@@ -670,9 +670,12 @@ class inicio (QWidget):
                             max-height: 20px;
                             min-height: 20px;
                         }""")
+
+        int_validator = QIntValidator(0, 2147483647)
         self.input_documento = QLineEdit()
         self.input_documento.setPlaceholderText(
             "Escribe el documento del estudiante")
+        self.input_documento.setValidator(int_validator)
         self.input_documento.setStyleSheet("""QLineEdit{
                             color: black;
                             font-family: sans-serif;
@@ -1014,7 +1017,7 @@ class inicio (QWidget):
 
         else:
             self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
-            self.mensaje_emergente.setText("Datos Incorrectos.")
+            self.mensaje_emergente.setText("Usuario o Contraseña Incorrectos.")
             self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
             self.mensaje_emergente.exec()
             self.boton_registrar.setEnabled(False)
@@ -1131,23 +1134,36 @@ class inicio (QWidget):
         usuario_documento = int(self.crear_usuario_input.text())
         pasword = self.crear_contra_input.text()
         confirma_pasword = self.confirmar_contra_input.text()
-        if pasword == confirma_pasword:
-            conexcionBD.crear_profesor(
-                usuario_documento, pasword, nombre_usuario)
+        esta = conexcionBD.verificar_documento_profesor_existe(
+            usuario_documento)
+        if esta == False:
+            if pasword == confirma_pasword:
+                conexcionBD.crear_profesor(
+                    usuario_documento, pasword, nombre_usuario)
+                self.nombre_usuario_input.setText("")
+                self.crear_usuario_input.setText("")
+                self.crear_contra_input.setText("")
+                self.confirmar_contra_input.setText("")
+                self.segunda_ventana.close()
+                self.mensaje_emergente.setWindowTitle("Mensaje de Exito")
+                self.mensaje_emergente.setText("Usuario Creado Exitosamente")
+                self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
+                self.mensaje_emergente.exec()
+            else:
+                self.crear_contra_input.setText("")
+                self.confirmar_contra_input.setText("")
+                self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+                self.mensaje_emergente.setText("La Contraseña NO coincide.")
+                self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
+                self.mensaje_emergente.exec()
+        else:
             self.nombre_usuario_input.setText("")
             self.crear_usuario_input.setText("")
             self.crear_contra_input.setText("")
             self.confirmar_contra_input.setText("")
-            self.segunda_ventana.close()
-            self.mensaje_emergente.setWindowTitle("Mensaje de Exito")
-            self.mensaje_emergente.setText("Usuario Creado Exitosamente")
-            self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
-            self.mensaje_emergente.exec()
-        else:
-            self.crear_contra_input.setText("")
-            self.confirmar_contra_input.setText("")
             self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
-            self.mensaje_emergente.setText("La Contraseña NO coincide.")
+            self.mensaje_emergente.setText(
+                "El documento digitado ya esta registrado.")
             self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
             self.mensaje_emergente.exec()
 

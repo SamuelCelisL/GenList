@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
                              QVBoxLayout, QHBoxLayout)
-from PyQt6.QtGui import QPixmap, QIcon
+from PyQt6.QtGui import QPixmap, QIcon, QIntValidator
 from PyQt6 import QtCore
 
 
@@ -68,6 +68,8 @@ class crear_usuario(QWidget):
                             max-width: 60px;
                         }""")
 
+        int_validator = QIntValidator(0, 2147483647)
+        crear_usuario_input.setValidator(int_validator)
         crear_usuario_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
         crear_usuario_input.setStyleSheet("""QLineEdit{
                             color: black;

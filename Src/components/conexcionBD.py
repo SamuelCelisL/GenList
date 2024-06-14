@@ -296,6 +296,38 @@ def editar_contrasena_profesor():
 # ? IMPORTANTE PARA PRESENTAR
 
 
+def verificar_documento_profesor_existe(documento_por_registrar):
+
+    # Establecer conexión con la base de datos
+    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    cursor = conexion.cursor()
+
+    # Ejecutar consulta para verificar la existencia del documento
+    cursor.execute(
+        'SELECT COUNT(*) FROM PROFESORES WHERE Documento_Profesor = ?', (documento_por_registrar,))
+
+    # Obtener el resultado de la consulta
+    resultado = cursor.fetchone()
+
+    # Verificar si el resultado es mayor que 0
+    if resultado[0] == 1:
+        documento_existe = True
+    elif resultado[0] == 0:
+        documento_existe = False
+    else:
+        # Manejar error en caso de que el resultado no sea un valor esperado
+        print(
+            f"Error al verificar documento: resultado inesperado ({resultado[0]})")
+        documento_existe = False
+
+    # Cerrar la conexión a la base de datos
+    cursor.close()
+    conexion.close()
+
+    # Devolver el resultado
+    return documento_existe
+
+
 def crear_profesor(documento, contrasena, nombre_usuario):
     conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
     cursor = conexion.cursor()

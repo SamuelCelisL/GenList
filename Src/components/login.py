@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
                              QVBoxLayout)
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QIntValidator
 from PyQt6 import QtCore
 
 
@@ -23,6 +23,8 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
                         border: none;
                         max-width: 60px;
                     }""")
+    int_validator = QIntValidator(0, 2147483647)
+    usuario_input.setValidator(int_validator)
     usuario_input.setStyleSheet("""QLineEdit{
                         color: black;
                         font-family: sans-serif;
