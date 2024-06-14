@@ -371,7 +371,7 @@ class inicio (QWidget):
         botonE, botonA = self.crear_botones(
             boton_editar, boton_asistencia)
         botonE.clicked.connect(
-            lambda checked, id=materia: self.borrar_materias(id))
+            lambda checked, id=materia: self.show_validacion5(id))
         botonA.clicked.connect(
             lambda checked, id=materia: self.marcar_asistencia(id))
 
@@ -1161,6 +1161,7 @@ class inicio (QWidget):
         else:
             msg_box.close()
 
+    # todo funcion validacion de salida del boton cancelar pag5
     def show_validacion4(self):
         # Crear una ventana emergente
         msg_box = QMessageBox()
@@ -1177,6 +1178,26 @@ class inicio (QWidget):
         response = msg_box.exec()
         if response == QMessageBox.StandardButton.Yes:
             self.volver_pag_cursos()
+        else:
+            msg_box.close()
+
+    # todo Funcion validacion de borrar del boton Borrar en pag2
+    def show_validacion5(self, id):
+        # Crear una ventana emergente
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("GenList")
+        msg_box.setWindowIcon(QIcon('src/images/logo2.ico'))
+        msg_box.setText(
+            "¿Seguro que deseas eliminar la clase?")
+        msg_box.setIcon(QMessageBox.Icon.Question)
+        msg_box.setStandardButtons(
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg_box.setDefaultButton(QMessageBox.StandardButton.No)
+
+        # Mostrar la ventana emergente y capturar la respuesta
+        response = msg_box.exec()
+        if response == QMessageBox.StandardButton.Yes:
+            self.borrar_materias(id)
         else:
             msg_box.close()
     #! FUNCIONES DE LOS BOTONES ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
@@ -1304,7 +1325,7 @@ class inicio (QWidget):
         else:
             pass
         self.estudiantes = []
-        self.materia_input = None
+        self.Titulomateria = None
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
