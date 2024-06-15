@@ -494,23 +494,21 @@ class inicio (QWidget):
             texto_informacion_materia)
         contenedor_cabeza.addWidget(
             self.materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
-
         anchoTabla = int((self.ventana.width()*0.533))
         table = QTableWidget()
-        table.setFixedHeight(350)
-        # table.setFixedWidth(anchoTabla)
-        table.setRowCount(6)  # Establece el número de filas
+        alturatabla = int((self.ventana.height()*0.41))
+        table.setFixedHeight(alturatabla)
+        cantidadfilas = len(self.estudiantes)
+        table.setRowCount(cantidadfilas)  # Establece el número de filas
         table.setColumnCount(3)  # Establece el número de columnas
-        table.setSizePolicy(QSizePolicy.Policy.Expanding,
-                            QSizePolicy.Policy.Expanding)
-        table.setEnabled(False)
+        # table.setSizePolicy(QSizePolicy.Policy.Expanding,
+        #                     QSizePolicy.Policy.Expanding)
+        table.setVerticalScrollMode(table.ScrollMode.ScrollPerItem)
+
+        # table.setEnabled(False)
         table.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        # anchoTituloTabla = int((self.ventana.width()*0.50))
-        anchoTituloTabla = int(anchoTabla - 12)
-        anchoTituloTabla1 = int(anchoTabla/3)
-        # header = table.horizontalHeader()
-        # header.resizeSection(1, anchoTituloTabla1)
+        anchoTituloTabla = int(anchoTabla - 50)
         table.setHorizontalHeaderLabels(
             ["Nombres y Apellidos", "Documento", "Carrera"])
         table.horizontalHeader().setStyleSheet(f"""
@@ -544,14 +542,14 @@ class inicio (QWidget):
                         border: none;
                         border-radius: 0px;
                         min-height: 30px;
-                        min-width: {10}px;
-                        max-width: {10}px;
+                        min-width: {20}px;
+                        max-width: {20}px;
                     }}
                     QHeaderView {{
                         border: none;
                         border-radius: 0px;
-                        min-width: {10}px;
-                        max-width: {10}px;
+                        min-width: {20}px;
+                        max-width: {20}px;
                     }}
                 """)
         table.setStyleSheet(f"""
@@ -567,38 +565,32 @@ class inicio (QWidget):
                 QTableWidget::item {{
                     color: black;
                     border: 1px solid black;
-                    border-radius: 0px;             
-                          
-                }}
-                QTableWidget::item:selected {{
-                    color: black;
-                    border: 1px solid transparent;
+                    border-radius: 0px;         
                 }}
                             """)
 
-        # table.setColumnWidth(0, anchoTituloTabla)
-        # table.setColumnWidth(1, anchoTituloTabla)
+        table.setColumnWidth(0, (anchoTituloTabla+200))
+        table.setColumnWidth(1, (anchoTituloTabla-200))
         # table.setColumnWidth(2, anchoTituloTabla)
 
         row_labels = [str(i+1) for i in range(table.rowCount())]
         table.setVerticalHeaderLabels(row_labels)
-        # header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
         table.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch)
         table.verticalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.ResizeToContents)
 
-    # todo Insetar informacion en la tabla ↓↓↓
-        # for i in range(5):  # Rellena la tabla con datos de ejemplo
-        #     for j in range(3):
-        #         table.setItem(
-        #             i, j, QTableWidgetItem(f"Celda {i+1}, {j+1}"))
-        # Primer bucle for para recorrer las sublistas (listas dentro de la lista principal)
-        for i in range(len(self.estudiantes)):
+    # todo Insetar informacion en la tabla y volver NO editable las celdas↓↓↓
+        for i in range(cantidadfilas):
             for j in range(3):
-                # print(self.estudiantes[i][j])
                 table.setItem(i, j, QTableWidgetItem(self.estudiantes[i][j]))
-    # todo Insertar informacion en la tabla ↑↑↑
+                item = QTableWidgetItem(self.estudiantes[i][j])
+                item.setFlags(item.flags() & ~
+                              QtCore.Qt.ItemFlag.ItemIsEditable)
+                table.setItem(i, j, item)
+                # print(self.estudiantes[i][j])
+
+    # todo Insetar informacion en la tabla y volver NO editable las celdas↑↑↑
         contenedor_form_curso.addWidget(
             widget_contenedor_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
         contenedor_form_curso.addWidget(table)
