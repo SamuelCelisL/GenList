@@ -725,41 +725,48 @@ class inicio (QWidget):
         contenedor_informacion.addWidget(self.input_carrera)
 
         contenedor_camara = QVBoxLayout()
-
+        largowidgetCamara = int((self.ventana.height()*0.55))
         widget_contenedor_camara = QWidget()
         widget_contenedor_camara.setLayout(contenedor_camara)
-        widget_contenedor_camara.setStyleSheet("""QWidget{
+        widget_contenedor_camara.setStyleSheet(f"""QWidget{{
                                     background-color: #DBE5D9;
                                     border: 1px solid black;
                                     border-radius: 9px;
                                     margin: 1px 1px;
-                                    }""")
+                                    max-height: {largowidgetCamara}px;
+                                    }}""")
         self.cameraLabel.setStyleSheet("""QWidget{
                                        border-radius: 1px;
+
                                        }""")
         contenedor_camara.addWidget(self.cameraLabel)
-        self.progressBar.setStyleSheet("""
-                        QProgressBar {
+        altobarra = int((largowidgetCamara*0.03))
+        self.progressBar.setStyleSheet(f"""
+                        QProgressBar {{
                             border: 2px solid black;
                             border-radius: 1px;
                             background-color: #E0E0E0;
                             color: black;
                             text-align: center;
                             font: bold 14px;
-                        }
-                        QProgressBar::chunk {
+                            max-height: {altobarra}px;
+                        }}
+                        QProgressBar::chunk {{
                             background: qlineargradient(x1:0, y1:0, x2:0.707, y2:0.707, stop:0.1 rgba(46, 145, 221, 255),
                     stop:0.4 rgba(40, 125, 190, 255),
                     stop:0.6 rgba(33, 104, 158, 255));
-                        }
+                        }}
                     """)
         contenedor_camara.addWidget(self.progressBar)
 
         contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
         contenedor_llenado_informacion.addWidget(widget_contenedor_camara)
 
+        # widget_contenedor_llenado_informacion.setStyleSheet("""QWidget{
+        #                                                     border: 1px solid black;
+        #                                                     }""")
         contenedro_pag3.addWidget(widget_contenedor_llenado_informacion)
-        anchoBarra3 = int((self.ventana.width()*0.944))
+        anchoBarra3 = int((self.ventana.width()*0.92))
         auxiliar = self.barra_botones_pag2(
             boton_cancelar2, boton_biometria, boton_registrar)
         auxiliar.setStyleSheet(f"""QWidget{{
@@ -1121,8 +1128,8 @@ class inicio (QWidget):
             self.volver_inicio()
         else:
             msg_box.close()
-    # todo Funcion de validacion de salida del boton cancelar pag 3
 
+    # todo Funcion de validacion de salida del boton cancelar pag 3
     def show_validacion2(self):
         # Crear una ventana emergente
         msg_box = QMessageBox()

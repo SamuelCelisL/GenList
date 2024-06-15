@@ -2,7 +2,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
                              QVBoxLayout, QHBoxLayout)
 from PyQt6.QtGui import QPixmap, QIcon, QIntValidator
-from PyQt6 import QtCore
+
 
 
 class crear_usuario(QWidget):
