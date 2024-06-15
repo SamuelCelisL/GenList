@@ -2,6 +2,7 @@ import sqlite3
 import os
 
 BasedeDatos = 'src/DataBase/BaseDeDatos.db'
+
 if os.path.isfile(BasedeDatos):
     pass
 else:
@@ -13,7 +14,7 @@ else:
 
 
 def validar_credenciales_profesor(documento_profesor, contrasena):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Verificar si el documento del profesor existe
@@ -42,7 +43,7 @@ def validar_credenciales_profesor(documento_profesor, contrasena):
 
 
 def obtener_id_profesor(documento_profesor):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
     # Buscar el ID_Profesor en la base de datos
     cursor.execute('''
@@ -66,7 +67,7 @@ def obtener_id_profesor(documento_profesor):
 
 
 def insertar_clase(nombre_clase, profesor_id, datos):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Preparar la sentencia SQL para insertar la clase
@@ -82,7 +83,7 @@ def insertar_clase(nombre_clase, profesor_id, datos):
 
 
 def obtener_id_clase(nombre_clase):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Buscar el ID_Clase en la base de datos
@@ -106,7 +107,7 @@ def obtener_id_clase(nombre_clase):
 
 
 def obtener_json_clase(id_clase):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Buscar el ID_Clase en la base de datos
@@ -132,7 +133,7 @@ def obtener_json_clase(id_clase):
 
 
 def insertar_estudiante(documento_estudiante, nombre_estudiante, carrera_estudiante, clase_id):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Preparar la sentencia SQL para insertar el estudiante
@@ -148,7 +149,7 @@ def insertar_estudiante(documento_estudiante, nombre_estudiante, carrera_estudia
 
 
 def insertar_datos_biometricos(datos_biometricos, clase_id):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
     # Preparar la sentencia SQL para insertar los datos biométricos
     cursor.execute('''
@@ -162,7 +163,7 @@ def insertar_datos_biometricos(datos_biometricos, clase_id):
 
 
 def obtener_datos_biometricos(clase_id):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     cursor.execute('''
@@ -185,7 +186,7 @@ def obtener_datos_biometricos(clase_id):
 
 
 def obtener_nombres_clases(profesor_id):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Buscar los nombres de las clases del profesor
@@ -208,7 +209,7 @@ def obtener_nombres_clases(profesor_id):
 
 
 def obtener_estudiante_por_posicion(clase_id, posicion):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Buscar los datos del estudiante en la posición especificada
@@ -234,7 +235,7 @@ def obtener_estudiante_por_posicion(clase_id, posicion):
 
 
 def obtener_estudiantes_de_una_clase(clase_id, estudiantes):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Obtener la cantidad total de estudiantes en la clase
@@ -255,7 +256,7 @@ def obtener_estudiantes_de_una_clase(clase_id, estudiantes):
 
 
 def eliminar_datos_por_clase_id(clase_id):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Eliminar estudiantes de la clase especificada
@@ -281,7 +282,7 @@ def eliminar_datos_por_clase_id(clase_id):
 
 
 def editar_contrasena_profesor():
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Editar la contraseña del profesor
@@ -299,7 +300,7 @@ def editar_contrasena_profesor():
 def verificar_documento_profesor_existe(documento_por_registrar):
 
     # Establecer conexión con la base de datos
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Ejecutar consulta para verificar la existencia del documento
@@ -329,7 +330,7 @@ def verificar_documento_profesor_existe(documento_por_registrar):
 
 
 def crear_profesor(documento, contrasena, nombre_usuario):
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Insertar los datos del nuevo profesor
@@ -345,7 +346,7 @@ def crear_profesor(documento, contrasena, nombre_usuario):
 def eliminar_datos_biometricos_por_clase_id(clase_id):
 
     # Establecer conexión con la base de datos
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Eliminar los datos biométricos de la tabla DATOS_BIOMETRICOS
@@ -362,7 +363,7 @@ def eliminar_datos_biometricos_por_clase_id(clase_id):
 def obtener_id_clases(profesor_id):
 
     # Establecer conexión con la base de datos
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # Buscar los ID_Clases del profesor
@@ -387,7 +388,7 @@ def obtener_id_clases(profesor_id):
 
 def eliminar_profesor_por_id(documento_profesor):
    # Establecer conexión con la base de datos
-    conexion = sqlite3.connect('src/DataBase/BaseDeDatos.db')
+    conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
     # obtener la ID_Profesor asociadas al documento
