@@ -234,10 +234,10 @@ def obtener_estudiante_por_posicion(clase_id, posicion):
     return estudiante
 
 
-def obtener_estudiantes_de_una_clase(clase_id, estudiantes):
+def obtener_estudiantes_de_una_clase(clase_id):
     conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
-
+    estudiantes = []
     # Obtener la cantidad total de estudiantes en la clase
     cursor.execute(
         'SELECT COUNT(*) FROM ESTUDIANTES WHERE Clase_ID = ?', (clase_id,))
