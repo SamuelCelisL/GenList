@@ -1,5 +1,5 @@
 --
--- Archivo generado con SQLiteStudio v3.4.4 el mar. jun. 4 22:41:39 2024
+-- Archivo generado con SQLiteStudio v3.4.4 el lun. jun. 17 17:12:24 2024
 --
 -- Codificaci�n de texto usada: System
 --
@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS CLASES (
                                NOT NULL,
     Nombre_Clase VARCHAR (100) NOT NULL,
     Profesor_ID  INTEGER       NOT NULL,
-    Datos_clase  TEXT          NOT NULL,     
+    Sede_Clase   VARCHAR (100) NOT NULL,
+    Grupo_Clase  VARCHAR (100) NOT NULL,
     FOREIGN KEY (
         Profesor_ID
     )
@@ -57,7 +58,6 @@ CREATE TABLE IF NOT EXISTS PROFESORES (
     Nombre_Profesor    VARCHAR (100) 
 );
 
-INSERT INTO PROFESORES (Documento_Profesor, Contrasena, Nombre_Profesor) VALUES (1091964042, 'AbuelaDestroyer', 'Samuel Andres Celis');
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;

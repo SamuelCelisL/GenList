@@ -4,7 +4,6 @@ from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit,
 from PyQt6.QtGui import QPixmap, QIcon, QIntValidator
 
 
-
 class crear_usuario(QWidget):
 
     def __init__(self, boton_volver_login, boton_crear_usuario, crear_usuario_input, crear_contra_input, confirmar_contra_input, nombre_usuario_input):
@@ -36,7 +35,7 @@ class crear_usuario(QWidget):
         etiqueta_imagen.setAlignment(Qt.AlignmentFlag.AlignCenter)
         etiqueta_imagen.setStyleSheet("border: none;")
 
-        etiqueta_nombre_usuario = QLabel("Nombre de Usuario")
+        etiqueta_nombre_usuario = QLabel("Nombre Completo")
         etiqueta_nombre_usuario.setAlignment(Qt.AlignmentFlag.AlignCenter)
         etiqueta_nombre_usuario.setStyleSheet("""QLabel{
                             color: black;
