@@ -127,7 +127,7 @@ class inicio (QWidget):
 
         tamaño_etiqueta_autor = int((self.altoC*0.30))
         tamaño_fuete_autores = int(tamaño_etiqueta_autor - 0.5)
-        autor1 = QLabel("La Secta de Samuel ®")
+        autor1 = QLabel("Grupo JUYSAM®")
         autor1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         autor1.setStyleSheet(f"""QLabel{{
                     background: red;
@@ -1356,7 +1356,7 @@ class inicio (QWidget):
     # ?Funcion boton agregar estudiantes pag3
     def b_llenar_curso(self):
         self.progressBar.setValue(0)
-        self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
+        self.cameraLabel.setPixmap(QPixmap('src/images/fondoimagenICO.ico'))
         self.Titulomateria = self.materia_input.text()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
@@ -1374,7 +1374,7 @@ class inicio (QWidget):
 
     # ? Funcion boton regsitar pag4
     def registrar_estudiante(self):
-        self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
+        self.cameraLabel.setPixmap(QPixmap('src/images/fondoimagenICO.ico'))
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
         self.widget_cuerpo_pag3.hide()
         self.showMaximized()
@@ -1383,7 +1383,7 @@ class inicio (QWidget):
 
     # ? Funcion boton cancelar pag5
     def volver_pag_cursos(self):
-        self.cameraLabel.setPixmap(QPixmap('src/images/logo2.ico'))
+        self.cameraLabel.setPixmap(QPixmap('src/images/fondoimagenICO.ico'))
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag4)
         self.widget_cuerpo_pag4.hide()
         self.stop_camera()
