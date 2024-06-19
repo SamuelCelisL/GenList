@@ -8,7 +8,7 @@ import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton,
-    QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
+    QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem, QSpacerItem)
 from PyQt6.QtGui import QIcon, QPixmap, QIntValidator
 from PyQt6 import QtWidgets, QtGui, QtCore
 from components import login, new_usuario, informacion_asistencia, conexcionBD, capture_and_save, train_model, recognize, generadorPDF
@@ -440,7 +440,7 @@ class inicio (QWidget):
         widget_principal_pag2 = QWidget()
         widget_principal_pag2.setLayout(principal_pag2)
 
-        anchoContenedor = int((self.ventana.width()*0.60))
+        anchoContenedor = int((self.ventana.width()*0.52))
         contenedor_form_curso = QVBoxLayout()
         widget_contenedor_form_curso = QWidget()
         widget_contenedor_form_curso.setStyleSheet(f"""QWidget{{
@@ -454,7 +454,7 @@ class inicio (QWidget):
         #                                            QSizePolicy.Policy.Expanding)
         widget_contenedor_form_curso.setLayout(contenedor_form_curso)
 
-        texto_informacion_materia = QLabel("Nombre del curso y grupo :")
+        texto_informacion_materia = QLabel("Nombre del curso")
         texto_informacion_materia.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         texto_informacion_materia.setStyleSheet("""QLabel{
@@ -462,8 +462,8 @@ class inicio (QWidget):
                                     font-family: sans-serif;
                                     font-weight: bold;
                                     color: black;
-                                    max-width: 160px;
-                                    min-width: 160px;
+                                    max-width: 115px;
+                                    min-width: 115px;
                                     max-height: 60px;
                                     min-height: 60px;
                                     }""")
@@ -493,12 +493,13 @@ class inicio (QWidget):
                                     font-family: sans-serif;
                                     font-weight: bold;
                                     color: black;
-                                    max-width: 60px;
-                                    min-width: 60px;
+                                    max-width: 40px;
+                                    min-width: 40px;
                                     max-height: 60px;
                                     min-height: 60px;
                                     }""")
         self.input_grupo = QLineEdit()
+        self.input_grupo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.input_grupo.setStyleSheet(f"""QLineEdit{{
                             color: black;
                             font-family: sans-serif;
@@ -517,17 +518,19 @@ class inicio (QWidget):
             self.input_grupo.setText(self.grupo)
 
         etiqueta_sede = QLabel("Sede")
-        etiqueta_sede.setAttribute(
-            QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        # etiqueta_sede.setAttribute(
+        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        etiqueta_sede.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         etiqueta_sede.setStyleSheet("""QLabel{
                                     border: none;
                                     font-family: sans-serif;
                                     font-weight: bold;
                                     color: black;
-                                    max-width: 50px;
-                                    min-width: 50px;
-                                    max-height: 60px;
-                                    min-height: 60px;
+                                    max-width: 115px;
+                                    min-width: 115px;
+                                    max-height: 40px;
+                                    min-height: 40px;
                                     }""")
         self.input_sede = QLineEdit()
         self.input_sede.setStyleSheet(f"""QLineEdit{{
@@ -582,7 +585,6 @@ class inicio (QWidget):
         contenedor_cabeza.addWidget(etiqueta_grupo)
         contenedor_cabeza.addWidget(
             self.input_grupo, alignment=Qt.AlignmentFlag.AlignLeft)
-
         contenedor_cabeza2.addWidget(etiqueta_sede)
         contenedor_cabeza2.addWidget(
             self.input_sede, alignment=Qt.AlignmentFlag.AlignLeft)
@@ -590,7 +592,7 @@ class inicio (QWidget):
         contenedor_toda_cabeza.addWidget(widget_contenedor_cabeza)
         contenedor_toda_cabeza.addWidget(widget_contenedor_cabeza2)
 
-        anchoTabla = int((self.ventana.width()*0.58))
+        anchoTabla = int((self.ventana.width()*0.50))
         table = QTableWidget()
         alturatabla = int((self.ventana.height()*0.35))
         table.setFixedHeight(alturatabla)
@@ -1008,7 +1010,7 @@ class inicio (QWidget):
     def barra_botones_pag2(self, boton_cancelar, boton_agregar_estudiante, boton_finalzar):
 
         # Creacion de contenerdor de datos y acciones basicas
-        anchoBarra2 = int((self.ventana.width()*0.60))
+        anchoBarra2 = int((self.ventana.width()*0.52))
         contenedor_ayuda = QHBoxLayout()
         widget_contenedor_ayuda = QWidget()
         widget_contenedor_ayuda.setStyleSheet(f"""QWidget{{
@@ -1503,7 +1505,11 @@ class inicio (QWidget):
         # ↓↓↓ vector global para guardar los ides de las personas que asistieron
         estudiante = int(self.identify_person())
         if estudiante in self.estudiantes_asiste:
-            print("Ya esta")
+            self.mensaje_emergente.setWindowTitle("Mensaje de ERROR")
+            self.mensaje_emergente.setText(
+                f"El {estudiante} ya esta registrada.")
+            self.mensaje_emergente.setIcon(QMessageBox.Icon.Warning)
+            self.mensaje_emergente.exec()
         else:
             self.estudiantes_asiste.append(estudiante)
             print(self.estudiantes_asiste)
@@ -1533,16 +1539,22 @@ class inicio (QWidget):
         tema = self.tema_input.text()
         nombre_profesor = conexcionBD.obtener_nombre_profesor(self.profesor_id)
         sede, grupo = conexcionBD.obtener_grupo_sede_clase(self.clase_id)
-        estudiantes = conexcionBD.obtener_estudiantes_de_una_clase(self.clase_id)
+        estudiantes = conexcionBD.obtener_estudiantes_de_una_clase(
+            self.clase_id)
 
-        generadorPDF.save_pdf(grupo, aula, nombre_profesor, self.materia_asistencia, tema, sede, estudiantes, self.estudiantes_asiste)
+        generadorPDF.save_pdf(grupo, aula, nombre_profesor, self.materia_asistencia,
+                              tema, sede, estudiantes, self.estudiantes_asiste)
 
+        self.mensaje_emergente.setWindowTitle("PROCESO TERMINADO CON EXITO")
+        self.mensaje_emergente.setText(
+            "EL PDF a sido guardado con exito.")
+        self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
+        self.mensaje_emergente.exec()
         self.ventana_info_clase.close()
-        
-
 
     # ! FUNCIONES DE RECONOCIMIENTO FACIAL ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? Conversor de Modelo a LONGBLOB
+
     def convertir(self):
         # Carga los datos del archivo
         with open('src/Models/ModeloFaceFrontalData2024.pkl', 'rb') as f:
