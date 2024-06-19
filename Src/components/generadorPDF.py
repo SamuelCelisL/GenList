@@ -210,7 +210,7 @@ def save_pdf(grupo, aula, docente, curso, tema, sede, estudiantes, asistencia):
         add_fields_to_pdf(file_path, file_path, fecha, grupo,
                           aula, docente, curso, tema, sede)
 
-        print(f"Documento PDF guardado en: {file_path}")
+        # print(f"Documento PDF guardado en: {file_path}")
 
 
 if __name__ == "__main__":

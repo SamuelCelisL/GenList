@@ -1275,6 +1275,7 @@ class inicio (QWidget):
         response = msg_box.exec()
         if response == QMessageBox.StandardButton.Yes:
             self.volver_pag_cursos()
+            self.estudiantes_asiste = []
         else:
             msg_box.close()
 
@@ -1512,7 +1513,6 @@ class inicio (QWidget):
             self.mensaje_emergente.exec()
         else:
             self.estudiantes_asiste.append(estudiante)
-            print(self.estudiantes_asiste)
 
     # ? funcion boton crear PDF pag5
     def crear_asistencia(self):
