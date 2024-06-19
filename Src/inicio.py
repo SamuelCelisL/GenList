@@ -547,7 +547,7 @@ class inicio (QWidget):
         }}""")
         if self.grupo is None:
             self.input_sede.setPlaceholderText(
-                "Ejemplo: sede Villa del Rosario Universidad de Pamplona")
+                "Ejemplo: Villa del Rosario")
         else:
             self.input_sede.setText(self.sede)
 
@@ -1450,8 +1450,10 @@ class inicio (QWidget):
         clase_id = conexcionBD.obtener_id_clase(nombre_clase)
 
         with ThreadPoolExecutor() as executor:
-            future_estudiantes = executor.submit(self.insertar_estudiantes, clase_id)
-            future_biometricos = executor.submit(self.insertar_datos_biometricos, clase_id)
+            future_estudiantes = executor.submit(
+                self.insertar_estudiantes, clase_id)
+            future_biometricos = executor.submit(
+                self.insertar_datos_biometricos, clase_id)
 
             # Esperar a que ambas tareas se completen
             future_estudiantes.result()
@@ -1526,6 +1528,11 @@ class inicio (QWidget):
             self.mensaje_emergente.exec()
         else:
             self.estudiantes_asiste.append(estudiante)
+            self.mensaje_emergente.setWindowTitle("Mensaje de EXITO")
+            self.mensaje_emergente.setText(
+                f"El {estudiante} se registro con exito.")
+            self.mensaje_emergente.setIcon(QMessageBox.Icon.Information)
+            self.mensaje_emergente.exec()
 
     # ? funcion boton crear PDF pag5
     def crear_asistencia(self):
