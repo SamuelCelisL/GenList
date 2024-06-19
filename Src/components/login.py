@@ -177,5 +177,4 @@ def generar_formulario_login(boton_registrar, usuario_input, Contra_input, boton
         pregunta_registro, alignment=Qt.AlignmentFlag.AlignCenter)
     contenedor_registro.addWidget(
         boton_crear_usuario, alignment=Qt.AlignmentFlag.AlignCenter)
-
     return widget_contenedor_registro

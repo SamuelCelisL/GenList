@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS CLASES (
     Profesor_ID  INTEGER       NOT NULL,
     Sede_Clase   VARCHAR (100) NOT NULL,
     Grupo_Clase  VARCHAR (100) NOT NULL,
+    Datos_Clase  TEXT          NOT NULL,
     FOREIGN KEY (
         Profesor_ID
     )

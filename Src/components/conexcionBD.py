@@ -66,17 +66,16 @@ def obtener_id_profesor(documento_profesor):
 #!HOJA DE WORD 2
 
 
-def insertar_clase(nombre_clase, profesor_id, datos):
+def insertar_clase(nombre_clase, profesor_id, sede_clase, grupo_clase, datos):
+
     conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
 
-    # Preparar la sentencia SQL para insertar la clase
     cursor.execute('''
-        INSERT INTO CLASES (Nombre_Clase, Profesor_ID, Datos_clase)
-        VALUES (?, ?, ?)
-    ''', (nombre_clase, profesor_id, datos))
+        INSERT INTO CLASES (Nombre_Clase, Profesor_ID, Sede_Clase, Grupo_Clase, Datos_Clase)
+        VALUES (?, ?, ?, ?, ?)
+    ''', (nombre_clase, profesor_id, sede_clase, grupo_clase, datos))
 
-    # Guardar los cambios en la base de datos
     conexion.commit()
     cursor.close()
     conexion.close()

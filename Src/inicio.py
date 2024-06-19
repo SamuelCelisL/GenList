@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
 from PyQt6.QtGui import QIcon, QPixmap, QIntValidator
 from PyQt6 import QtWidgets, QtGui, QtCore
-from components import login, new_usuario, conexcionBD, capture_and_save, train_model, recognize
+from components import login, new_usuario, informacion_asistencia, conexcionBD, capture_and_save, train_model, recognize
 
 
 #! Se implemento la clase MiBoton Para asigar el evento entrar a boton
@@ -81,7 +81,10 @@ class inicio (QWidget):
         self.profesor_id = None
         self.clase_id = None
         self.estudiantes = []
+        self.estudiantes_asiste = []
         self.Titulomateria = None
+        self.grupo = None
+        self.sede = None
         self.materia_asistencia = None
         self.setWindowTitle("Login GenList")
         self.setWindowIcon(QIcon('src/images/logo2.ico'))
@@ -204,7 +207,6 @@ class inicio (QWidget):
         self.boton_volver_login.clicked.connect(self.cerrar_crear_usuario)
         self.boton_confirmar_usuario.setHazDadoClick(self.comprobarcrear)
         self.boton_confirmar_usuario.clicked.connect(self.usuario_nuevo)
-
         #! Creacion de los botones de las barras de las paginas ↓↓↓‼
         # todo botones pag2
         self._boton_cerrar_sesion = QPushButton("Cerrar Sesion")
@@ -233,7 +235,9 @@ class inicio (QWidget):
         self.boton_cancelar3 = QPushButton("Cancelar")
         self.boton_cancelar3.clicked.connect(self.show_validacion4)
         self.boton_asistio = QPushButton("Registrar Estudiante")
+        self.boton_asistio.clicked.connect(self.guardar_estudiante)
         self.boton_pdf = QPushButton("Generar PDF")
+        self.boton_pdf.clicked.connect(self.crear_asistencia)
 
         #! LAYOUT DE LOS CREDITOS ↓↓↓↓
         contenedor_credito = QVBoxLayout()
@@ -436,7 +440,7 @@ class inicio (QWidget):
         widget_principal_pag2 = QWidget()
         widget_principal_pag2.setLayout(principal_pag2)
 
-        anchoContenedor = int((self.ventana.width()*0.553))
+        anchoContenedor = int((self.ventana.width()*0.60))
         contenedor_form_curso = QVBoxLayout()
         widget_contenedor_form_curso = QWidget()
         widget_contenedor_form_curso.setStyleSheet(f"""QWidget{{
@@ -450,7 +454,7 @@ class inicio (QWidget):
         #                                            QSizePolicy.Policy.Expanding)
         widget_contenedor_form_curso.setLayout(contenedor_form_curso)
 
-        texto_informacion_materia = QLabel("Nombre del curso y grupo : ")
+        texto_informacion_materia = QLabel("Nombre del curso y grupo :")
         texto_informacion_materia.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         texto_informacion_materia.setStyleSheet("""QLabel{
@@ -458,12 +462,12 @@ class inicio (QWidget):
                                     font-family: sans-serif;
                                     font-weight: bold;
                                     color: black;
-                                    max-width: 180px;
-                                    min-width: 180px;
+                                    max-width: 160px;
+                                    min-width: 160px;
                                     max-height: 60px;
                                     min-height: 60px;
                                     }""")
-        anchomateria = int((self.ventana.width()*0.3252))
+        anchomateria = int((self.ventana.width()*0.30))
         self.materia_input = QLineEdit()
         self.materia_input.setStyleSheet(f"""QLineEdit{{
                             color: black;
@@ -478,9 +482,80 @@ class inicio (QWidget):
         }}""")
         if self.Titulomateria is None:
             self.materia_input.setPlaceholderText(
-                "Ejemplo: Sistemas Inteligentes AR")
+                "Ejemplo: Sistemas Inteligentes")
         else:
             self.materia_input.setText(self.Titulomateria)
+        etiqueta_grupo = QLabel("Grupo")
+        etiqueta_grupo.setAttribute(
+            QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        etiqueta_grupo.setStyleSheet("""QLabel{
+                                    border: none;
+                                    font-family: sans-serif;
+                                    font-weight: bold;
+                                    color: black;
+                                    max-width: 60px;
+                                    min-width: 60px;
+                                    max-height: 60px;
+                                    min-height: 60px;
+                                    }""")
+        self.input_grupo = QLineEdit()
+        self.input_grupo.setStyleSheet(f"""QLineEdit{{
+                            color: black;
+                            font-family: sans-serif;
+                            font-weight: bold;
+                            border-radius: 8px;
+                            border: 1px solid black;
+                            min-height: 40px;
+                            max-height: 40px;
+                            max-width: {50}px;
+                            min-width: {50}px;
+        }}""")
+        if self.grupo is None:
+            self.input_grupo.setPlaceholderText(
+                "AR")
+        else:
+            self.input_grupo.setText(self.grupo)
+
+        etiqueta_sede = QLabel("Sede")
+        etiqueta_sede.setAttribute(
+            QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
+        etiqueta_sede.setStyleSheet("""QLabel{
+                                    border: none;
+                                    font-family: sans-serif;
+                                    font-weight: bold;
+                                    color: black;
+                                    max-width: 50px;
+                                    min-width: 50px;
+                                    max-height: 60px;
+                                    min-height: 60px;
+                                    }""")
+        self.input_sede = QLineEdit()
+        self.input_sede.setStyleSheet(f"""QLineEdit{{
+                            color: black;
+                            font-family: sans-serif;
+                            font-weight: bold;
+                            border-radius: 8px;
+                            border: 1px solid black;
+                            min-height: 40px;
+                            max-height: 40px;
+                            max-width: {anchomateria}px;
+                            min-width: {anchomateria}px;
+        }}""")
+        if self.grupo is None:
+            self.input_sede.setPlaceholderText(
+                "Ejemplo: sede Villa del Rosario Universidad de Pamplona")
+        else:
+            self.input_sede.setText(self.sede)
+
+        contenedor_toda_cabeza = QVBoxLayout()
+        widget_contenedor_toda_cabeza = QWidget()
+        widget_contenedor_toda_cabeza.setStyleSheet("""QWidget{
+                                    max-height: 150px;
+                                    min-height: 150px;
+                                    border: none;
+                                    }""")
+        widget_contenedor_toda_cabeza.setLayout(contenedor_toda_cabeza)
+
         contenedor_cabeza = QHBoxLayout()
         contenedor_cabeza.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         widget_contenedor_cabeza = QWidget()
@@ -490,13 +565,34 @@ class inicio (QWidget):
                                     border: none;
                                     }""")
         widget_contenedor_cabeza.setLayout(contenedor_cabeza)
+
+        contenedor_cabeza2 = QHBoxLayout()
+        widget_contenedor_cabeza2 = QWidget()
+        widget_contenedor_cabeza2.setStyleSheet("""QWidget{
+                                    max-height: 80px;
+                                    min-height: 80px;
+                                    border: none;
+                                    }""")
+        widget_contenedor_cabeza2.setLayout(contenedor_cabeza2)
+
         contenedor_cabeza.addWidget(
             texto_informacion_materia)
         contenedor_cabeza.addWidget(
-            self.materia_input, alignment=Qt.AlignmentFlag.AlignLeft)
-        anchoTabla = int((self.ventana.width()*0.533))
+            self.materia_input)
+        contenedor_cabeza.addWidget(etiqueta_grupo)
+        contenedor_cabeza.addWidget(
+            self.input_grupo, alignment=Qt.AlignmentFlag.AlignLeft)
+
+        contenedor_cabeza2.addWidget(etiqueta_sede)
+        contenedor_cabeza2.addWidget(
+            self.input_sede, alignment=Qt.AlignmentFlag.AlignLeft)
+
+        contenedor_toda_cabeza.addWidget(widget_contenedor_cabeza)
+        contenedor_toda_cabeza.addWidget(widget_contenedor_cabeza2)
+
+        anchoTabla = int((self.ventana.width()*0.58))
         table = QTableWidget()
-        alturatabla = int((self.ventana.height()*0.41))
+        alturatabla = int((self.ventana.height()*0.35))
         table.setFixedHeight(alturatabla)
         cantidadfilas = len(self.estudiantes)
         table.setRowCount(cantidadfilas)  # Establece el número de filas
@@ -592,7 +688,7 @@ class inicio (QWidget):
 
     # todo Insetar informacion en la tabla y volver NO editable las celdas↑↑↑
         contenedor_form_curso.addWidget(
-            widget_contenedor_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
+            widget_contenedor_toda_cabeza, alignment=Qt.AlignmentFlag.AlignTop)
         contenedor_form_curso.addWidget(table)
 
         principal_pag2.addWidget(widget_contenedor_form_curso)
@@ -912,7 +1008,7 @@ class inicio (QWidget):
     def barra_botones_pag2(self, boton_cancelar, boton_agregar_estudiante, boton_finalzar):
 
         # Creacion de contenerdor de datos y acciones basicas
-        anchoBarra2 = int((self.ventana.width()*0.553))
+        anchoBarra2 = int((self.ventana.width()*0.60))
         contenedor_ayuda = QHBoxLayout()
         widget_contenedor_ayuda = QWidget()
         widget_contenedor_ayuda.setStyleSheet(f"""QWidget{{
@@ -1287,15 +1383,15 @@ class inicio (QWidget):
         self.materia_asistencia = materia
         self.descargarJSON()
         self.descargarModel()
+        self.start_recognition()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo)
         self.widget_cuerpo.hide()
         self.widget_cuerpo_pag4 = self.tomar_asistencia(
             self.boton_cancelar3, self.boton_asistio, self.boton_pdf)
         self.contenedor_pre_registro.addWidget(self.widget_cuerpo_pag4)
-        self.start_recognition()
         self.showMaximized()
+        # ? Bototn Editar en las materias pag2
 
-    # ? Bototn Editar en las materias pag2
     def borrar_materias(self, materia):
         id_clase_borrar = conexcionBD.obtener_id_clase(materia)
         conexcionBD.eliminar_datos_por_clase_id(id_clase_borrar)
@@ -1325,6 +1421,8 @@ class inicio (QWidget):
             pass
         self.estudiantes = []
         self.Titulomateria = None
+        self.grupo = None
+        self.sede = None
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
@@ -1336,11 +1434,15 @@ class inicio (QWidget):
         self.widget_cuerpo_pag2.hide()
         self.showMaximized()
         nombre_clase = self.materia_input.text()
+        grupo_clase = self.input_grupo.text()
+        sede_clase = self.input_sede.text()
         json_path = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), 'JSON', 'estudiantes.json')
         with open(json_path, 'r') as f:
             datos = f.read()
-        conexcionBD.insertar_clase(nombre_clase, self.profesor_id, datos)
+        conexcionBD.insertar_clase(
+            nombre_clase, self.profesor_id, sede_clase, grupo_clase, datos)
+        # conexcionBD.insertar_clase(nombre_clase, self.profesor_id, datos)
         clase_id = conexcionBD.obtener_id_clase(nombre_clase)
         for i in range(len(self.estudiantes)):
             conexcionBD.insertar_estudiante(int(
@@ -1350,7 +1452,11 @@ class inicio (QWidget):
         conexcionBD.insertar_datos_biometricos(datos_biometricos, clase_id)
         self.estudiantes = []
         self.materia_input = None
-        self.Titulomateria = ""
+        self.input_grupo = None
+        self.input_sede = None
+        self.grupo = None
+        self.sede = None
+        self.Titulomateria = None
         self.cambiar_pantalla()
 
     # ?Funcion boton agregar estudiantes pag3
@@ -1358,6 +1464,8 @@ class inicio (QWidget):
         self.progressBar.setValue(0)
         self.cameraLabel.setPixmap(QPixmap('src/images/fondoimagenICO.ico'))
         self.Titulomateria = self.materia_input.text()
+        self.grupo = self.input_grupo.text()
+        self.sede = self.input_sede.text()
         self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag2)
         self.widget_cuerpo_pag2.hide()
         self.widget_cuerpo_pag3 = self.llenar_curso(
@@ -1390,9 +1498,41 @@ class inicio (QWidget):
         self.showMaximized()
         self.widget_cuerpo.show()
 
-    # ! FUNCIONES DE RECONOCIMIENTO FACIAL ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
+    # ? Funcion para el boton registrar estudiante pag5
+    def guardar_estudiante(self):
+        # ↓↓↓ vector global para guardar los ides de las personas que asistieron
+        # self.estudiantes_asiste
+        pass
 
-    # ? Conversor de Modelo a LONGBLOB
+    # ? funcion boton crear PDF pag5
+    def crear_asistencia(self):
+        self.boton_atras = QPushButton("Volver")
+        self.boton_reconocer = QPushButton("Continuar")
+        self.aula_input = QLineEdit()
+        self.tema_input = QLineEdit()
+        self.ventana_info_clase = informacion_asistencia.informacion_asistencia_clase(
+            self.boton_atras, self.boton_reconocer, self.aula_input, self.tema_input)
+        self.ventana_info_clase.show()
+
+        self.boton_atras.clicked.connect(self.volver_atras)
+        self.boton_reconocer.clicked.connect(self.pdf)
+
+    # ? funcion para el boton volver de la ventana emergente de la pag5
+    def volver_atras(self):
+        self.aula_input.setText("")
+        self.tema_input.setText("")
+        self.ventana_info_clase.close()
+
+    # ? funcion para el boton continuar en la ventana emergente de la pag5
+    def pdf(self):
+        aula = self.aula_input.text()
+        tema = self.tema_input.text()
+        print(aula)
+        print(tema)
+        self.ventana_info_clase.close()
+
+        # ! FUNCIONES DE RECONOCIMIENTO FACIAL ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
+        # ? Conversor de Modelo a LONGBLOB
     def convertir(self):
         # Carga los datos del archivo
         with open('src/Models/ModeloFaceFrontalData2024.pkl', 'rb') as f:
