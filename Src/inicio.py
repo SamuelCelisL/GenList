@@ -11,6 +11,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem, QSpacerItem)
 from PyQt6.QtGui import QIcon, QPixmap, QIntValidator
 from PyQt6 import QtWidgets, QtGui, QtCore
+from concurrent.futures import ThreadPoolExecutor
 from components import login, new_usuario, informacion_asistencia, conexcionBD, capture_and_save, train_model, recognize, generadorPDF
 
 
@@ -1447,12 +1448,15 @@ class inicio (QWidget):
             nombre_clase, self.profesor_id, sede_clase, grupo_clase, datos)
         # conexcionBD.insertar_clase(nombre_clase, self.profesor_id, datos)
         clase_id = conexcionBD.obtener_id_clase(nombre_clase)
-        for i in range(len(self.estudiantes)):
-            conexcionBD.insertar_estudiante(int(
-                self.estudiantes[i][1]), self.estudiantes[i][0], self.estudiantes[i][2], clase_id)
-        datos_biometricos = self.convertir()
 
-        conexcionBD.insertar_datos_biometricos(datos_biometricos, clase_id)
+        with ThreadPoolExecutor() as executor:
+            future_estudiantes = executor.submit(self.insertar_estudiantes, clase_id)
+            future_biometricos = executor.submit(self.insertar_datos_biometricos, clase_id)
+
+            # Esperar a que ambas tareas se completen
+            future_estudiantes.result()
+            future_biometricos.result()
+
         self.estudiantes = []
         self.materia_input = None
         self.input_grupo = None
@@ -1461,6 +1465,15 @@ class inicio (QWidget):
         self.sede = None
         self.Titulomateria = None
         self.cambiar_pantalla()
+
+    def insertar_estudiantes(self, clase_id):
+        for i in range(len(self.estudiantes)):
+            conexcionBD.insertar_estudiante(int(
+                self.estudiantes[i][1]), self.estudiantes[i][0], self.estudiantes[i][2], clase_id)
+
+    def insertar_datos_biometricos(self, clase_id):
+        datos_biometricos = self.convertir()
+        conexcionBD.insertar_datos_biometricos(datos_biometricos, clase_id)
 
     # ?Funcion boton agregar estudiantes pag3
     def b_llenar_curso(self):
@@ -1554,7 +1567,6 @@ class inicio (QWidget):
 
     # ! FUNCIONES DE RECONOCIMIENTO FACIAL ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
     # ? Conversor de Modelo a LONGBLOB
-
     def convertir(self):
         # Carga los datos del archivo
         with open('src/Models/ModeloFaceFrontalData2024.pkl', 'rb') as f:
