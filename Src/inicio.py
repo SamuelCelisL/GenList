@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QMessageBox, QSizePolicy, QScrollArea, QTableWidget, QHeaderView, QTableWidgetItem)
 from PyQt6.QtGui import QIcon, QPixmap, QIntValidator
 from PyQt6 import QtWidgets, QtGui, QtCore
-from components import login, new_usuario, informacion_asistencia, conexcionBD, capture_and_save, train_model, recognize
+from components import login, new_usuario, informacion_asistencia, conexcionBD, capture_and_save, train_model, recognize, generadorPDF
 
 
 #! Se implemento la clase MiBoton Para asigar el evento entrar a boton
@@ -1501,8 +1501,12 @@ class inicio (QWidget):
     # ? Funcion para el boton registrar estudiante pag5
     def guardar_estudiante(self):
         # ↓↓↓ vector global para guardar los ides de las personas que asistieron
-        # self.estudiantes_asiste
-        pass
+        estudiante = int(self.identify_person())
+        if estudiante in self.estudiantes_asiste:
+            print("Ya esta")
+        else:
+            self.estudiantes_asiste.append(estudiante)
+            print(self.estudiantes_asiste)
 
     # ? funcion boton crear PDF pag5
     def crear_asistencia(self):
@@ -1527,12 +1531,18 @@ class inicio (QWidget):
     def pdf(self):
         aula = self.aula_input.text()
         tema = self.tema_input.text()
-        print(aula)
-        print(tema)
-        self.ventana_info_clase.close()
+        nombre_profesor = conexcionBD.obtener_nombre_profesor(self.profesor_id)
+        sede, grupo = conexcionBD.obtener_grupo_sede_clase(self.clase_id)
+        estudiantes = conexcionBD.obtener_estudiantes_de_una_clase(self.clase_id)
 
-        # ! FUNCIONES DE RECONOCIMIENTO FACIAL ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
-        # ? Conversor de Modelo a LONGBLOB
+        generadorPDF.save_pdf(grupo, aula, nombre_profesor, self.materia_asistencia, tema, sede, estudiantes, self.estudiantes_asiste)
+
+        self.ventana_info_clase.close()
+        
+
+
+    # ! FUNCIONES DE RECONOCIMIENTO FACIAL ↓↓ ¦ ↓↓ ¦ ↓↓ ¦
+    # ? Conversor de Modelo a LONGBLOB
     def convertir(self):
         # Carga los datos del archivo
         with open('src/Models/ModeloFaceFrontalData2024.pkl', 'rb') as f:
@@ -1544,6 +1554,7 @@ class inicio (QWidget):
 
     def descargarJSON(self):
         id_clase = conexcionBD.obtener_id_clase(self.materia_asistencia)
+        self.clase_id = id_clase
         datos = conexcionBD.obtener_json_clase(id_clase)
         # Convertir la cadena JSON a un diccionario
         datos_dict = json.loads(datos)
@@ -1603,14 +1614,8 @@ class inicio (QWidget):
             if ret:
                 results = recognize.recognize_face(frame, self.clf, self.model)
                 for (x, y, w, h, label) in results:
-                    if label == 'Desconocido':
-                        message = 'Desconocido'
-                    else:
-                        personName = self.get_person_name(label)
-                        message = f'Persona reconocida: {personName}'
-                    QtWidgets.QMessageBox.information(
-                        self, "Reconocimiento", message)
-                    return
+                    personName = self.get_person_name(label)
+                    return personName
 
     # ? Iniciador de Camara
     def start_camera(self):

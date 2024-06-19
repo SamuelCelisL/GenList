@@ -63,6 +63,26 @@ def obtener_id_profesor(documento_profesor):
     conexion.close()
     return profesor_id
 
+def obtener_nombre_profesor(profesor_id):
+    conexion = sqlite3.connect(BasedeDatos)
+    cursor = conexion.cursor()
+    # Buscar el ID_Profesor en la base de datos
+    cursor.execute('''
+        SELECT Nombre_Profesor
+        FROM PROFESORES
+        WHERE ID_Profesor = ?
+    ''', (profesor_id,))
+    resultado = cursor.fetchone()
+    # Si se encontró un registro, extraer el ID_Profesor
+    if resultado:
+        nombre_profesor = resultado[0]
+    else:
+        nombre_profesor = None
+    # Retornar el ID_Profesor o None
+    cursor.close()
+    conexion.close()
+    return nombre_profesor
+
 #!HOJA DE WORD 2
 
 
@@ -103,6 +123,31 @@ def obtener_id_clase(nombre_clase):
     cursor.close()
     conexion.close()
     return clase_id
+
+def obtener_grupo_sede_clase(id_clase):
+    conexion = sqlite3.connect(BasedeDatos)
+    cursor = conexion.cursor()
+
+    # Buscar el ID_Clase en la base de datos
+    cursor.execute('''
+        SELECT Sede_Clase, Grupo_Clase
+        FROM CLASES
+        WHERE ID_Clase = ?
+    ''', (id_clase,))
+    resultado = cursor.fetchone()
+
+    # Si se encontró un registro, extraer el ID_Clase
+    if resultado:
+        sede = resultado[0]
+        grupo = resultado[1]
+    else:
+        sede = None
+        grupo = None
+
+    # Retornar el ID_Clase o None
+    cursor.close()
+    conexion.close()
+    return sede, grupo
 
 
 def obtener_json_clase(id_clase):
