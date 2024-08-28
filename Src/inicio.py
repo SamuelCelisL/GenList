@@ -1174,24 +1174,28 @@ class inicio (QWidget):
     def comprobarguardar(self):
         comprobacionlarga = []
         comprobacionBol = []
-        comprobacion = self.input_nombre_completo.text()
-        comprobacion2 = self.input_documento.text()
-        comprobacion3 = self.input_carrera.text()
-
-        comprobacionlarga = [comprobacion,
+        try:
+            comprobacion = self.input_nombre_completo.text()
+            comprobacion2 = self.input_documento.text()
+            comprobacion3 = self.input_carrera.text()
+            comprobacionlarga = [comprobacion,
                              comprobacion2, comprobacion3]
-        for elemento in comprobacionlarga:
-            if elemento == "":
-                comprobacionBol.append(False)
-            else:
-                comprobacionBol.append(True)
+            for elemento in comprobacionlarga:
+                if elemento == "":
+                    comprobacionBol.append(False)
+                else:
+                    comprobacionBol.append(True)
 
-        for campo in comprobacionBol:
-            if campo == False:
-                self.boton_guardar.setEnabled(False)
-                break
-            else:
-                self.boton_guardar.setEnabled(True)
+            for campo in comprobacionBol:
+                if campo == False:
+                    self.boton_guardar.setEnabled(False)
+                    break
+                else:
+                    self.boton_guardar.setEnabled(True)
+        except:
+            print("entro en el error")      
+
+        
 
     # todo Funcion para validar si el campo biometria esta vacio en la pag4
     def comprobarbiometria(self):
