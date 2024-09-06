@@ -1128,15 +1128,17 @@ class inicio (QWidget):
 
     # todo Funcion boton Registrar acomodar con lo WhatsApp ↓↓ pag4
     def creacion_vector(self):
+        try:
+            nombreEstudiante = self.input_nombre_completo.text()
+            documentoEstudiante = self.input_documento.text()
+            carreraEstudiante = self.input_carrera.text()
 
-        nombreEstudiante = self.input_nombre_completo.text()
-        documentoEstudiante = self.input_documento.text()
-        carreraEstudiante = self.input_carrera.text()
+            datos_estudiante = [nombreEstudiante,
+                                documentoEstudiante, carreraEstudiante]
 
-        datos_estudiante = [nombreEstudiante,
-                            documentoEstudiante, carreraEstudiante]
-
-        self.estudiantes.append(datos_estudiante)
+            self.estudiantes.append(datos_estudiante)
+        except:
+            print("PASAN COSAS!!!!!!!!!!!!!!!")
 
     # todo Funcion para validar si el campo de usuario en el LOGIN esta vacio
     def comprobar(self):
@@ -1179,7 +1181,7 @@ class inicio (QWidget):
             comprobacion2 = self.input_documento.text()
             comprobacion3 = self.input_carrera.text()
             comprobacionlarga = [comprobacion,
-                             comprobacion2, comprobacion3]
+                                 comprobacion2, comprobacion3]
             for elemento in comprobacionlarga:
                 if elemento == "":
                     comprobacionBol.append(False)
@@ -1193,11 +1195,10 @@ class inicio (QWidget):
                 else:
                     self.boton_guardar.setEnabled(True)
         except:
-            print("entro en el error")      
-
-        
+            print("entro en el error")
 
     # todo Funcion para validar si el campo biometria esta vacio en la pag4
+
     def comprobarbiometria(self):
         comprobacion = self.input_documento.text()
         if comprobacion == "":
@@ -1504,12 +1505,16 @@ class inicio (QWidget):
 
     # ? Funcion boton regsitar pag4
     def registrar_estudiante(self):
-        self.cameraLabel.setPixmap(QPixmap('src/images/fondoimagenICO.ico'))
-        self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
-        self.widget_cuerpo_pag3.hide()
-        self.showMaximized()
-        self.crear_curso()
-        # self.widget_cuerpo_pag2.show()
+        try:
+            self.cameraLabel.setPixmap(
+                QPixmap('src/images/fondoimagenICO.ico'))
+            self.contenedor_pre_registro.removeWidget(self.widget_cuerpo_pag3)
+            self.widget_cuerpo_pag3.hide()
+            self.showMaximized()
+            self.crear_curso()
+            # self.widget_cuerpo_pag2.show()
+        except:
+            print("SIGUEN PASANDO COSAS!!!!!!!")
 
     # ? Funcion boton cancelar pag5
     def volver_pag_cursos(self):
