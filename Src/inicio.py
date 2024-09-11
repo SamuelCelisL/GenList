@@ -451,8 +451,6 @@ class inicio (QWidget):
                                     margin: 1px 1px;
                                     max-width: {anchoContenedor}px;
                                     }}""")
-        # widget_contenedor_form_curso.setSizePolicy(QSizePolicy.Policy.Expanding,
-        #                                            QSizePolicy.Policy.Expanding)
         widget_contenedor_form_curso.setLayout(contenedor_form_curso)
 
         texto_informacion_materia = QLabel("Nombre del curso")
@@ -519,8 +517,6 @@ class inicio (QWidget):
             self.input_grupo.setText(self.grupo)
 
         etiqueta_sede = QLabel("Sede")
-        # etiqueta_sede.setAttribute(
-        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         etiqueta_sede.setAlignment(
             Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         etiqueta_sede.setStyleSheet("""QLabel{
@@ -600,11 +596,8 @@ class inicio (QWidget):
         cantidadfilas = len(self.estudiantes)
         table.setRowCount(cantidadfilas)  # Establece el número de filas
         table.setColumnCount(3)  # Establece el número de columnas
-        # table.setSizePolicy(QSizePolicy.Policy.Expanding,
-        #                     QSizePolicy.Policy.Expanding)
         table.setVerticalScrollMode(table.ScrollMode.ScrollPerItem)
 
-        # table.setEnabled(False)
         table.setAttribute(
             QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         anchoTituloTabla = int(anchoTabla - 50)
@@ -670,7 +663,6 @@ class inicio (QWidget):
 
         table.setColumnWidth(0, (anchoTituloTabla+200))
         table.setColumnWidth(1, (anchoTituloTabla-200))
-        # table.setColumnWidth(2, anchoTituloTabla)
 
         row_labels = [str(i+1) for i in range(table.rowCount())]
         table.setVerticalHeaderLabels(row_labels)
@@ -853,9 +845,6 @@ class inicio (QWidget):
         contenedor_llenado_informacion.addWidget(widget_contenedor_informacion)
         contenedor_llenado_informacion.addWidget(widget_contenedor_camara)
 
-        # widget_contenedor_llenado_informacion.setStyleSheet("""QWidget{
-        #                                                     border: 1px solid black;
-        #                                                     }""")
         contenedro_pag3.addWidget(widget_contenedor_llenado_informacion)
         anchoBarra3 = int((self.ventana.width()*0.92))
         auxiliar = self.barra_botones_pag2(
@@ -888,8 +877,6 @@ class inicio (QWidget):
 
         recomendacion = QLabel(
             "IMPORTANTE: Solo debe salir en camara la persona a registrar")
-        # recomendacion.setAttribute(
-        #     QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         recomendacion.setStyleSheet("""QLabel{
                             color: black;
                             font-family: sans-serif;
@@ -1108,7 +1095,6 @@ class inicio (QWidget):
         aprobacion = False
         usuario = int(self.usuario_input.text())
         contraseña = self.Contra_input.text()
-        # print(usuario)
         aprobacion = conexcionBD.validar_credenciales_profesor(
             usuario, contraseña)
         if aprobacion is True:
@@ -1414,8 +1400,6 @@ class inicio (QWidget):
         self.widget_cuerpo.hide()
         self.widget_cuerpo_pag2 = self.generar_llenado_curso(
             self.boton_cancelar, self.boton_agregar_estudiante, self.boton_finalizar)
-        # self.widget_cuerpo_pag2.setSizePolicy(
-        #     QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.contenedor_pre_registro.addWidget(
             self.widget_cuerpo_pag2, alignment=Qt.AlignmentFlag.AlignCenter)
         self.showMaximized()
@@ -1451,7 +1435,6 @@ class inicio (QWidget):
             datos = f.read()
         conexcionBD.insertar_clase(
             nombre_clase, self.profesor_id, sede_clase, grupo_clase, datos)
-        # conexcionBD.insertar_clase(nombre_clase, self.profesor_id, datos)
         clase_id = conexcionBD.obtener_id_clase(nombre_clase)
 
         with ThreadPoolExecutor() as executor:
@@ -1459,7 +1442,6 @@ class inicio (QWidget):
                 self.insertar_estudiantes, clase_id)
             future_biometricos = executor.submit(
                 self.insertar_datos_biometricos, clase_id)
-
             # Esperar a que ambas tareas se completen
             future_estudiantes.result()
             future_biometricos.result()
@@ -1512,7 +1494,6 @@ class inicio (QWidget):
             self.widget_cuerpo_pag3.hide()
             self.showMaximized()
             self.crear_curso()
-            # self.widget_cuerpo_pag2.show()
         except:
             print("SIGUEN PASANDO COSAS!!!!!!!")
 
@@ -1615,7 +1596,6 @@ class inicio (QWidget):
 
     # ? Captura de imagenes
     def capture(self):
-        # personName, ok = QtWidgets.QInputDialog.getText(self, 'Input Dialog', 'Ingrese el nombre de la persona:')
         personName = self.input_documento.text()
         self.start_camera()
         self.is_capturing = True
@@ -1639,7 +1619,6 @@ class inicio (QWidget):
             json.dump(person_data, f, indent=4)
 
         shutil.rmtree(self.dataPath)
-        # QtWidgets.QMessageBox.information(self, "Entrenamiento", "Modelo entrenado y guardado exitosamente.")
 
     # ? Iniciador de reconocimiento
     def start_recognition(self):

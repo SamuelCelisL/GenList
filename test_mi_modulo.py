@@ -1,6 +1,5 @@
 import unittest
 from unittest.mock import patch, MagicMock
-# Reemplaza "conexcionBD" con el nombre real de tu archivo que contiene las funciones
 from src.components import conexcionBD
 
 
