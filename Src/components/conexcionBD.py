@@ -1,14 +1,28 @@
 import sqlite3
 import os
 
-BasedeDatos = 'src/DataBase/BaseDeDatos.db'
+# Construye la ruta base del proyecto
+project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+base_dir = os.path.join(project_dir, 'src')
+
+# Construye las rutas a los archivos de la base de datos
+BasedeDatos = os.path.join(base_dir, 'DataBase', 'BaseDeDatos.db')
+BasedeSQL = os.path.join(base_dir, 'DataBase', 'BaseDeDatos.sql')
+
+
+# Imprime la ruta para verificarla
+print(f"Ruta de la base de datos: {BasedeDatos}")
+
+# Verifica si el archivo de la base de datos existe
+if not os.path.isfile(BasedeDatos):
+    raise FileNotFoundError(f"No se encontró el archivo de la base de datos en la ruta: {BasedeDatos}")
 
 if os.path.isfile(BasedeDatos):
     pass
 else:
     conexion = sqlite3.connect(BasedeDatos)
     cursor = conexion.cursor()
-    with open('src/DataBase/BaseDeDatos.sql', 'r') as f:
+    with open(BasedeSQL, 'r') as f:
         script_sql = f.read()
     cursor.executescript(script_sql)
 
